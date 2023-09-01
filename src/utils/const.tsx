@@ -16,3 +16,11 @@ export const formatDateInputs = (date: string) => {
 
   return `${year}-${month}-${day}`;
 };
+
+export const formatHourInputs = (date: string) => {
+  const objDate = new Date(date);
+  const hours = String(objDate.getHours()).padStart(2, "0");
+  const minutes = String(objDate.getMinutes()).padStart(2, "0");
+
+  return `${hours}:${minutes}:00`;
+}
