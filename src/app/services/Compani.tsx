@@ -10,6 +10,9 @@ export const useFetchCompani = () => {
       {
         cache: "no-store",
         mode: "cors",
+        headers: {
+          'Content-Type': 'application/json'
+        },
       }
     );
 
