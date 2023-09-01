@@ -8,7 +8,7 @@ export const useFetchInstallation = () => {
 
   const fetchInstalattion = async () => {
     const res = await fetch(
-      "http://plataformasgps.cl:1337/api/instalattions?populate=*",
+      "https://plataformasgps.cl/api/instalattions?populate=*",
       {
         cache: "no-store",
         mode: "cors",
@@ -62,7 +62,7 @@ export const useDeleteInstallation = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const res = await fetch(`http://plataformasgps.cl:1337/api/instalattions/${id}`, {
+          const res = await fetch(`https://plataformasgps.cl/api/instalattions/${id}`, {
             method: "DELETE",
           });
           if (res.ok) {

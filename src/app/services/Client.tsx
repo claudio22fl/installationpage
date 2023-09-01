@@ -7,7 +7,7 @@ export const useFetchClient = () => {
 
   const fetchClient = async () => {
     const res = await fetch(
-      "http://plataformasgps.cl:1337/api/clients?populate=*",
+      "https://plataformasgps.cl/api/clients?populate=*",
       {
         cache: "no-store",
         mode: "cors",
@@ -45,7 +45,7 @@ export const postClient = async (dataUser: client) => {
       }
     };
   
-    const res = await fetch("http://plataformasgps.cl:1337/api/clients", {
+    const res = await fetch("https://plataformasgps.cl/api/clients", {
       method: "POST",
       mode: 'cors',
       cache: "no-store",

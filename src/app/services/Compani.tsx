@@ -6,11 +6,11 @@ export const useFetchCompani = () => {
 
   const fetchCompani = async () => {
     const res = await fetch(
-      "http://plataformasgps.cl:1337/api/companies?populate=*",
+      "https://plataformasgps.cl/api/companies?populate=*",
       {
         cache: "no-store",
         mode: "cors",
-        headers: {
+        headers: {  
           'Content-Type': 'application/json'
         },
       }

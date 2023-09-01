@@ -47,7 +47,7 @@ export const useFormCreate = ({ refreshTable, formData, setFormData }: any) => {
     }
     console.log(JSON.stringify(formatData));
     try {
-      const response = await fetch("http://plataformasgps.cl:1337/api/instalattions", {
+      const response = await fetch("https://plataformasgps.cl/api/instalattions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

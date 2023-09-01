@@ -7,7 +7,7 @@ export const useFetchDevice = () => {
 
   const fetchDevice = async () => {
     const res = await fetch(
-      "http://plataformasgps.cl:1337/api/products?populate=*",
+      "https://plataformasgps.cl/api/products?populate=*",
       {
         cache: "no-store",
         mode: "cors",
