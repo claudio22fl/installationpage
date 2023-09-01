@@ -108,7 +108,7 @@ export const inputstabla: IImpuchip[] = [
   },
   {
     id: 13,
-    tipo: "number",
+    tipo: "money",
     name: "cost",
     label: "Costo:",
     valor: ["0"],
@@ -116,7 +116,7 @@ export const inputstabla: IImpuchip[] = [
   },
   {
     id: 14,
-    tipo: "number",
+    tipo: "money",
     name: "value",
     label: "Valor :",
     valor: ["0"],

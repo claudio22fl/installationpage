@@ -1,13 +1,12 @@
 "use client";
 import React, { useEffect } from "react";
 import styles from "../page.module.css";
-import CollapsibleTable from "./component/Table";
 import FormData from "../component/formComponent/Formulariosims";
 import { useDataForm } from "./hooks/useDaraForm";
 import { inputstabla } from "../hooks/mockInputs";
 import { useFetchInstallation } from "../services/Intallation";
 import './styles.css'
-import { Container } from "@mui/material";
+import { Container, Divider } from "@mui/material";
 
 export default function Page() {
   const { instalattion, fetchInstalattion } = useFetchInstallation();
@@ -15,8 +14,7 @@ export default function Page() {
 
   return (
     <main className={styles.main}>
-      <Container fixed maxWidth="xl">
-        <div className="rounded-t bg-white mb-0 px-6 py-6">
+         <div className="flex-auto px-4 bg-gray-300 lg:px-10  pt-0 rounded-b-xl" style={{width: '100%'}}>
           <div className="text-center flex justify-between">
             <h6 className="text-blueGray-700 text-xl font-bold">Agregar Instalacion</h6>
             <button onClick={() => {}}>
@@ -34,7 +32,8 @@ export default function Page() {
             </button>
           </div>
         </div>
-        <div className="flex-auto px-4 bg-gray-300 lg:px-10 py-10 pt-0 rounded-b-xl">
+        <Divider />
+        <div className="flex-auto px-4 bg-gray-300 lg:px-10  pt-0 rounded-b-xl">
           <FormData
             refreshTable={fetchInstalattion}
             formData={formData}
@@ -42,15 +41,7 @@ export default function Page() {
             inputstabla={inputstabla}
           />
         </div>
-
-        {instalattion.length > 0 ? (
-          <div className="text-center flex flex-col mt-10 rounded-xl">
-            <CollapsibleTable instalattion={instalattion} />
-          </div>
-        ) : (
-          <div className="text-center flex flex-col mt-10"></div>
-        )}
-      </Container>
+      
     </main>
   );
 }

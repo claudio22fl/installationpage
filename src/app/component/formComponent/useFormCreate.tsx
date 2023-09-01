@@ -8,17 +8,16 @@ export const useFormCreate = ({ refreshTable, formData, setFormData }: any) => {
     const date1 = new Date(formData[`fechainicio`]);
     date1.setMonth(date1.getMonth() + Number(e.target.value));
 
- console.log(e.target.name)
-
     if(e.target.name === 'hours'){
       setFormData({
         ...formData,
         [e.target.name]: `${e.target.value}:00`,
       });
     }else{
+      const upperCaseValue = e.target.value.toUpperCase();
       setFormData({
         ...formData,
-        [e.target.name]: e.target.value,
+        [e.target.name]: upperCaseValue,
       });
     }
 

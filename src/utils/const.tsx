@@ -24,3 +24,8 @@ export const formatHourInputs = (date: string) => {
 
   return `${hours}:${minutes}:00`;
 }
+
+export const formatClp = (value: string) => {
+  const cleanedValue = value.replace(/[,\.]/g, "");
+  return cleanedValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};

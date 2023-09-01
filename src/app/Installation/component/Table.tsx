@@ -18,6 +18,7 @@ import { Button, Stack } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { useDeleteInstallation } from "@/app/services/Intallation";
+import { formatClp } from "@/utils/const";
 
 function Row(props: { row: fotmatAttributes }) {
   const { row } = props;
@@ -93,26 +94,27 @@ function Row(props: { row: fotmatAttributes }) {
                 </TableHead>
                 <TableBody>
                   {row.product?.map((historyRow, index) => (
+                    historyRow != undefined &&
                     <TableRow key={index}>
                       <TableCell component="th" scope="row">
-                        {historyRow?.name}
+                        {historyRow.name}
                       </TableCell>
-                      <TableCell>{historyRow?.imeigps}</TableCell>
+                      <TableCell>{historyRow.imeigps}</TableCell>
                       <TableCell align="right">
                         {historyRow?.tipochip}
                       </TableCell>
                       <TableCell align="right">
                         {historyRow?.numerochip}
                       </TableCell>
-                      <TableCell align="right">{historyRow?.cost}</TableCell>
-                      <TableCell align="right">{historyRow?.value}</TableCell>
+                      <TableCell align="right">$ {formatClp(`${historyRow.cost}`)}</TableCell>
+                      <TableCell align="right">$ {formatClp(`${historyRow?.value}`)}</TableCell>
                     </TableRow>
                   ))}
 
                   <TableRow>
                     <TableCell rowSpan={1} />
                     <TableCell colSpan={4}>Total</TableCell>
-                    <TableCell align="right">{total}</TableCell>
+                    <TableCell align="right">$ {formatClp(`${total}`)}</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>

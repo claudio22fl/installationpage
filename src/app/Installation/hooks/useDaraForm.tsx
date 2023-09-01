@@ -9,10 +9,7 @@ export const useDataForm = () => {
   const productoInicial: Producto[] = [];
  
   const date1 = new Date(formatDateInputs(new Date().toString()));
-  const hora = date1.getHours();
-  const minutos = date1.getMinutes();
-  
-  console.log(date1);
+
   date1.setMonth(date1.getMonth() + Number(1));
 
   const [formData, setFormData] = useState<fotmatAttributes>({

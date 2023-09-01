@@ -7,6 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Irows } from '@/types/Types';
+import { formatClp } from '@/utils/const';
 
 
 function ccyFormat(num: number) {
@@ -72,14 +73,14 @@ export default function SpanningTable({rows}: Pods) {
               <TableCell align="right">{row.imeigps}</TableCell>
               <TableCell align="right">{row.tipochip}</TableCell>
               <TableCell align="right">{row.numerochip}</TableCell>
-              <TableCell align="right">{ccyFormat(row.cost)}</TableCell>
-              <TableCell align="right">{ccyFormat(row.value)}</TableCell>
+              <TableCell align="right">$ {formatClp(`${row.cost}`)}</TableCell>
+              <TableCell align="right">$ {formatClp(`${row.value}`)}</TableCell>
             </TableRow>
           ))}
           <TableRow>
             <TableCell rowSpan={1} />
             <TableCell colSpan={4}>Total</TableCell>
-            <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
+            <TableCell align="right">$ {formatClp(`${invoiceSubtotal}`)}</TableCell>
           </TableRow>
           
         </TableBody>

@@ -56,17 +56,19 @@ const FormData = ({
           const element = parsedValue[key];
 
           if (key === "label") {
+            const upperCaseValue = element.toUpperCase();
             setDevices({
               ...devices,
-              label: element,
+              label: upperCaseValue,
             });
           }
         }
       }
     } else {
+      const upperCaseValue = value.toUpperCase();
       setDevices({
         ...devices,
-        [name]: value,
+        [name]: upperCaseValue,
       });
     }
   };
@@ -76,6 +78,7 @@ const FormData = ({
     console.log(value);
     let parsedValue;
     parsedValue = value;
+ 
 
     if (typeof parsedValue === "object") {
       // value es un JSON
@@ -86,9 +89,10 @@ const FormData = ({
           console.log(key);
 
           if (key === "nameUser" ) {
+            const upperCaseValue = element.toUpperCase();
             serDataUser({
               ...dataUser,
-              name: element,
+              name: upperCaseValue,
             });
           }
           if (key === "email" ) {
@@ -106,9 +110,10 @@ const FormData = ({
         
       }
     } else {
+      const upperCaseValue = value.toUpperCase();
       serDataUser({
         ...dataUser,
-        [name]: value,
+        [name]: upperCaseValue,
       });
     }
   };
@@ -116,10 +121,10 @@ const FormData = ({
   const handleChancheDevice = (e: {
     target: { name: string; value: string };
   }) => {
-
+    const upperCaseValue = e.target.value.toUpperCase();
     setDevices({
       ...devices,
-      [e.target.name]: e.target.value,
+      [e.target.name]: upperCaseValue,
     });
   };
 
@@ -127,12 +132,13 @@ const FormData = ({
     target: { name: string; value: string };
   }) => {
 
+    const upperCaseValue = e.target.value.toUpperCase();
 
     console.log(e.target.name)
-    console.log(e.target.value)
+    console.log(upperCaseValue)
     serDataUser({
       ...dataUser,
-      [e.target.name]: e.target.value,
+      [e.target.name]: upperCaseValue,
     });
   };
 
@@ -140,11 +146,15 @@ const FormData = ({
 
   const saveData = () => {
     console.log(devices);
-
+    
+     const cost = devices.cost.replace(/[,\.]/g, "");
+     const value = devices.value.replace(/[,\.]/g, "");
+     console.log(cost);
+      console.log(value);
     const newRow = createData(
       devices.label,
-      Number(devices.cost),
-      Number(devices.value),
+      Number(cost),
+      Number(value),
       devices.imeigps,
       devices.tipochip,
       devices.numerochip
