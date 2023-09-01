@@ -132,10 +132,10 @@ export const inputstabla: IImpuchip[] = [
   },
   {
     id: 16,
-    tipo: "selected",
+    tipo: "autocomplete",
     name: "tipochip",
     label: "Tipo Chip:",
-    valor: ["ENTEL", "WOM", "VIRGIN"],
+    valor: ["ENTEL M2M", "ENTEL PREPAGO", "WOM", "VIRGIN","CLARO"],
     shrink: false,
   },
   {

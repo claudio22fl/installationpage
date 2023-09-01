@@ -27,5 +27,5 @@ export const formatHourInputs = (date: string) => {
 
 export const formatClp = (value: string) => {
   const cleanedValue = value.replace(/[,\.]/g, "");
-  return cleanedValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return cleanedValue.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 };

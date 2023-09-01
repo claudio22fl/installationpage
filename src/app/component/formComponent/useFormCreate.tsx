@@ -37,8 +37,6 @@ export const useFormCreate = ({ refreshTable, formData, setFormData }: any) => {
     e.preventDefault();
     
     console.log('llegue');
-   
-   
     const formatData = {
       "data": {
              ...formData
@@ -57,7 +55,7 @@ export const useFormCreate = ({ refreshTable, formData, setFormData }: any) => {
       if (response.ok) {
         const Toast = Swal.mixin({
           toast: true,
-          position: "top",
+          position: "center",
           showConfirmButton: false,
           timer: 2000,
           timerProgressBar: true,

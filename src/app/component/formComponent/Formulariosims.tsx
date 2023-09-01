@@ -11,6 +11,7 @@ import { useFetchDevice } from "@/app/services/Device";
 import { useFetchCompani } from "@/app/services/Compani";
 import { postClient, useFetchClient } from "@/app/services/Client";
 import { client } from "@/types/Client";
+import { useFetchChips } from "@/app/services/Chips";
 
 const FormData = ({
   refreshTable,
@@ -27,6 +28,7 @@ const FormData = ({
   const { compani } = useFetchCompani();
   const { device } = useFetchDevice();
   const { client } = useFetchClient();
+  const { chips } = useFetchChips();
 
   const [devices, setDevices] = useState({
     label: "",
@@ -55,11 +57,11 @@ const FormData = ({
         if (Object.hasOwnProperty.call(parsedValue, key)) {
           const element = parsedValue[key];
 
-          if (key === "label") {
+          if (key === name) {
             const upperCaseValue = element.toUpperCase();
             setDevices({
               ...devices,
-              label: upperCaseValue,
+              [key]: upperCaseValue,
             });
           }
         }
@@ -245,8 +247,17 @@ const FormData = ({
           formData={devices}
           autocompleteChague={autocompleteChagueDevice}
           inicio={12}
-          fin={19}
+          fin={16}
           autocoleteData={device}
+        />
+         <Inputtype
+          inputs={inputstabla}
+          handleChange={handleChancheDevice}
+          formData={devices}
+          autocompleteChague={autocompleteChagueDevice}
+          inicio={16}
+          fin={19}
+          autocoleteData={chips}
         />
         <Button 
           sx={{ width: 25, height: 30, fontSize: 10 }}
