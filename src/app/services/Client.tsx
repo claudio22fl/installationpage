@@ -24,10 +24,10 @@ export const useFetchClient = () => {
       id: data.id,
       label: data.attributes.name,
       nameUser: data.attributes.name,
+      fone: data.attributes.fone,
       email: data.attributes.email
     }));
 
-    console.log(formatData);
     setClient(formatData);
   };
 
@@ -61,8 +61,7 @@ export const postClient = async (dataUser: client) => {
   
     const responseData = await res.json();
     const { id } = responseData.data;
-   
-    console.log(responseData.data.id);
+  
   
     return `${id}`;
   };

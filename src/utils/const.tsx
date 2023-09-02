@@ -29,3 +29,13 @@ export const formatClp = (value: string) => {
   const cleanedValue = value.replace(/[,\.]/g, "");
   return cleanedValue.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 };
+
+
+export function formatearFecha(fecha: string) {
+  const partes = fecha.split('-'); // Dividir la fecha en partes: [año, mes, día]
+  // Reorganizar las partes en el formato deseado: "dd-mm-yyyy"
+  const fechaFormateada = `${partes[2]}-${partes[1]}-${partes[0]}`;
+  
+  return fechaFormateada;
+}
+

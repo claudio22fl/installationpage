@@ -19,10 +19,14 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { useDeleteInstallation } from "@/app/services/Intallation";
 import { formatClp } from "@/utils/const";
+import ModalUpdate from "@/app/Installation_list/component/ModalUpdate";
+
+
 
 function Row(props: { row: fotmatAttributes }) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
+  const [openUpdate, setOpenUpdate] = React.useState(false);
   const lines = row.note.split("\n");
 
   let total = 0;
@@ -32,10 +36,13 @@ function Row(props: { row: fotmatAttributes }) {
       total = total + (historyRow.value ?? 0);
     }
   });
-  console.log(row.note);
+
+  const handleClickOpen = () => {
+    setOpenUpdate(true);
+  };
+
 
  const {deleteInstallation} = useDeleteInstallation();
-  
 
   return (
     <React.Fragment>
@@ -49,13 +56,14 @@ function Row(props: { row: fotmatAttributes }) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
+        <TableCell width={150} component="th" scope="row">
           {row.fecha}
         </TableCell>
         <TableCell align="left">{row.client}</TableCell>
         <TableCell align="left">{row.patent}</TableCell>
         <TableCell align="left">{row.vehiclename}</TableCell>
         <TableCell align="left">{row.installationtype}</TableCell>
+        <TableCell align="left">{row.address}</TableCell>
         <TableCell align="left">{row.product.length}</TableCell>
         <TableCell align="left">
           {" "}
@@ -68,14 +76,14 @@ function Row(props: { row: fotmatAttributes }) {
             <Button onClick={() => deleteInstallation(row?.id)} variant="outlined" color="error" startIcon={<DeleteIcon />}>
               Delete
             </Button>
-            <Button variant="outlined" startIcon={<EditIcon />}>
+            <Button onClick={handleClickOpen} variant="outlined" startIcon={<EditIcon />}>
               Edit
             </Button>
           </Stack>
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={8}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={10}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
@@ -122,6 +130,7 @@ function Row(props: { row: fotmatAttributes }) {
           </Collapse>
         </TableCell>
       </TableRow>
+      <ModalUpdate open={openUpdate} setOpen={setOpenUpdate} row={row} />
     </React.Fragment>
   );
 }
@@ -132,6 +141,7 @@ interface Props {
 
 export default function CollapsibleTable({ instalattion }: Props) {
   return (
+    <>
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
         <TableHead>
@@ -142,6 +152,7 @@ export default function CollapsibleTable({ instalattion }: Props) {
             <TableCell align="left">Pantene</TableCell>
             <TableCell align="left">Vehiculo</TableCell>
             <TableCell align="left">Tipo</TableCell>
+            <TableCell align="left">Direccion</TableCell>
             <TableCell align="left">DI</TableCell>
             <TableCell align="left">Notas</TableCell>
             <TableCell align="left">Acciones</TableCell>
@@ -154,5 +165,7 @@ export default function CollapsibleTable({ instalattion }: Props) {
         </TableBody>
       </Table>
     </TableContainer>
+   
+    </>
   );
 }

@@ -27,7 +27,6 @@ export const useFetchDevice = () => {
       value: data.attributes.value,
     }));
 
-    console.log(formatData);
     setdevice(formatData);
   };
 

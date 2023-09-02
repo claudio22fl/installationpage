@@ -27,7 +27,6 @@ export const useFetchCompani = () => {
       label: data.attributes.name
     }));
 
-    console.log(formatData);
     setCompani(formatData);
   };
 

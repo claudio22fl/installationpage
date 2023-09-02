@@ -39,6 +39,7 @@ export default function Page() {
             formData={formData}
             setFormData={setFormData}
             inputstabla={inputstabla}
+            isUpdate={false}
           />
         </div>
       

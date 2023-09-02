@@ -8,7 +8,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Irows } from '@/types/Types';
 import { formatClp } from '@/utils/const';
-
+import { Button } from '@mui/material';
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function ccyFormat(num: number) {
   return `$ ${num}`;
@@ -42,11 +43,23 @@ function subtotal(items: Row[]) {
 
 interface Pods {
     rows: Irows[]
+    setRows: React.Dispatch<React.SetStateAction<Irows[]>>
 }
 
 
-export default function SpanningTable({rows}: Pods) {
+
+export default function SpanningTable({rows,setRows}: Pods) {
     const invoiceSubtotal = subtotal(rows as any);
+
+
+    const deleteRow = (index: number)  => {
+      console.log(index);
+        const newRows = [...rows];
+        newRows.splice(index, 1);
+        console.log(newRows);
+        setRows(newRows);
+    }
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="spanning table">
@@ -64,10 +77,11 @@ export default function SpanningTable({rows}: Pods) {
             <TableCell align="right">Numero Chip</TableCell>
             <TableCell align="right">Valor&nbsp;(costo)</TableCell>
             <TableCell align="right">Precio.</TableCell>
+            <TableCell style={{width: 50}} align="center">Borrar</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {rows.map((row, index) => (
             <TableRow key={row.name}>
               <TableCell>{row.name}</TableCell>
               <TableCell align="right">{row.imeigps}</TableCell>
@@ -75,6 +89,8 @@ export default function SpanningTable({rows}: Pods) {
               <TableCell align="right">{row.numerochip}</TableCell>
               <TableCell align="right">$ {formatClp(`${row.cost}`)}</TableCell>
               <TableCell align="right">$ {formatClp(`${row.value}`)}</TableCell>
+              <TableCell align="right"> <Button onClick={() => deleteRow(index)} variant="outlined" color="error" startIcon={<DeleteIcon />}>
+            </Button></TableCell>
             </TableRow>
           ))}
           <TableRow>

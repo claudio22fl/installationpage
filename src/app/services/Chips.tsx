@@ -27,7 +27,6 @@ export const useFetchChips= () => {
       label: data.attributes.name
     }));
 
-    console.log(formatData);
     setChips(formatData);
   };
 

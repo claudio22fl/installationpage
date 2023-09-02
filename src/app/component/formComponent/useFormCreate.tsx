@@ -36,7 +36,6 @@ export const useFormCreate = ({ refreshTable, formData, setFormData }: any) => {
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     
-    console.log('llegue');
     const formatData = {
       "data": {
              ...formData
@@ -79,5 +78,51 @@ export const useFormCreate = ({ refreshTable, formData, setFormData }: any) => {
     }
    };
 
-  return { formData, handleChange, handleSubmit,autocompleteChague};
+   const handleEdit = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    
+    const formatData = {
+      "data": {
+             ...formData
+         }
+    }
+    console.log(formData.id)
+    console.log(JSON.stringify(formatData));
+    try {
+      const response = await fetch(`https://plataformasgps.cl/api/instalattions/${formData.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formatData),
+      });
+
+      if (response.ok) {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "center",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
+
+        Toast.fire({
+          icon: "success",
+          title: "Actualizado correctamente",
+        });
+
+        refreshTable();
+      } else {
+        Swal.fire("Error al ingresar", "", "error");
+      }
+    } catch (error) {
+      console.log("Error:", error);
+    } 
+   }
+
+  return { formData, handleChange, handleSubmit,autocompleteChague, handleEdit};
 };

@@ -20,22 +20,20 @@ export default function Inputtype({
   fin,
   autocoleteData,
 }: IInputsTypeProps) {
-
-  function formatPatente(patente: string ) {
+  function formatPatente(patente: string) {
     // Eliminar caracteres no alfanuméricos y espacios
-    const cleanedPatente = patente.replace(/[^0-9a-zA-Z]/g, '');
-  
+    const cleanedPatente = patente.replace(/[^0-9a-zA-Z]/g, "");
+
     if (cleanedPatente.length >= 6) {
       // Patente de automóvil (xx*xx*42)
-      const formattedPatente = cleanedPatente.replace(/(.{2})(.{2})/, '$1*$2*');
+      const formattedPatente = cleanedPatente.replace(/(.{2})(.{2})/, "$1*$2*");
       return formattedPatente;
     } else {
       // Patente de motocicleta (ccc*42)
-      const formattedPatente = cleanedPatente.replace(/(.{3})/, '$1*');
+      const formattedPatente = cleanedPatente.replace(/(.{3})/, "$1*");
       return formattedPatente;
     }
   }
-
 
   return (
     <>
@@ -77,7 +75,7 @@ export default function Inputtype({
             {tipo === "money" && (
               <TextField
                 id={name}
-                type={'text'}
+                type={"text"}
                 name={name}
                 variant="outlined"
                 onChange={handleChange}
@@ -90,21 +88,48 @@ export default function Inputtype({
               />
             )}
 
-            {tipo != "autocomplete" && tipo != "selected" &&  tipo != "money" &&(
-              <TextField
-                id={name}
-                type={tipo}
-                name={name}
-                variant="outlined"
-                onChange={handleChange}
-                value={ label === 'Patente:' ? formatPatente(formData[name]) : formData[name]}
-                sx={{ m: 1, width: "30ch" }}
-                required={false}
-                label={label}
-                multiline={shrink}
-                rows={4}
-              />
-            )}
+            {tipo === "time" && (
+                <TextField
+                  id={name}
+                  InputLabelProps={{ shrink: true }}
+                  type={tipo}
+                  name={name}
+                  variant="outlined"
+                  onChange={handleChange}
+                  value={
+                    label === "Patente:"
+                      ? formatPatente(formData[name])
+                      : formData[name]
+                  }
+                  sx={{ m: 1, width: "30ch" }}
+                  required={false}
+                  label={label}
+                  multiline={shrink}
+                  rows={4}
+                />
+              )}
+
+            {tipo != "autocomplete" &&
+              tipo != "selected" &&
+              tipo != "money" &&  tipo != "time" &&(
+                <TextField
+                  id={name}
+                  type={tipo}
+                  name={name}
+                  variant="outlined"
+                  onChange={handleChange}
+                  value={
+                    label === "Patente:"
+                      ? formatPatente(formData[name])
+                      : formData[name]
+                  }
+                  sx={{ m: 1, width: "30ch" }}
+                  required={false}
+                  label={label}
+                  multiline={shrink}
+                  rows={4}
+                />
+              )}
           </Grid>
         ))}
     </>

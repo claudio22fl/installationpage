@@ -38,4 +38,5 @@ export type IndexPageProps = {
   formData: fotmatAttributes;
   setFormData: React.Dispatch<React.SetStateAction<fotmatAttributes>>;
   inputstabla: IImpuchip[];
+  isUpdate: boolean;
 };

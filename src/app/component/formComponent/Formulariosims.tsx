@@ -1,158 +1,79 @@
 "use client";
 import Inputtype from "./Inputtype";
-import SendIcon from '@mui/icons-material/Send';
+import SendIcon from "@mui/icons-material/Send";
 import { IImpuchip, IndexPageProps, Irows } from "@/types/Types";
 import { useFormCreate } from "./useFormCreate";
 import "./styles.css";
 import { Button } from "@mui/material";
 import DenseTable, { createData } from "../tableComponent/Table";
-import { useState } from "react";
-import { useFetchDevice } from "@/app/services/Device";
+import { useEffect, useState } from "react";
 import { useFetchCompani } from "@/app/services/Compani";
 import { postClient, useFetchClient } from "@/app/services/Client";
-import { client } from "@/types/Client";
 import { useFetchChips } from "@/app/services/Chips";
+import { useDataClient } from "@/app/hooks/useDataClient";
+import { useDataDevice } from "@/app/hooks/useDataDevice";
 
 const FormData = ({
   refreshTable,
   formData,
   setFormData,
   inputstabla,
+  isUpdate,
 }: IndexPageProps) => {
-  const { handleChange, handleSubmit, autocompleteChague } = useFormCreate({
+
+  const { handleChange, handleSubmit, autocompleteChague, handleEdit } = useFormCreate({
     refreshTable,
     formData,
     setFormData,
   });
 
   const { compani } = useFetchCompani();
-  const { device } = useFetchDevice();
-  const { client } = useFetchClient();
   const { chips } = useFetchChips();
 
-  const [devices, setDevices] = useState({
-    label: "",
-    cost: "",
-    value: "",
-    imeigps: "",
-    tipochip: "",
-    numerochip: "",
-  });
-
-  const [dataUser, serDataUser] = useState<client>({
-    name: "",
-    email: "",
-    fone: 0,
-  });
-
-  const autocompleteChagueDevice = (name: string, value: any) => {
-    console.log(name);
-    console.log(value);
-    let parsedValue;
-    parsedValue = value;
-
-    if (typeof parsedValue === "object") {
-      // value es un JSON
-      for (const key in parsedValue) {
-        if (Object.hasOwnProperty.call(parsedValue, key)) {
-          const element = parsedValue[key];
-
-          if (key === name) {
-            const upperCaseValue = element.toUpperCase();
-            setDevices({
-              ...devices,
-              [key]: upperCaseValue,
-            });
-          }
-        }
-      }
-    } else {
-      const upperCaseValue = value.toUpperCase();
-      setDevices({
-        ...devices,
-        [name]: upperCaseValue,
-      });
-    }
-  };
   
-  const autocompleteChagueUser= (name: string, value: any) => {
-    console.log(name);
-    console.log(value);
-    let parsedValue;
-    parsedValue = value;
- 
 
-    if (typeof parsedValue === "object") {
-      // value es un JSON
-      for (const key in parsedValue) {
-       
-          const element = parsedValue[key];
-          
-          console.log(key);
+  const {
+    dataUser,
+    serDataUser,
+    autocompleteChagueUser,
+    client,
+    handleChancheUser,
+  } = useDataClient({ setFormData, formData });
+  const {
+    devices,
+    device,
+    setDevices,
+    autocompleteChagueDevice,
+    handleChancheDevice,
+  } = useDataDevice();
 
-          if (key === "nameUser" ) {
-            const upperCaseValue = element.toUpperCase();
-            serDataUser({
-              ...dataUser,
-              name: upperCaseValue,
-            });
-          }
-          if (key === "email" ) {
-            serDataUser({
-              ...dataUser,
-              email: element,
-            });
-          }
-          if (key === "id" ) {
-            setFormData({
+  useEffect(() => {
+    if(formData.client !== 0){
+      console.log(formData.client);
+      console.log(client);
+      client?.forEach((element) => {
+         if(element.label === formData.client){
+           serDataUser({
+             ...dataUser,
+             name: element.label,
+             email: element.email,
+             fone: element.fone,
+           });
+
+           setFormData({
               ...formData,
-              ["client"]: `${element}`,
-            });
-          }
-        
-      }
-    } else {
-      const upperCaseValue = value.toUpperCase();
-      serDataUser({
-        ...dataUser,
-        [name]: upperCaseValue,
-      });
+              ["client"]: element.id,
+           })
+         }
+      })
     }
-  };
+ }, [client]);
 
-  const handleChancheDevice = (e: {
-    target: { name: string; value: string };
-  }) => {
-    const upperCaseValue = e.target.value.toUpperCase();
-    setDevices({
-      ...devices,
-      [e.target.name]: upperCaseValue,
-    });
-  };
-
-  const handleChancheUser = (e: {
-    target: { name: string; value: string };
-  }) => {
-
-    const upperCaseValue = e.target.value.toUpperCase();
-
-    console.log(e.target.name)
-    console.log(upperCaseValue)
-    serDataUser({
-      ...dataUser,
-      [e.target.name]: upperCaseValue,
-    });
-  };
-
-  const [rows, setRows] = useState<Irows[]>([]);
+  const [rows, setRows] = useState<Irows[]>(formData.product);
 
   const saveData = () => {
-    console.log(devices);
-    
-     const cost = devices.cost.replace(/[,\.]/g, "");
-     const value = devices.value.replace(/[,\.]/g, "");
-     console.log(cost);
-      console.log(value);
+    const cost = devices.cost.replace(/[,\.]/g, "");
+    const value = devices.value.replace(/[,\.]/g, "");
     const newRow = createData(
       devices.label,
       Number(cost),
@@ -161,7 +82,6 @@ const FormData = ({
       devices.tipochip,
       devices.numerochip
     ); // Agrega aquí los valores iniciales
-    console.log(newRow);
 
     setRows([...rows, newRow]);
 
@@ -181,18 +101,17 @@ const FormData = ({
   };
 
   const saveUser = async () => {
-   const res = await postClient(dataUser)
-   console.log(dataUser);
-   
+    const res = await postClient(dataUser);
+
     setFormData({
       ...formData,
       ["client"]: res,
     });
-    
-  }
+  };
+
 
   return (
-    <form onSubmit={handleSubmit} className="form">
+    <form onSubmit={ isUpdate ? handleEdit : handleSubmit} className="form">
       <h2 style={{ color: "black" }}>Datos Instalacion</h2>
       <div className="inputs">
         <Inputtype
@@ -250,7 +169,7 @@ const FormData = ({
           fin={17}
           autocoleteData={device}
         />
-         <Inputtype
+        <Inputtype
           inputs={inputstabla}
           handleChange={handleChancheDevice}
           formData={devices}
@@ -259,7 +178,7 @@ const FormData = ({
           fin={20}
           autocoleteData={chips}
         />
-        <Button 
+        <Button
           sx={{ width: 25, height: 30, fontSize: 10 }}
           onClick={saveData}
           variant="contained"
@@ -268,7 +187,7 @@ const FormData = ({
         </Button>
       </div>
 
-      <DenseTable rows={rows} />
+      <DenseTable rows={rows} setRows={setRows}/>
 
       <div className=" mt-10 text-right">
         <Button endIcon={<SendIcon />} type="submit" variant="contained">

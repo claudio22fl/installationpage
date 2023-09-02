@@ -1,5 +1,5 @@
 import { IRootInstallation, fotmatAttributes } from "@/types/Installation";
-import { formatFecha } from "@/utils/const";
+import { formatFecha, formatearFecha } from "@/utils/const";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
@@ -22,9 +22,10 @@ export const useFetchInstallation = () => {
 
     const formatData: fotmatAttributes[] = data.map((data: any) => ({
       id: data.id,
-      fecha: formatFecha(data.attributes.fecha),
+      fecha: formatearFecha(data.attributes.fecha),
       hora: data.attributes.hours,
       installationtype: data.attributes.installationtype,
+      installer: data.attributes.installer,
       address: data.attributes.address,
       vehiclename: data.attributes.vehiclename,
       patent: data.attributes.patent,
@@ -32,9 +33,8 @@ export const useFetchInstallation = () => {
       product: data.attributes.product,
       client: data.attributes.client.data?.attributes.name,
       company: data.attributes.company.data?.attributes.name,
+      commune: data.attributes.commune,
     }));
-
-    console.log(formatData);
     setInstaattion(formatData);
   };
 
@@ -80,4 +80,31 @@ export const useDeleteInstallation = () => {
   };
 
   return { deleteInstallation };
+}
+
+const useUpdateInstallation = () => {
+  const { fetchInstalattion: refreshTable } = useFetchInstallation();
+
+  const updateInstallation = async (id: number | undefined, data: IRootInstallation) => {
+    try {
+      const res = await fetch(`https://plataformasgps.cl/api/instalattions/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      if (res.ok) {
+        Swal.fire("Actualizado correctamente", "", "success");
+        refreshTable();
+      } else {
+        Swal.fire("Error al actualizar", "", "error");
+      }
+    } catch (error) {
+      console.log("Error:", error);
+    }
+    refreshTable();
+  };
+
+  return { updateInstallation };
 }

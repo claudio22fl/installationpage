@@ -12,7 +12,7 @@ export const inputstabla: IImpuchip[] = [
   },
   {
     id: 2,
-    tipo: "TIME",
+    tipo: "time",
     name: "hours",
     label: "Hora:",
     valor: ["0"],
