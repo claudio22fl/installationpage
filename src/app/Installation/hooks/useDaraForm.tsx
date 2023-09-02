@@ -13,7 +13,6 @@ export const useDataForm = () => {
   date1.setMonth(date1.getMonth() + Number(1));
 
   const [formData, setFormData] = useState<fotmatAttributes>({
-    id: 0,
     fecha: formatDateInputs(new Date().toString()),
     hours: formatHourInputs(new Date().toString()),
     installer: "",
