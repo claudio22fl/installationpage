@@ -111,7 +111,7 @@ const FormData = ({
 
 
   return (
-    <form onSubmit={handleSubmit} className="form">
+   <form onSubmit={ isUpdate ? handleEdit : handleSubmit} className="form">
       <h2 style={{ color: "black" }}>Datos Instalacion</h2>
       <div className="inputs">
         <Inputtype
