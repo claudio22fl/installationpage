@@ -44,6 +44,14 @@ export const inputstabla: IImpuchip[] = [
   },
   {
     id: 18,
+    tipo: "text",
+    name: "commune",
+    label: "Comuna",
+    valor: ["0"],
+    shrink: false,
+  },
+  {
+    id: 18,
     tipo: "selected",
     name: "installer",
     label: "Instalador:",

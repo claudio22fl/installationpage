@@ -42,4 +42,5 @@ export interface fotmatAttributes {
   product: Producto[]
   client: string
   company: string
+  commune: string
 }

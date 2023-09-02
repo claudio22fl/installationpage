@@ -201,7 +201,7 @@ const FormData = ({
           formData={formData}
           autocompleteChague={autocompleteChague}
           inicio={0}
-          fin={6}
+          fin={7}
           autocoleteData={compani}
         />
       </div>
@@ -212,8 +212,8 @@ const FormData = ({
           handleChange={handleChange}
           formData={formData}
           autocompleteChague={autocompleteChague}
-          inicio={6}
-          fin={9}
+          inicio={7}
+          fin={10}
           autocoleteData={compani}
         />
       </div>
@@ -224,8 +224,8 @@ const FormData = ({
           handleChange={handleChancheUser}
           formData={dataUser}
           autocompleteChague={autocompleteChagueUser}
-          inicio={9}
-          fin={12}
+          inicio={10}
+          fin={13}
           autocoleteData={client}
         />
 
@@ -246,8 +246,8 @@ const FormData = ({
           handleChange={handleChancheDevice}
           formData={devices}
           autocompleteChague={autocompleteChagueDevice}
-          inicio={12}
-          fin={16}
+          inicio={13}
+          fin={17}
           autocoleteData={device}
         />
          <Inputtype
@@ -255,8 +255,8 @@ const FormData = ({
           handleChange={handleChancheDevice}
           formData={devices}
           autocompleteChague={autocompleteChagueDevice}
-          inicio={16}
-          fin={19}
+          inicio={17}
+          fin={20}
           autocoleteData={chips}
         />
         <Button 

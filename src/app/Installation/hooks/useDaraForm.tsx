@@ -24,6 +24,7 @@ export const useDataForm = () => {
     product: productoInicial,
     client: "",
     company: "",
+    commune: "",
   });
 
   return { formData, setFormData };
