@@ -71,12 +71,12 @@ export default function ModalUpdate({ open, setOpen, row }: IModalUpdate) {
   
   console.log(row.installer)
 
-   useEffect(() => {
+    useEffect(() => {
     setFormData({
         ["id"]: row.id,
-      ["fecha"]: row.fecha,
-      ["hours"]: row.hours,
-      ["installer"]: row.installer,
+        ["fecha"]: formatDateInputs(row.fecha),
+        ["hours"]: (row.hours),
+        ["installer"]: row.installer,
         ["installationtype"]: row.installationtype,
         ["address"]: row.address,
         ["vehiclename"]: row.vehiclename,
