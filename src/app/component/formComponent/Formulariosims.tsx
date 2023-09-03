@@ -69,6 +69,19 @@ const FormData = ({
     }
  }, [client]);
 
+  useEffect(() => {
+   if(formData.company !== ""){
+     compani?.forEach((element) => {
+        if(element.label === formData.company){
+          setFormData({
+             ...formData,
+             ["company"]:{"id":element.id,"label": element.label},
+          })
+        }
+     })
+   }
+} , [compani]);
+
   const [rows, setRows] = useState<Irows[]>(formData.product);
 
   const saveData = () => {
