@@ -23,7 +23,7 @@ export const useFetchInstallation = () => {
     const formatData: fotmatAttributes[] = data.map((data: any) => ({
       id: data.id,
       fecha: formatearFecha(data.attributes.fecha),
-      hora: data.attributes.hours,
+      hours: data.attributes.hours,
       installationtype: data.attributes.installationtype,
       installer: data.attributes.installer,
       address: data.attributes.address,
