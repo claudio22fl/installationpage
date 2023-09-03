@@ -20,6 +20,7 @@ import FormData from "@/app/component/formComponent/Formulariosims";
 import { inputstabla } from "@/app/hooks/mockInputs";
 import '../../Installation/styles.css'
 import { useEffect } from "react";
+import { formatDateInputs, formatHourInputs } from "@/utils/const";
 
 interface IModalUpdate {
   open: boolean;
