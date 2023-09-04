@@ -56,7 +56,7 @@ export function Row({ row, client }: Props) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell align="left">{row.company}</TableCell>
+        <TableCell align="left"><strong>{row.company}</strong></TableCell>
         <TableCell width={150} component="th" scope="row">
           {row.fecha}
         </TableCell>
@@ -127,10 +127,10 @@ export function Row({ row, client }: Props) {
                           </TableCell>
                           <TableCell>{historyRow.imeigps}</TableCell>
                           <TableCell align="right">
-                            {historyRow?.tipochip}
+                            {historyRow.tipochip}
                           </TableCell>
                           <TableCell align="right">
-                            {historyRow?.numerochip}
+                            {historyRow.numerochip}
                           </TableCell>
                           <TableCell align="right">
                             $ {formatClp(`${historyRow.cost}`)}
