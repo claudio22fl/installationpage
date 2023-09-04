@@ -49,8 +49,6 @@ const FormData = ({
 
   useEffect(() => {
       client?.forEach((element) => {
-        console.log(element);
-        console.log(formData.client);
          if(element.label === formData.client || element.id === Number(formData.client)){
            setFormData({
               ...formData,
@@ -65,7 +63,6 @@ const FormData = ({
          })
          }
       })
-      console.log(formData)
  }, [client]);
 
   useEffect(() => {

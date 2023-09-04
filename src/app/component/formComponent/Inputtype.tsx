@@ -40,7 +40,7 @@ export default function Inputtype({
       {inputs
         .slice(inicio, fin)
         .map(({ id, name, label, tipo, valor, shrink }: IImpuchip) => (
-          <Grid spacing={{ xs: 3, md: 4 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+          <div key={name}>
             {tipo === "autocomplete" && (
               <AutocompleteInput
                 formData={formData}
@@ -51,7 +51,7 @@ export default function Inputtype({
               />
             )}
             {tipo === "selected" && (
-              <FormControl sx={{ m: 1, width: "30ch" }}>
+              <FormControl key={id} sx={{ m: 1, width: "30ch" }}>
                 <InputLabel id="demo-simple-select-label">{label}</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
@@ -131,7 +131,7 @@ export default function Inputtype({
                   rows={4}
                 />
               )}
-          </Grid>
+          </div>
         ))}
     </>
   );

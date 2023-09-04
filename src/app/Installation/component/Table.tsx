@@ -20,7 +20,7 @@ interface Props {
 export default function CollapsibleTable({ instalattion, client }: Props) {
   return (
     <>
-    <TableContainer component={Paper}>
+    <TableContainer sx={{ minWidth: '99%' }} component={Paper}>
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
@@ -32,6 +32,7 @@ export default function CollapsibleTable({ instalattion, client }: Props) {
             <TableCell align="left">Vehiculo</TableCell>
             <TableCell align="left">Tipo</TableCell>
             <TableCell align="left">Direccion</TableCell>
+            <TableCell align="left">Comuna</TableCell>
             <TableCell align="left">DI</TableCell>
             <TableCell align="left">Notas</TableCell>
             <TableCell align="left">Acciones</TableCell>

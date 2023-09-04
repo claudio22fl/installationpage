@@ -65,6 +65,7 @@ export function Row({ row, client }: Props) {
         <TableCell style={{fontSize: 12}}  align="left">{row.vehiclename}</TableCell>
         <TableCell style={{fontSize: 12}}  align="left">{row.installationtype}</TableCell>
         <TableCell style={{fontSize: 12}}  align="left">{row.address}</TableCell>
+        <TableCell style={{fontSize: 12}}  align="left">{row.commune}</TableCell>
         <TableCell style={{fontSize: 12}}  align="left">{row.product.length}</TableCell>
         <TableCell style={{fontSize: 12}}  align="left">
           {" "}
@@ -99,7 +100,7 @@ export function Row({ row, client }: Props) {
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={10}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={12}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
