@@ -22,7 +22,7 @@ export const useDataClient = ({setFormData, formData}: IState) => {
   const { client } = useFetchClient();
 
   const autocompleteChagueUser = (name: string, value: any) => {
-  
+
     if (typeof value === "object") {
       // value es un JSON
       const name = value.nameUser;
@@ -34,6 +34,11 @@ export const useDataClient = ({setFormData, formData}: IState) => {
         ["fone"]: value.fone,
         ["email"]: email,
       });
+      
+      setFormData({
+        ...formData,
+        ["client"]: `${value.id}`,
+      })
 
     } else {
       const upperCaseValue = value.toUpperCase();
