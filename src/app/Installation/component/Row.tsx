@@ -56,16 +56,17 @@ export function Row({ row, client }: Props) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
+        <TableCell align="left">{row.company}</TableCell>
         <TableCell width={150} component="th" scope="row">
           {row.fecha}
         </TableCell>
-        <TableCell align="left">{row.client}</TableCell>
-        <TableCell align="left">{row.patent}</TableCell>
-        <TableCell align="left">{row.vehiclename}</TableCell>
-        <TableCell align="left">{row.installationtype}</TableCell>
-        <TableCell align="left">{row.address}</TableCell>
-        <TableCell align="left">{row.product.length}</TableCell>
-        <TableCell align="left">
+        <TableCell style={{fontSize: 12}} align="left">{row.client}</TableCell>
+        <TableCell style={{fontSize: 12}}  align="left">{row.patent}</TableCell>
+        <TableCell style={{fontSize: 12}}  align="left">{row.vehiclename}</TableCell>
+        <TableCell style={{fontSize: 12}}  align="left">{row.installationtype}</TableCell>
+        <TableCell style={{fontSize: 12}}  align="left">{row.address}</TableCell>
+        <TableCell style={{fontSize: 12}}  align="left">{row.product.length}</TableCell>
+        <TableCell style={{fontSize: 12}}  align="left">
           {" "}
           {lines.map((line, index) => (
             <p key={index}>{line}</p>

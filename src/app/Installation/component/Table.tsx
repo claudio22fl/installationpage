@@ -25,7 +25,8 @@ export default function CollapsibleTable({ instalattion, client }: Props) {
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell>Fecha</TableCell>
+            <TableCell>Empresa</TableCell>
+            <TableCell align="left">Fecha</TableCell>
             <TableCell align="left">Cliente</TableCell>
             <TableCell align="left">Pantene</TableCell>
             <TableCell align="left">Vehiculo</TableCell>
