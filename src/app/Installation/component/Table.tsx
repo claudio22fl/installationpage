@@ -43,6 +43,9 @@ const handleChangeRowsPerPage = (
 };
 
  const Pagination = instalattion.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+
+ const filter = instalattion.filter((row) => row.client?.toLowerCase().includes('sims'));
+
   return (
     <>
     <TableContainer sx={{ minWidth: '99%' }} component={Paper}>
@@ -52,6 +55,7 @@ const handleChangeRowsPerPage = (
             <TableCell />
             <TableCell>Empresa</TableCell>
             <TableCell align="left">Fecha</TableCell>
+            <TableCell align="left">Hora</TableCell>
             <TableCell align="left">Cliente</TableCell>
             <TableCell align="left">Pantene</TableCell>
             <TableCell align="left">Vehiculo</TableCell>
@@ -80,7 +84,7 @@ const handleChangeRowsPerPage = (
                 inputProps: {
                   'aria-label': 'Instalaciones por pagina',
                 },
-                native: true,
+                native: false,
               }}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}

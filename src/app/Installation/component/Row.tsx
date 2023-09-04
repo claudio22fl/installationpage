@@ -61,6 +61,7 @@ export function Row({ row, client, fetchInstalattion }: Props) {
         <TableCell width={150} component="th" scope="row">
           {row.fecha}
         </TableCell>
+        <TableCell style={{fontSize: 12}} align="left">{row.hours}</TableCell>
         <TableCell style={{fontSize: 12}} align="left">{row.client}</TableCell>
         <TableCell style={{fontSize: 12}}  align="left">{row.patent}</TableCell>
         <TableCell style={{fontSize: 12}}  align="left">{row.vehiclename}</TableCell>

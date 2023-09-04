@@ -12,17 +12,16 @@ import MuiAccordionSummary, {
   AccordionSummaryProps,
 } from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
 import { fotmatAttributes } from "@/types/Installation";
-import { useFetchInstallation } from "@/app/services/Intallation";
 import { useDataForm } from "@/app/Installation/hooks/useDaraForm";
 import FormData from "@/app/component/formComponent/Formulariosims";
 import { inputstabla } from "@/app/hooks/mockInputs";
 import '../../Installation/styles.css'
 import { useEffect } from "react";
 import { formatDateInputs, formatFechaInput, formatHourInputs, formatearFecha } from "@/utils/const";
-import { useFetchClient } from "@/app/services/Client";
 import { client } from "@/types/Client";
+import Swal from "sweetalert2";
+
 
 interface IModalUpdate {
   open: boolean;
@@ -114,6 +113,9 @@ export default function ModalUpdate({ open, setOpen, row, client, fetchInstalatt
       setOpen(false);
     }
   };
+
+
+
 
   return (
     <div>

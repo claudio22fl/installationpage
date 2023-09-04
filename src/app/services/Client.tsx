@@ -42,7 +42,7 @@ export const useFetchClient = () => {
 
 export const postClient = async (dataUser: client) => {
   const formatDataUser = () => {
-    if (dataUser.email === "") {
+    if (dataUser.email === "" || dataUser.email === null) {
       return {
         name: dataUser.name,
         fone: dataUser.fone,
@@ -72,8 +72,11 @@ export const postClient = async (dataUser: client) => {
   });
 
   if (!res.ok) {
+    const responseData = await res.json();
+     const { message } = responseData.data;
+     console.log(message);
     Swal.fire({
-      title: "Error al agregar cliente",
+      title: `Error al agregar cliente ${message}`,
       icon: "error",
       confirmButtonText: "Aceptar",
     });

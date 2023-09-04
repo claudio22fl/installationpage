@@ -7,6 +7,7 @@ import { useDataForm } from "../Installation/hooks/useDaraForm";
 import CollapsibleTable from "../Installation/component/Table";
 import '../Installation/styles.css'
 import { useFetchClient } from "../services/Client";
+
 export default function Page() {
   const { instalattion, fetchInstalattion } = useFetchInstallation();
   const { formData, setFormData } = useDataForm();
