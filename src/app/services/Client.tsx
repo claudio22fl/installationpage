@@ -1,6 +1,8 @@
 import { DataClient, IClient, client } from "@/types/Client";
 import { IRootEmpresa, empresa } from "@/types/Compani";
+import { format } from "path";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 export const useFetchClient = () => {
   const [client, setClient] = useState<client[]>([]);
@@ -25,7 +27,7 @@ export const useFetchClient = () => {
       label: data.attributes.name,
       nameUser: data.attributes.name,
       fone: data.attributes.fone,
-      email: data.attributes.email
+      email: data.attributes.email,
     }));
 
     setClient(formatData);
@@ -39,31 +41,52 @@ export const useFetchClient = () => {
 };
 
 export const postClient = async (dataUser: client) => {
-    const newClient = {
-      "data": {
-        ...dataUser
-      }
-    };
-  
-    const res = await fetch("https://plataformasgps.cl/api/clients", {
-      method: "POST",
-      mode: 'cors',
-      cache: "no-store",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newClient),
-    });
-  
-    if (!res.ok) {
-      throw new Error("problema");
+  const formatDataUser = () => {
+    if (dataUser.email === "") {
+      return {
+        name: dataUser.name,
+        fone: dataUser.fone,
+      };
+    } else {
+      return {
+        name: dataUser.name,
+        fone: (dataUser.fone),
+        email: dataUser.email,
+      };
     }
-  
-    const responseData = await res.json();
-    const { id } = responseData.data;
-  
-  
-    return `${id}`;
   };
-  
-  
+  const newClient = {
+    data: {
+      ...formatDataUser(),
+    },
+  };
+  console.log(JSON.stringify(newClient));
+  const res = await fetch("https://plataformasgps.cl/api/clients", {
+    method: "POST",
+    mode: "cors",
+    cache: "no-store",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newClient),
+  });
+
+  if (!res.ok) {
+    Swal.fire({
+      title: "Error al agregar cliente",
+      icon: "error",
+      confirmButtonText: "Aceptar",
+    });
+  } else {
+    Swal.fire({
+      title: "Cliente agregado correctamente",
+      icon: "success",
+      confirmButtonText: "Aceptar",
+    });
+  }
+
+  const responseData = await res.json();
+  const { id } = responseData.data;
+
+  return `${id}`;
+};

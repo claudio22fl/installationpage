@@ -6,10 +6,12 @@ import { Container } from "@mui/material";
 import { useDataForm } from "../Installation/hooks/useDaraForm";
 import CollapsibleTable from "../Installation/component/Table";
 import '../Installation/styles.css'
+import { useFetchClient } from "../services/Client";
 export default function Page() {
   const { instalattion, fetchInstalattion } = useFetchInstallation();
   const { formData, setFormData } = useDataForm();
-
+  const { client } = useFetchClient();
+  
   return (
     <main className={styles.main}>
       <Container fixed maxWidth="xl">
@@ -20,7 +22,7 @@ export default function Page() {
         </div>
        
           <div className="text-center flex flex-col rounded-xl">
-            <CollapsibleTable instalattion={instalattion} />
+            <CollapsibleTable instalattion={instalattion} client = {client} />
           </div>
        
       </Container>

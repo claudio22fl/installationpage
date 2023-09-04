@@ -39,3 +39,10 @@ export function formatearFecha(fecha: string) {
   return fechaFormateada;
 }
 
+export const formatFechaInput = (date: string) => {
+  const partes = date.split('-'); // Dividir la fecha en partes: [año, mes, día]
+  // Reorganizar las partes en el formato deseado: "dd-mm-yyyy"
+  const fechaFormateada = `${partes[0]}/${partes[1]}/${partes[2]}`;
+  
+  return fechaFormateada;
+}

@@ -48,25 +48,24 @@ const FormData = ({
   } = useDataDevice();
 
   useEffect(() => {
-    if(formData.client !== 0){
-      console.log(formData.client);
-      console.log(client);
       client?.forEach((element) => {
-         if(element.label === formData.client){
-           serDataUser({
-             ...dataUser,
-             name: element.label,
-             email: element.email,
-             fone: element.fone,
-           });
-
+        console.log(element);
+        console.log(formData.client);
+         if(element.label === formData.client || element.id === Number(formData.client)){
            setFormData({
               ...formData,
-              ["client"]: element.id,
+              ["client"]: `${element.id}`,
            })
+
+           serDataUser({
+            ...dataUser,
+            ["name"]: element.label,
+            ["fone"]: element.fone,
+            ["email"]: element.email,
+         })
          }
       })
-    }
+      console.log(formData)
  }, [client]);
 
   useEffect(() => {
@@ -114,6 +113,7 @@ const FormData = ({
   };
 
   const saveUser = async () => {
+    console.log(dataUser);
     const res = await postClient(dataUser);
 
     setFormData({

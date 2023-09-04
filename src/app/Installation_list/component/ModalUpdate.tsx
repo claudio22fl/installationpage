@@ -20,12 +20,15 @@ import FormData from "@/app/component/formComponent/Formulariosims";
 import { inputstabla } from "@/app/hooks/mockInputs";
 import '../../Installation/styles.css'
 import { useEffect } from "react";
-import { formatDateInputs, formatHourInputs } from "@/utils/const";
+import { formatDateInputs, formatFechaInput, formatHourInputs, formatearFecha } from "@/utils/const";
+import { useFetchClient } from "@/app/services/Client";
+import { client } from "@/types/Client";
 
 interface IModalUpdate {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   row: fotmatAttributes;
+  client: client[];
 }
 
 const Accordion = styled((props: AccordionProps) => (
@@ -64,18 +67,20 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: "1px solid rgba(0, 0, 0, .125)",
 }));
 
-export default function ModalUpdate({ open, setOpen, row }: IModalUpdate) {
+export default function ModalUpdate({ open, setOpen, row, client }: IModalUpdate) {
   const [age, setAge] = React.useState<number | string>("");
   const [expanded, setExpanded] = React.useState<string | false>("panel1");
   const { instalattion, fetchInstalattion } = useFetchInstallation();
   const { formData, setFormData } = useDataForm();
   
-  console.log(row.installer)
+
+  const idCliente = client?.find((element) => element.label === row.client)?.id;
+  console.log(idCliente);
 
     useEffect(() => {
     setFormData({
         ["id"]: row.id,
-        ["fecha"]: formatDateInputs(row.fecha),
+        ["fecha"]: formatearFecha(row.fecha),
         ["hours"]: (row.hours),
         ["installer"]: row.installer,
         ["installationtype"]: row.installationtype,
@@ -84,12 +89,13 @@ export default function ModalUpdate({ open, setOpen, row }: IModalUpdate) {
         ["patent"]: row.patent,
         ["note"]: row.note,
         ["product"]: row.product,
-        ["client"]: row.client,
+        ["client"]: `${idCliente}`,
         ["company"]: row.company,
         ["commune"]: row.commune,
       
     });
    }, [row])  
+
 
   const handleChangeAcordeon =
     (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {

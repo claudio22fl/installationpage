@@ -13,7 +13,7 @@ export interface client {
     id?: number
     email?: string
     name?: string
-    fone?: number
+    fone?: number | string
     label?: string
 }
   

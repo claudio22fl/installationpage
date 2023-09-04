@@ -19,19 +19,13 @@ export const useDataDevice = () => {
     
         if (typeof parsedValue === "object") {
           // value es un JSON
-          for (const key in parsedValue) {
-            if (Object.hasOwnProperty.call(parsedValue, key)) {
-              const element = parsedValue[key];
-    
-              if (key === name) {
-                const upperCaseValue = element.toUpperCase();
-                setDevices({
-                  ...devices,
-                  [key]: upperCaseValue,
-                });
-              }
-            }
-          }
+          setDevices({
+            ...devices,
+            ["label"]: parsedValue.label,
+            ["cost"]: `${parsedValue.cost}`,
+            ["value"]: `${parsedValue.value}`,
+          });
+
         } else {
           const upperCaseValue = value.toUpperCase();
           setDevices({

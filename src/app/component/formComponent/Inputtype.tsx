@@ -114,6 +114,7 @@ export default function Inputtype({
               tipo != "money" &&  tipo != "time" &&(
                 <TextField
                   id={name}
+                  autoComplete="false"
                   type={tipo}
                   name={name}
                   variant="outlined"

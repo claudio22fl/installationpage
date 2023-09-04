@@ -16,42 +16,27 @@ interface IState {
 export const useDataClient = ({setFormData, formData}: IState) => {
   const [dataUser, serDataUser] = useState<client>({
     name: "",
-    email: "",
     fone: 0,
+    email: "",
   });
   const { client } = useFetchClient();
 
   const autocompleteChagueUser = (name: string, value: any) => {
   
-    let parsedValue;
-    parsedValue = value;
+  
 
-    if (typeof parsedValue === "object") {
+    if (typeof value === "object") {
       // value es un JSON
-      for (const key in parsedValue) {
-        const element = parsedValue[key];
+      const name = value.nameUser;
+      const email = value.email;
+  
+      serDataUser({
+        ...dataUser,
+        ["name"]: name,
+        ["fone"]: value.fone,
+        ["email"]: email,
+      });
 
-
-        if (key === "nameUser") {
-          const upperCaseValue = element.toUpperCase();
-          serDataUser({
-            ...dataUser,
-            name: upperCaseValue,
-          });
-        }
-        if (key === "email") {
-          serDataUser({
-            ...dataUser,
-            email: element,
-          });
-        }
-        if (key === "id") {
-          setFormData({
-            ...formData,
-            ["client"]: `${element}`,
-          });
-        }
-      }
     } else {
       const upperCaseValue = value.toUpperCase();
       serDataUser({
