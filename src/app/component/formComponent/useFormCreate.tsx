@@ -1,55 +1,61 @@
-
 import { postClient } from "@/app/services/Client";
+import { formatPatente } from "@/utils/const";
 import Swal from "sweetalert2";
 
 export const useFormCreate = ({ refreshTable, formData, setFormData }: any) => {
-
   const handleChange = (e: { target: { name: string; value: string } }) => {
     const date1 = new Date(formData[`fechainicio`]);
     date1.setMonth(date1.getMonth() + Number(e.target.value));
+    const cleanedPatente = e.target.value.replace(/[^0-9a-zA-Z]/g, "");
 
-    if(e.target.name === 'hours'){
+    if (e.target.name === "patent") {
+      const patente = formatPatente(e.target.value);
+      const upperCaseValue = patente.toUpperCase();
+      setFormData({
+        ...formData,
+        [e.target.name]: upperCaseValue,
+      });
+    } else if (e.target.name === "hours") {
       setFormData({
         ...formData,
         [e.target.name]: `${e.target.value}:00`,
       });
-    }else{
+    } else {
       const upperCaseValue = e.target.value.toUpperCase();
       setFormData({
         ...formData,
         [e.target.name]: upperCaseValue,
       });
     }
-
-     
-    
   };
 
-  const autocompleteChague = ( name : string, value: string) => {
-
+  const autocompleteChague = (name: string, value: string) => {
     setFormData({
       ...formData,
       [name]: value,
     });
-  }
+  };
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    
+
     const formatData = {
-      "data": {
-             ...formData
-         }
-    }
+      data: {
+        ...formData,
+      },
+    };
     console.log(JSON.stringify(formatData));
     try {
-      const response = await fetch("https://plataformasgps.cl/api/instalattions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formatData),
-      });
+      const response = await fetch(
+        "https://plataformasgps.cl/api/instalattions",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formatData),
+        }
+      );
 
       if (response.ok) {
         const Toast = Swal.mixin({
@@ -76,25 +82,28 @@ export const useFormCreate = ({ refreshTable, formData, setFormData }: any) => {
     } catch (error) {
       console.log("Error:", error);
     }
-   };
+  };
 
-   const handleEdit = async (e: { preventDefault: () => void }) => {
+  const handleEdit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    
+
     const formatData = {
-      "data": {
-             ...formData
-         }
-    }
+      data: {
+        ...formData,
+      },
+    };
     console.log(JSON.stringify(formatData));
     try {
-      const response = await fetch(`https://plataformasgps.cl/api/instalattions/${formData.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formatData),
-      });
+      const response = await fetch(
+        `https://plataformasgps.cl/api/instalattions/${formData.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formatData),
+        }
+      );
 
       if (response.ok) {
         const Toast = Swal.mixin({
@@ -120,8 +129,14 @@ export const useFormCreate = ({ refreshTable, formData, setFormData }: any) => {
       }
     } catch (error) {
       console.log("Error:", error);
-    } 
-   }
+    }
+  };
 
-  return { formData, handleChange, handleSubmit,autocompleteChague, handleEdit};
+  return {
+    formData,
+    handleChange,
+    handleSubmit,
+    autocompleteChague,
+    handleEdit,
+  };
 };

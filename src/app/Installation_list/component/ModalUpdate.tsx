@@ -29,6 +29,7 @@ interface IModalUpdate {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   row: fotmatAttributes;
   client: client[];
+  fetchInstalattion: () => void;
 }
 
 const Accordion = styled((props: AccordionProps) => (
@@ -67,10 +68,9 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: "1px solid rgba(0, 0, 0, .125)",
 }));
 
-export default function ModalUpdate({ open, setOpen, row, client }: IModalUpdate) {
+export default function ModalUpdate({ open, setOpen, row, client, fetchInstalattion }: IModalUpdate) {
   const [age, setAge] = React.useState<number | string>("");
   const [expanded, setExpanded] = React.useState<string | false>("panel1");
-  const { instalattion, fetchInstalattion } = useFetchInstallation();
   const { formData, setFormData } = useDataForm();
   
 

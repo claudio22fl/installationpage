@@ -16,12 +16,13 @@ import { TableFooter, TablePagination } from "@mui/material";
 interface Props {
   instalattion: fotmatAttributes[];
   client: client[];
+  fetchInstalattion: () => void;
 }
 
-export default function CollapsibleTable({ instalattion, client }: Props) {
+export default function CollapsibleTable({ instalattion, client,fetchInstalattion}: Props) {
 
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
 
   const emptyRows =
@@ -64,20 +65,20 @@ const handleChangeRowsPerPage = (
         </TableHead>
         <TableBody>
           {Pagination.map((row) => (
-            <Row key={row.id} row={row} client={client} />
+            <Row key={row.id} row={row} client={client} fetchInstalattion= {fetchInstalattion} />
           ))}
         </TableBody>
         <TableFooter>
           <TableRow>
             <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-              colSpan={3}
+              rowsPerPageOptions={[10, 20, 100, { label: 'All', value: -1 }]}
+              colSpan={12}
               count={instalattion.length}
               rowsPerPage={rowsPerPage}
               page={page}
               SelectProps={{
                 inputProps: {
-                  'aria-label': 'rows per page',
+                  'aria-label': 'Instalaciones por pagina',
                 },
                 native: true,
               }}

@@ -45,8 +45,8 @@ export const useFetchInstallation = () => {
   return { instalattion, fetchInstalattion };
 };
 
-export const useDeleteInstallation = () => {
-  const { fetchInstalattion: refreshTable } = useFetchInstallation();
+
+export const useDeleteInstallation = (fetchInstalattion: () => void) => {
 
   const deleteInstallation = async (id: number | undefined) => {
 
@@ -67,7 +67,7 @@ export const useDeleteInstallation = () => {
           });
           if (res.ok) {
             Swal.fire("Ingresado correctamente", "", "success");
-            refreshTable();
+            fetchInstalattion();
           } else {
             Swal.fire("Error al ingresar", "", "error");
           }
@@ -76,7 +76,7 @@ export const useDeleteInstallation = () => {
         }
       }
     });
-    refreshTable();
+    fetchInstalattion();
   };
 
   return { deleteInstallation };

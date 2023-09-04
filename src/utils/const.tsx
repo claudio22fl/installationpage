@@ -46,3 +46,18 @@ export const formatFechaInput = (date: string) => {
   
   return fechaFormateada;
 }
+
+export function formatPatente(patente: string) {
+  // Eliminar caracteres no alfanuméricos y espacios
+  const cleanedPatente = patente.replace(/[^0-9a-zA-Z]/g, "");
+
+  if (cleanedPatente.length >= 6) {
+    // Patente de automóvil (xx*xx*42)
+    const formattedPatente = cleanedPatente.replace(/(.{2})(.{2})/, "$1*$2*");
+    return formattedPatente;
+  } else {
+    // Patente de motocicleta (ccc*42)
+    const formattedPatente = cleanedPatente.replace(/(.{3})/, "$1*");
+    return formattedPatente;
+  }
+}

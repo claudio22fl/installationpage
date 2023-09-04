@@ -9,7 +9,7 @@ import { Autocomplete, Grid, Input, TextField } from "@mui/material";
 import { useFetchCompani } from "@/app/services/Compani";
 import AutocompleteInput from "./inputs/AutoCompleteInput";
 import { useFetchDevice } from "@/app/services/Device";
-import { formatClp } from "@/utils/const";
+import { formatClp, formatPatente } from "@/utils/const";
 
 export default function Inputtype({
   inputs,
@@ -20,20 +20,6 @@ export default function Inputtype({
   fin,
   autocoleteData,
 }: IInputsTypeProps) {
-  function formatPatente(patente: string) {
-    // Eliminar caracteres no alfanuméricos y espacios
-    const cleanedPatente = patente.replace(/[^0-9a-zA-Z]/g, "");
-
-    if (cleanedPatente.length >= 6) {
-      // Patente de automóvil (xx*xx*42)
-      const formattedPatente = cleanedPatente.replace(/(.{2})(.{2})/, "$1*$2*");
-      return formattedPatente;
-    } else {
-      // Patente de motocicleta (ccc*42)
-      const formattedPatente = cleanedPatente.replace(/(.{3})/, "$1*");
-      return formattedPatente;
-    }
-  }
 
   return (
     <>

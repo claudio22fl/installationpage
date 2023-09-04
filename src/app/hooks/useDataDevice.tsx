@@ -16,7 +16,6 @@ export const useDataDevice = () => {
      
         let parsedValue;
         parsedValue = value;
-    
         if (typeof parsedValue === "object") {
           // value es un JSON
           setDevices({
@@ -39,6 +38,7 @@ export const useDataDevice = () => {
         target: { name: string; value: string };
       }) => {
         const upperCaseValue = e.target.value.toUpperCase();
+
         setDevices({
           ...devices,
           [e.target.name]: upperCaseValue,

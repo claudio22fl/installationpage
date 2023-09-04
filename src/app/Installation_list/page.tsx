@@ -22,7 +22,7 @@ export default function Page() {
         </div>
        
           <div className="text-center flex flex-col rounded-xl" style={{fontSize: 1}}>
-            <CollapsibleTable instalattion={instalattion} client = {client} />
+            <CollapsibleTable instalattion={instalattion} client = {client} fetchInstalattion={fetchInstalattion} />
           </div>
        
       </Container>

@@ -23,9 +23,10 @@ import { client } from "@/types/Client";
 interface Props {
   row: fotmatAttributes;
   client: client[];
+  fetchInstalattion: () => void;
 }
 
-export function Row({ row, client }: Props) {
+export function Row({ row, client, fetchInstalattion }: Props) {
   const [open, setOpen] = React.useState(false);
   const [openUpdate, setOpenUpdate] = React.useState(false);
   const lines = row.note.split("\n");
@@ -42,7 +43,7 @@ export function Row({ row, client }: Props) {
     setOpenUpdate(true);
   };
 
-  const { deleteInstallation } = useDeleteInstallation();
+  const { deleteInstallation } = useDeleteInstallation(fetchInstalattion);
 
   return (
     <React.Fragment>
@@ -160,6 +161,7 @@ export function Row({ row, client }: Props) {
         setOpen={setOpenUpdate}
         row={row}
         client={client}
+        fetchInstalattion={fetchInstalattion}
       />
     </React.Fragment>
   );
