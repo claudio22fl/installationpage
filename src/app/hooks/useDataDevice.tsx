@@ -46,6 +46,28 @@ export const useDataDevice = () => {
       };
       
 
-      return {devices, device,setDevices, autocompleteChagueDevice, handleChancheDevice}
+      const autocompleteChagueChip = (name: string, value: any) => {
+     
+        let parsedValue;
+        parsedValue = value;
+    
+        if (typeof parsedValue === "object") {
+          // value es un JSON
+         setDevices({
+            ...devices,
+            ["tipochip"]: parsedValue.label,
+          });
+    
+        } else {
+          const upperCaseValue = value.toUpperCase();
+          setDevices({
+            ...devices,
+            ["tipochip"]: parsedValue.label,
+          });
+        }
+      };
+    
+
+      return {devices, device,setDevices, autocompleteChagueDevice, handleChancheDevice,autocompleteChagueChip}
     
 }

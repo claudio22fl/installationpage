@@ -30,8 +30,6 @@ const FormData = ({
   const { compani } = useFetchCompani();
   const { chips } = useFetchChips();
 
-  
-
   const {
     dataUser,
     serDataUser,
@@ -39,12 +37,14 @@ const FormData = ({
     client,
     handleChancheUser,
   } = useDataClient({ setFormData, formData });
+
   const {
     devices,
     device,
     setDevices,
     autocompleteChagueDevice,
     handleChancheDevice,
+    autocompleteChagueChip,
   } = useDataDevice();
 
   useEffect(() => {
@@ -120,6 +120,8 @@ const FormData = ({
   };
 
 
+
+ 
   return (
    <form onSubmit={ isUpdate ? handleEdit : handleSubmit} className="form">
       <h2 style={{ color: "black" }}>Datos Instalacion</h2>
@@ -183,7 +185,7 @@ const FormData = ({
           inputs={inputstabla}
           handleChange={handleChancheDevice}
           formData={devices}
-          autocompleteChague={autocompleteChagueDevice}
+          autocompleteChague={autocompleteChagueChip}
           inicio={17}
           fin={20}
           autocoleteData={chips}

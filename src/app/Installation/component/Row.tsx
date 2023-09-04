@@ -144,9 +144,9 @@ export function Row({ row, client }: Props) {
 
                   <TableRow>
                     <TableCell rowSpan={1} />
-                    <TableCell colSpan={4}>Total</TableCell>
+                    <TableCell colSpan={4}><strong>Total</strong></TableCell>
                     <TableCell align="right">
-                      $ {formatClp(`${total}`)}
+                      <strong>$ {formatClp(`${total}`)}</strong>
                     </TableCell>
                   </TableRow>
                 </TableBody>

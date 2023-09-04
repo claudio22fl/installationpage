@@ -23,8 +23,6 @@ export const useDataClient = ({setFormData, formData}: IState) => {
 
   const autocompleteChagueUser = (name: string, value: any) => {
   
-  
-
     if (typeof value === "object") {
       // value es un JSON
       const name = value.nameUser;

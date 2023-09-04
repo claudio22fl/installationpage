@@ -10,6 +10,7 @@ import Paper from "@mui/material/Paper";
 import { fotmatAttributes } from "@/types/Installation";
 import { client } from "@/types/Client";
 import { Row } from "./Row";
+import { TableFooter, TablePagination } from "@mui/material";
 
 
 interface Props {
@@ -18,6 +19,29 @@ interface Props {
 }
 
 export default function CollapsibleTable({ instalattion, client }: Props) {
+
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+
+  const emptyRows =
+  page > 0 ? Math.max(0, (1 + page) * rowsPerPage - instalattion.length) : 0;
+
+const handleChangePage = (
+  event: React.MouseEvent<HTMLButtonElement> | null,
+  newPage: number,
+) => {
+  setPage(newPage);
+};
+
+const handleChangeRowsPerPage = (
+  event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+) => {
+  setRowsPerPage(parseInt(event.target.value, 10));
+  setPage(0);
+};
+
+ const Pagination = instalattion.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
   return (
     <>
     <TableContainer sx={{ minWidth: '99%' }} component={Paper}>
@@ -39,10 +63,30 @@ export default function CollapsibleTable({ instalattion, client }: Props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {instalattion.map((row) => (
+          {Pagination.map((row) => (
             <Row key={row.id} row={row} client={client} />
           ))}
         </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+              colSpan={3}
+              count={instalattion.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              SelectProps={{
+                inputProps: {
+                  'aria-label': 'rows per page',
+                },
+                native: true,
+              }}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              
+            />
+          </TableRow>
+        </TableFooter>
       </Table>
     </TableContainer>
    
