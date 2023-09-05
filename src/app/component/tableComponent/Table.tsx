@@ -10,6 +10,7 @@ import { Irows } from '@/types/Types';
 import { formatClp } from '@/utils/const';
 import { Button } from '@mui/material';
 import DeleteIcon from "@mui/icons-material/Delete";
+import { fotmatAttributes } from '@/types/Installation';
 
 
 export function createData(
@@ -41,11 +42,13 @@ function subtotal(items: Row[]) {
 interface Pods {
     rows: Irows[]
     setRows: React.Dispatch<React.SetStateAction<Irows[]>>
+    setFormData: React.Dispatch<React.SetStateAction<any>>
+    formData: fotmatAttributes
 }
 
 
 
-export default function SpanningTable({rows,setRows}: Pods) {
+export default function SpanningTable({rows,setRows, setFormData, formData}: Pods) {
     const invoiceSubtotal = subtotal(rows as any);
 
 
@@ -55,6 +58,10 @@ export default function SpanningTable({rows,setRows}: Pods) {
         newRows.splice(index, 1);
         console.log(newRows);
         setRows(newRows);
+        setFormData({
+          ...formData,
+          ["product"]: newRows,
+        });
     }
 
   return (

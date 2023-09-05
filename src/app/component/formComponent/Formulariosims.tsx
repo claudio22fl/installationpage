@@ -80,6 +80,9 @@ const FormData = ({
 
   const [rows, setRows] = useState<Irows[]>(formData.product);
 
+
+
+
   const saveData = () => {
     const cost = devices.cost.replace(/[,\.]/g, "");
     const value = devices.value.replace(/[,\.]/g, "");
@@ -197,7 +200,7 @@ const FormData = ({
         </Button>
       </div>
 
-      <DenseTable rows={rows} setRows={setRows}/>
+      <DenseTable rows={rows} setRows={setRows} setFormData={setFormData} formData ={formData} />
 
       <div className=" mt-10 text-right">
         <Button endIcon={<SendIcon />} type="submit" variant="contained">
