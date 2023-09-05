@@ -73,13 +73,21 @@ export const postClient = async (dataUser: client) => {
 
   if (!res.ok) {
     const responseData = await res.json();
-     const { message } = responseData.data;
-     console.log(message);
+     const { message } = responseData.error;
+   console.log(message);
+   if(message === "This attribute must be unique"){
     Swal.fire({
-      title: `Error al agregar cliente ${message}`,
+      title: `El usuario ${dataUser.name} ya existe`,
       icon: "error",
       confirmButtonText: "Aceptar",
     });
+   }else{
+    Swal.fire({
+      title: `Error al agregar cliente`,
+      icon: "error",
+      confirmButtonText: "Aceptar",
+    });
+   }
   } else {
     Swal.fire({
       title: "Cliente agregado correctamente",

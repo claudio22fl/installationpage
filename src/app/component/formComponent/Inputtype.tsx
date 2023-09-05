@@ -20,7 +20,6 @@ export default function Inputtype({
   fin,
   autocoleteData,
 }: IInputsTypeProps) {
-
   return (
     <>
       {inputs
@@ -75,29 +74,30 @@ export default function Inputtype({
             )}
 
             {tipo === "time" && (
-                <TextField
-                  id={name}
-                  InputLabelProps={{ shrink: true }}
-                  type={tipo}
-                  name={name}
-                  variant="outlined"
-                  onChange={handleChange}
-                  value={
-                    label === "Patente:"
-                      ? formatPatente(formData[name])
-                      : formData[name]
-                  }
-                  sx={{ m: 1, width: "30ch" }}
-                  required={false}
-                  label={label}
-                  multiline={shrink}
-                  rows={4}
-                />
-              )}
+              <TextField
+                id={name}
+                InputLabelProps={{ shrink: true }}
+                type={tipo}
+                name={name}
+                variant="outlined"
+                onChange={handleChange}
+                value={
+                  label === "Patente:"
+                    ? formatPatente(formData[name])
+                    : formData[name]
+                }
+                sx={{ m: 1, width: "30ch" }}
+                required={false}
+                label={label}
+                multiline={shrink}
+                rows={4}
+              />
+            )}
 
             {tipo != "autocomplete" &&
               tipo != "selected" &&
-              tipo != "money" &&  tipo != "time" &&(
+              tipo != "money" &&
+              tipo != "time" && (
                 <TextField
                   id={name}
                   autoComplete="false"

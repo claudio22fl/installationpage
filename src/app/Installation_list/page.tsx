@@ -4,9 +4,10 @@ import styles from "../page.module.css";
 import { useFetchInstallation } from "../services/Intallation";
 import { Container } from "@mui/material";
 import { useDataForm } from "../Installation/hooks/useDaraForm";
-import CollapsibleTable from "../Installation/component/Table";
+
 import '../Installation/styles.css'
 import { useFetchClient } from "../services/Client";
+import CollapsibleTable from "./component/Table";
 
 export default function Page() {
   const { instalattion, fetchInstalattion } = useFetchInstallation();

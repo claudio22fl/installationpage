@@ -11,9 +11,6 @@ import { formatClp } from '@/utils/const';
 import { Button } from '@mui/material';
 import DeleteIcon from "@mui/icons-material/Delete";
 
-function ccyFormat(num: number) {
-  return `$ ${num}`;
-}
 
 export function createData(
     name: string,
