@@ -8,7 +8,7 @@ export const useFetchInstallation = () => {
 
   const fetchInstalattion = async () => {
     const res = await fetch(
-      "https://plataformasgps.cl/api/instalattions?populate=*&sort[0]=fecha:desc&sort[1]=hours:desc",
+      "https://plataformasgps.cl/api/instalattions?populate=*&sort[0]=fecha:DESC&sort[1]=hours:DESC&pagination[pageSize]=100000000000000",
       {
         cache: "no-store",
         mode: "cors",
