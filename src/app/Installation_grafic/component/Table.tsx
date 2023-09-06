@@ -74,7 +74,7 @@ export default function CollapsibleTable({
       newPagination.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
     );
 
-  }, [page, rowsPerPage, empresas, Pagination]);
+  }, [page, rowsPerPage, empresas, newPagination]);
 
   useEffect(() => {
     setNewPagination([...empresas]);
