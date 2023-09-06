@@ -14,7 +14,7 @@ export const useFetchCompani = () => {
           'Content-Type': 'application/json'
         },
       }
-    );
+    ); 
 
     if (!res.ok) {
       throw new Error("problema");
