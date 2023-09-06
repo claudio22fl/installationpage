@@ -1,8 +1,8 @@
-import { IRootEmpresa, empresa } from "@/types/Compani";
+import { IRootChips, chips } from "@/types/Chips";
 import { useEffect, useState } from "react";
 
 export const useFetchChips= () => {
-  const [chips, setChips] = useState<empresa[]>([]);
+  const [chips, setChips] = useState<chips[]>([]);
 
   const fetchChips = async () => {
     const res = await fetch(
@@ -20,9 +20,9 @@ export const useFetchChips= () => {
       throw new Error("problema");
     }
 
-    const { data }: IRootEmpresa = await res.json();
+    const { data }: IRootChips = await res.json();
 
-    const formatData: empresa[] = data.map((data) => ({
+    const formatData: chips[] = data.map((data) => ({
       id: data.id,
       label: data.attributes.name
     }));
