@@ -70,7 +70,7 @@ export default function CollapsibleTable({
     setPagination(
       newPagination.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
     );
-  }, [page, rowsPerPage, instalattion]);
+  }, [page, rowsPerPage, instalattion, Pagination]);
 
   useEffect(() => {
     setNewPagination([...instalattion]);
@@ -83,6 +83,7 @@ export default function CollapsibleTable({
     setSearchTerm(value);
     // Filtra los resultados de la búsqueda por varios campos dependiendo de que campo viene en el name
     const newPagination = instalattion.filter((row: any) => {
+      type ISimKey = keyof typeof row;
 
       return row[namae]?.toLowerCase().includes(value.toLowerCase());
     });
@@ -109,9 +110,9 @@ export default function CollapsibleTable({
     setPagination(OrderPagination);
     setNewPagination(OrderPagination);
   };
-console.log(Pagination);
+
   return (
-    
+    <>
       <TableContainer sx={{ minWidth: "99%" }} component={Paper}>
         <Table aria-label="collapsible table">
           <TableHead>
@@ -127,7 +128,6 @@ console.log(Pagination);
               {columns.map((columns, index) => (
                 <TableCell 
                   align="left"
-                  sx={{paddingLeft: 0}}
                   onClick={() =>
                     ordenarIntalacionesAlfabeticamente(columns.data, orderFiels[index], index)
                   }
@@ -197,6 +197,6 @@ console.log(Pagination);
           </TableFooter>
         </Table>
       </TableContainer>
-  
+    </>
   );
 }
