@@ -1,7 +1,8 @@
 import { DataClient, IClient } from "./Client"
 import { DataEmpresa, IEmpresa } from "./Compani"
 import { Instalador } from "./Installer"
-import { Producto } from "./Product"
+import { IRootProducto, Producto } from "./Product"
+
 
 export interface IRootInstallation {
   data: Idata[]

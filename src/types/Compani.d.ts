@@ -16,5 +16,6 @@ export interface IEmpresa {
     published_at?: string
     created_at?: string
     updated_at?: string
+    percentage: number
     }
   

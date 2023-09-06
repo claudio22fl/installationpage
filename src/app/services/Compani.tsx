@@ -24,7 +24,8 @@ export const useFetchCompani = () => {
 
     const formatData: empresa[] = data.map((data) => ({
       id: data.id,
-      label: data.attributes.name
+      label: data.attributes.name,
+      percentage: data.attributes.percentage
     }));
 
     setCompani(formatData);

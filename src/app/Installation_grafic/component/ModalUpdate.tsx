@@ -6,7 +6,6 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { styled } from "@mui/material/styles";
 import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
-import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import { fotmatAttributes } from "@/types/Installation";
 import { useDataForm } from "@/app/Installation/hooks/useDaraForm";
 import FormData from "@/app/component/formComponent/Formulariosims";

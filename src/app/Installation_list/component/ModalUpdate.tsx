@@ -69,6 +69,7 @@ export default function ModalUpdate({
     event: React.SyntheticEvent<unknown>,
     reason?: string
   ) => {
+    fetchInstalattion();
     if (reason !== "backdropClick") {
       setOpen(false);
     }

@@ -19,6 +19,7 @@ import { useDeleteInstallation } from "@/app/services/Intallation";
 import { formatClp } from "@/utils/const";
 import ModalUpdate from "@/app/Installation_list/component/ModalUpdate";
 import { client } from "@/types/Client";
+import { Padding } from "@mui/icons-material";
 
 interface Props {
   row: fotmatAttributes;
@@ -71,7 +72,7 @@ export function Row({ row, client, fetchInstalattion }: Props) {
         <TableCell style={{fontSize: 12}}  align="left">{row.product.length}</TableCell>
         <TableCell width={250} style={{fontSize: 12}}  align="left">
           {lines.map((line, index) => (
-            <p style={{padding: 0, margin: 0}} key={index}>{line}</p>
+            <p style={ line.length === 0 ? {margin: 5, height: 5} : {margin: 0}} key={index}>{line}</p>
           ))}
         </TableCell>
         <TableCell width={50} align="left">

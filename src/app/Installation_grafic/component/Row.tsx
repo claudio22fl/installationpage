@@ -19,32 +19,49 @@ import { useDeleteInstallation } from "@/app/services/Intallation";
 import { formatClp } from "@/utils/const";
 import ModalUpdate from "@/app/Installation_list/component/ModalUpdate";
 import { client } from "@/types/Client";
+import { empresa } from "@/types/Compani";
+import { useEffect } from "react";
+import { Row } from "@/app/Installation_list/component/Row";
 
 interface Props {
-  row: fotmatAttributes;
+  row: empresa;
   client: client[];
   fetchInstalattion: () => void;
+  instalattion: fotmatAttributes[];
 }
 
-export function Row({ row, client, fetchInstalattion }: Props) {
+export function Row2({ row, client, fetchInstalattion, instalattion }: Props) {
   const [open, setOpen] = React.useState(false);
   const [openUpdate, setOpenUpdate] = React.useState(false);
-  const lines = row.note.split("\n");
+  const [data, setData] = React.useState<fotmatAttributes[]>([]);
 
   let total = 0;
 
-  row.product?.map((historyRow, index) => {
-    if (historyRow != undefined) {
-      total = total + (historyRow.value ?? 0);
-    }
-  });
+  useEffect(() => {
+    //filtra instalattion por row.label
+    const filter = instalattion.filter((item) => item.company === row.label);
+    setData(filter);
+    
+    
+    
+  }, [row, instalattion, open]);
+
+  const sumaCostos = data.reduce((total, item) => {
+    const costoTotal = item.product.reduce((subtotal, producto) => subtotal + (producto?.cost === undefined? 0 : producto.cost), 0);
+    return total + costoTotal;
+  }, 0);
+
+  const sumaValue = data.reduce((total, item) => {
+    const costoTotal = item.product.reduce((subtotal, producto) => subtotal + (producto?.value === undefined? 0 : producto.value), 0);
+    return total + costoTotal;
+  }, 0);
 
   const handleClickOpen = () => {
     setOpenUpdate(true);
   };
 
   const { deleteInstallation } = useDeleteInstallation(fetchInstalattion);
-
+ console.log(row)
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -57,10 +74,24 @@ export function Row({ row, client, fetchInstalattion }: Props) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell align="left"><strong>{row.company}</strong></TableCell>
-        <TableCell style={{fontSize: 12}} align="left">{row.hours}</TableCell>
-        <TableCell style={{fontSize: 12}} align="left">{row.client}</TableCell>
-        <TableCell style={{fontSize: 12}}  align="left">{row.product.length}</TableCell>
+        <TableCell align="left">
+          <strong>{row.label}</strong>
+        </TableCell>
+        <TableCell style={{ fontSize: 12 }} align="left">
+          {data.length}
+        </TableCell>
+        <TableCell style={{ fontSize: 12 }} align="left">
+          $ {formatClp(`${sumaValue}`)}
+        </TableCell>
+        <TableCell style={{ fontSize: 12 }} align="left">
+        $ {formatClp(`${sumaCostos}`)}
+        </TableCell>
+        <TableCell style={{ fontSize: 12 }} align="left">
+        $ {formatClp(`${((sumaValue *  (row.percentage/100 === 0 ? 1 : row.percentage/100 )) - sumaCostos)}`)}
+        </TableCell>
+        <TableCell style={{ fontSize: 12 }} align="left">
+        $ {formatClp(`${((sumaValue *  (row.percentage/100 === 0 ? 1 : row.percentage/100 )) + sumaCostos)}`)}
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={12}>
@@ -71,60 +102,33 @@ export function Row({ row, client, fetchInstalattion }: Props) {
               </Typography>
               <Table size="small" aria-label="purchases">
                 <TableHead>
-                  <TableRow>
-                    <TableCell>Dispositivo</TableCell>
-                    <TableCell>Imei GPS</TableCell>
-                    <TableCell align="right">Tipo Chip</TableCell>
-                    <TableCell align="right">Numero Chip</TableCell>
-                    <TableCell align="right">Costo ($)</TableCell>
-                    <TableCell align="right">Valor ($)</TableCell>
-                  </TableRow>
+                  
                 </TableHead>
                 <TableBody>
-                  {row.product?.map(
-                    (historyRow, index) =>
-                      historyRow != undefined && (
-                        <TableRow key={index}>
-                          <TableCell component="th" scope="row">
-                            {historyRow.name}
-                          </TableCell>
-                          <TableCell>{historyRow.imeigps}</TableCell>
-                          <TableCell align="right">
-                            {historyRow.tipochip}
-                          </TableCell>
-                          <TableCell align="right">
-                            {historyRow.numerochip}
-                          </TableCell>
-                          <TableCell align="right">
-                            $ {formatClp(`${historyRow.cost}`)}
-                          </TableCell>
-                          <TableCell align="right">
-                            $ {formatClp(`${historyRow?.value}`)}
-                          </TableCell>
-                        </TableRow>
-                      )
-                  )}
+                  
+                      {data.map((row) => (
+                         <Row
+                            key={row.id}
+                            row={row}
+                            client={client}
+                            fetchInstalattion={fetchInstalattion}
+                          />
+                       ))}
+                    
 
-                  <TableRow>
+                  {/* <TableRow>
                     <TableCell rowSpan={1} />
                     <TableCell colSpan={4}><strong>Total</strong></TableCell>
                     <TableCell align="right">
                       <strong>$ {formatClp(`${total}`)}</strong>
                     </TableCell>
-                  </TableRow>
+                  </TableRow> */}
                 </TableBody>
               </Table>
             </Box>
           </Collapse>
         </TableCell>
       </TableRow>
-      <ModalUpdate
-        open={openUpdate}
-        setOpen={setOpenUpdate}
-        row={row}
-        client={client}
-        fetchInstalattion={fetchInstalattion}
-      />
     </React.Fragment>
   );
 }

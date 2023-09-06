@@ -9,7 +9,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { fotmatAttributes } from "@/types/Installation";
 import { client } from "@/types/Client";
-import { Row } from "./Row";
+import { Row2 } from "./Row";
 import {
   IconButton,
   TableFooter,
@@ -21,23 +21,26 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { columns } from "../const";
+import { empresa } from "@/types/Compani";
 
 interface Props {
-  instalattion: fotmatAttributes[];
+  empresas:  empresa[];
   client: client[];
   fetchInstalattion: () => void;
+  instalattion: fotmatAttributes[];
 }
 
 export default function CollapsibleTable({
-  instalattion,
+  empresas,
   client,
   fetchInstalattion,
+  instalattion,
 }: Props) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [searchTerm, setSearchTerm] = React.useState<string>(""); // Estado para almacenar el término de búsqueda
-  const [Pagination, setPagination] = useState<fotmatAttributes[]>([]);
-  const [newPagination, setNewPagination] = useState<fotmatAttributes[]>([]);
+  const [Pagination, setPagination] = useState<empresa[]>([]);
+  const [newPagination, setNewPagination] = useState<empresa[]>([]);
   const [showFields, setShowFields] = useState<boolean>(false); // Estado para controlar la visibilidad de los campos
   const [orderFiels, setOrderFiels] = useState<boolean[]>([false,false,false,false,false]);
 
@@ -45,8 +48,8 @@ export default function CollapsibleTable({
     // Cambiar el estado de visibilidad del campo en el índice especificado
 
     if (showFields == true) {
-      setNewPagination(instalattion);
-      setPagination(instalattion);
+      setNewPagination(empresas);
+      setPagination(empresas);
     }
 
     setShowFields(!showFields);
@@ -70,11 +73,12 @@ export default function CollapsibleTable({
     setPagination(
       newPagination.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
     );
-  }, [page, rowsPerPage, instalattion]);
+
+  }, [page, rowsPerPage, empresas]);
 
   useEffect(() => {
-    setNewPagination([...instalattion]);
-  }, [instalattion]);
+    setNewPagination([...empresas]);
+  }, [empresas]);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     // Actualiza el estado del término de búsqueda al escribir en el campo de búsqueda
@@ -82,7 +86,7 @@ export default function CollapsibleTable({
     const namae: any = event.target.name;
     setSearchTerm(value);
     // Filtra los resultados de la búsqueda por varios campos dependiendo de que campo viene en el name
-    const newPagination = instalattion.filter((row: any) => {
+    const newPagination = empresas.filter((row: any) => {
       type ISimKey = keyof typeof row;
 
       return row[namae]?.toLowerCase().includes(value.toLowerCase());
@@ -94,7 +98,7 @@ export default function CollapsibleTable({
 
   const ordenarIntalacionesAlfabeticamente = (dato: any, active: boolean, id: number) => {
     // ordenar de la a a la z las companias y si esta de a a la z ordenar de la z a la a
-    const OrderPagination = instalattion.sort((a: any, b: any) => {
+    const OrderPagination = empresas.sort((a: any, b: any) => {
       if (a[dato] < b[dato]) {
         return active ? 1 : -1;
       }
@@ -110,6 +114,7 @@ export default function CollapsibleTable({
     setPagination(OrderPagination);
     setNewPagination(OrderPagination);
   };
+
 
   return (
     <>
@@ -128,6 +133,7 @@ export default function CollapsibleTable({
               {columns.map((columns, index) => (
                 <TableCell 
                   align="left"
+                  sx={{paddingLeft: 0}}
                   onClick={() =>
                     ordenarIntalacionesAlfabeticamente(columns.data, orderFiels[index], index)
                   }
@@ -168,12 +174,13 @@ export default function CollapsibleTable({
           </TableHead>
           <TableBody>
             {Pagination.map((row) => (
-              <Row
-                key={row.id}
-                row={row}
-                client={client}
-                fetchInstalattion={fetchInstalattion}
-              />
+              <Row2
+                 key={row.id}
+                 row={row}
+                 client={client}
+                 fetchInstalattion={fetchInstalattion}
+                 instalattion={instalattion}
+               />
             ))}
           </TableBody>
           <TableFooter>

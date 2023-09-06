@@ -77,7 +77,7 @@ export default function page() {
         </div>
 
         <div className="text-center flex flex-col rounded-xl" style={{fontSize: 1}}>
-        <CollapsibleTable instalattion={instalattion} client = {client} fetchInstalattion={fetchInstalattion} />
+        <CollapsibleTable empresas={empresas} client = {client} fetchInstalattion={fetchInstalattion} instalattion={instalattion} />
           </div>
       </Container>
     </main>
