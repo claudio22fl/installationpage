@@ -87,10 +87,10 @@ export function Row2({ row, client, fetchInstalattion, instalattion }: Props) {
         $ {formatClp(`${sumaCostos}`)}
         </TableCell>
         <TableCell style={{ fontSize: 12 }} align="left">
-        $ {formatClp(`${((sumaValue *  (row.percentage/100 === 0 ? 1 : row.percentage/100 )) - sumaCostos)}`)}
+        $ {formatClp(`${((sumaValue) - sumaCostos)*  (row.percentage/100 === 0 ? 1 : row.percentage/100 )}`)}
         </TableCell>
         <TableCell style={{ fontSize: 12 }} align="left">
-        $ {formatClp(`${((sumaValue *  (row.percentage/100 === 0 ? 1 : row.percentage/100 )) + sumaCostos)}`)}
+        $ {formatClp(`${((sumaValue ) + sumaCostos)*  (row.percentage/100 === 0 ? 1 : row.percentage/100 )}`)}
         </TableCell>
       </TableRow>
       <TableRow>
