@@ -70,7 +70,7 @@ export default function CollapsibleTable({
     setPagination(
       newPagination.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
     );
-  }, [page, rowsPerPage, instalattion, Pagination]);
+  }, [page, rowsPerPage, instalattion, newPagination]);
 
   useEffect(() => {
     setNewPagination([...instalattion]);
