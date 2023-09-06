@@ -38,6 +38,7 @@ export const useFetchInstallation = () => {
     setInstaattion(formatData);
   };
 
+
   useEffect(() => {
     fetchInstalattion();
   },[]);

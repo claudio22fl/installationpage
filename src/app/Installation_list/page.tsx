@@ -4,7 +4,6 @@ import styles from "../page.module.css";
 import { useFetchInstallation } from "../services/Intallation";
 import { Container } from "@mui/material";
 import { useDataForm } from "../Installation/hooks/useDaraForm";
-
 import '../Installation/styles.css'
 import { useFetchClient } from "../services/Client";
 import CollapsibleTable from "./component/Table";
@@ -13,7 +12,7 @@ export default function Page() {
   const { instalattion, fetchInstalattion } = useFetchInstallation();
   const { formData, setFormData } = useDataForm();
   const { client } = useFetchClient();
-  
+   console.log(client)
   return (
     <main>
        <Container maxWidth="xl">

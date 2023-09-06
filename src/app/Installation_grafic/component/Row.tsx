@@ -58,43 +58,9 @@ export function Row({ row, client, fetchInstalattion }: Props) {
           </IconButton>
         </TableCell>
         <TableCell align="left"><strong>{row.company}</strong></TableCell>
-        <TableCell width={130} component="th" scope="row">
-          {row.fecha}
-        </TableCell>
         <TableCell style={{fontSize: 12}} align="left">{row.hours}</TableCell>
         <TableCell style={{fontSize: 12}} align="left">{row.client}</TableCell>
-        <TableCell width={80} style={{fontSize: 12}}  align="left">{row.patent}</TableCell>
-        <TableCell style={{fontSize: 12}}  align="left">{row.vehiclename}</TableCell>
-        <TableCell style={{fontSize: 12}}  align="left">{row.installationtype}</TableCell>
-        <TableCell style={{fontSize: 12}}  align="left">{row.address}</TableCell>
-        <TableCell style={{fontSize: 12}}  align="left">{row.commune}</TableCell>
         <TableCell style={{fontSize: 12}}  align="left">{row.product.length}</TableCell>
-        <TableCell width={250} style={{fontSize: 12}}  align="left">
-          {lines.map((line, index) => (
-            <p style={{padding: 0, margin: 0}} key={index}>{line}</p>
-          ))}
-        </TableCell>
-        <TableCell width={50} align="left">
-          <ButtonGroup
-            disableElevation
-            style={{ alignItems: "center", justifyContent: "center" }}
-            variant="contained"
-            aria-label="Disabled elevation buttons"
-          >
-           
-              <IconButton onClick={handleClickOpen} aria-label="delete" size="small">
-                <EditIcon fontSize="inherit" />
-              </IconButton>
-         
-
-         
-              <IconButton  onClick={() => deleteInstallation(row?.id)} aria-label="delete" size="small">
-                <DeleteIcon color="error" fontSize="inherit" />
-              </IconButton>
-         
-          </ButtonGroup>
-          <Stack spacing={1}></Stack>
-        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={12}>

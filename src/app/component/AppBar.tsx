@@ -17,8 +17,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+import DataUsageIcon from '@mui/icons-material/DataUsage';
 import SaveAsIcon from "@mui/icons-material/SaveAs";
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 
@@ -123,6 +122,12 @@ export default function MiniDrawer({ children }: Props) {
       icon: <FormatListNumberedIcon />,
       onClick: handleDrawerOpen,
       href: "/Installation_list",
+    },
+    {
+      label: "Graficos",
+      icon: <DataUsageIcon />,
+      onClick: handleDrawerOpen,
+      href: "/Installation_grafic",
     },
   ];
 
