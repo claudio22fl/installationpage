@@ -10,7 +10,7 @@ export interface IRootChips{
     }
     
     export interface chips {
-      id: number
+      id?: number
       name?: string
       label?: string
       published_at?: string

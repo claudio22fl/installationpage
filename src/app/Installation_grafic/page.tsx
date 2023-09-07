@@ -41,31 +41,6 @@ export default function page() {
 
     }, [empresas]);
     
-    
-  const seriesA = {
-    data: [2, 3, 1, 4, 5],
-    label: "series A",
-  };
-  const seriesB = {
-    data: [3, 1, 4, 2, 1],
-    label: "series B",
-  };
-  const seriesC = {
-    data: [3, 2, 4, 5, 1],
-    label: "series C",
-  };
-
-  const data = [
-    { value: 5, label: "MUNDIAL" },
-    { value: 10, label: "B" },
-    { value: 15, label: "C" },
-    { value: 20, label: "D" },
-  ];
-
-  const size = {
-    width: 400,
-    height: 200,
-  };
 
   return (
     <main>

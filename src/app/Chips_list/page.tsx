@@ -13,12 +13,14 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { useFetchCompani } from "../services/Compani";
+import CollapsibleTable from "./component/Table";
 
 export default function page() {
   const { instalattion, fetchInstalattion } = useFetchInstallation();
   const { formData, setFormData } = useDataForm();
   const { client } = useFetchClient();
-
+  const { compani, fetchCompani } = useFetchCompani();
 
   function createData(
     name: any,
@@ -52,9 +54,12 @@ export default function page() {
     const filteredDataArray = newDataArray.filter((item) => item !== undefined);
     
      setRows(filteredDataArray);
-    
+    console.log(filteredDataArray)
    
   }, [instalattion]);
+
+
+  
 
   return (
     <main>
@@ -71,36 +76,8 @@ export default function page() {
           className="text-center flex flex-col rounded-xl"
           style={{ fontSize: 1 }}
         >
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Empresa</TableCell>
-                  <TableCell align="right">Fecha</TableCell>
-                  <TableCell align="right">Tupo&nbsp;(sim)</TableCell>
-                  <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                  <TableCell align="right">Protein&nbsp;(g)</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row: any) => (
-                  <TableRow
-                    key={row.name}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      {row.name}
-                    </TableCell>
-                    <TableCell align="right">{row.calories}</TableCell>
-                    <TableCell align="right">{row.fat}</TableCell>
-                    <TableCell align="right">{row.carbs}</TableCell>
-                    <TableCell align="right">{row.protein}</TableCell>
-                    <TableCell align="right">{row.imeigps}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+         <CollapsibleTable empresas={compani} client = {client} fetchInstalattion={fetchInstalattion} instalattion={instalattion} />
+          
         </div>
       </Container>
     </main>
