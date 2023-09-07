@@ -170,8 +170,8 @@ export function Row2({ row, client, fetchInstalattion, instalattion }: Props) {
               <Table size="small" aria-label="purchases">
               <TableHead>
                   <TableRow>
-                    <TableCell>Dispositivo</TableCell>
-                    <TableCell>Imei GPS</TableCell>
+                    <TableCell>Empresa</TableCell>
+                    <TableCell>Fecha Instalacion</TableCell>
                     <TableCell align="right">Tipo Chip</TableCell>
                     <TableCell align="right">Numero Chip</TableCell>
                     <TableCell align="right">Costo ($)</TableCell>
