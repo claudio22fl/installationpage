@@ -20,6 +20,7 @@ import ListItemText from "@mui/material/ListItemText";
 import DataUsageIcon from '@mui/icons-material/DataUsage';
 import SaveAsIcon from "@mui/icons-material/SaveAs";
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
+import SimCardIcon from '@mui/icons-material/SimCard';
 
 const drawerWidth = 240;
 
@@ -128,6 +129,12 @@ export default function MiniDrawer({ children }: Props) {
       icon: <DataUsageIcon />,
       onClick: handleDrawerOpen,
       href: "/Installation_grafic",
+    },
+    {
+      label: "Chips Instalaciones",
+      icon: <SimCardIcon  sx={{color: 'red'}}/>,
+      onClick: handleDrawerOpen,
+      href: "/Chips_list",
     },
   ];
 

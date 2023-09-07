@@ -41,18 +41,38 @@ export function Row2({ row, client, fetchInstalattion, instalattion }: Props) {
     //filtra instalattion por row.label
     const filter = instalattion.filter((item) => item.company === row.label);
     setData(filter);
-    
-    
-    
   }, [row, instalattion, open]);
 
   const sumaCostos = data.reduce((total, item) => {
-    const costoTotal = item.product.reduce((subtotal, producto) => subtotal + (producto?.cost === undefined? 0 : producto.cost), 0);
+    // sumar cost siempre que label no sea chip
+
+    const costoTotal = item.product.reduce(
+      (subtotal, producto) =>
+        subtotal +
+        (producto?.cost === undefined
+          ? 0 
+           : producto?.name === undefined
+           ? 0
+           : producto?.name.includes("M2M")
+           ? 0
+           : producto.cost),
+      0
+    );
     return total + costoTotal;
   }, 0);
 
   const sumaValue = data.reduce((total, item) => {
-    const costoTotal = item.product.reduce((subtotal, producto) => subtotal + (producto?.value === undefined? 0 : producto.value), 0);
+    const costoTotal = item.product.reduce(
+      (subtotal, producto) =>
+        subtotal + (producto?.value === undefined
+           ? 0 
+           : producto?.name === undefined
+           ? 0
+           : producto?.name.includes("M2M")
+           ? 0
+           : producto.value),
+      0
+    );
     return total + costoTotal;
   }, 0);
 
@@ -61,7 +81,7 @@ export function Row2({ row, client, fetchInstalattion, instalattion }: Props) {
   };
 
   const { deleteInstallation } = useDeleteInstallation(fetchInstalattion);
- console.log(row)
+  console.log(row);
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -84,13 +104,25 @@ export function Row2({ row, client, fetchInstalattion, instalattion }: Props) {
           $ {formatClp(`${sumaValue}`)}
         </TableCell>
         <TableCell style={{ fontSize: 12 }} align="left">
-        $ {formatClp(`${sumaCostos}`)}
+          $ {formatClp(`${sumaCostos}`)}
         </TableCell>
         <TableCell style={{ fontSize: 12 }} align="left">
-        $ {formatClp(`${((sumaValue) - sumaCostos)*  (row.percentage/100 === 0 ? 1 : row.percentage/100 )}`)}
+          ${" "}
+          {formatClp(
+            `${
+              (sumaValue - sumaCostos) *
+              (row.percentage / 100 === 0 ? 1 : row.percentage / 100)
+            }`
+          )}
         </TableCell>
         <TableCell style={{ fontSize: 12 }} align="left">
-        $ {formatClp(`${((sumaValue ) + sumaCostos)*  (row.percentage/100 === 0 ? 1 : row.percentage/100 )}`)}
+          ${" "}
+          {formatClp(
+            `${
+              (sumaValue + sumaCostos) *
+              (row.percentage / 100 === 0 ? 1 : row.percentage / 100)
+            }`
+          )}
         </TableCell>
       </TableRow>
       <TableRow>
@@ -101,20 +133,16 @@ export function Row2({ row, client, fetchInstalattion, instalattion }: Props) {
                 Dispositivos
               </Typography>
               <Table size="small" aria-label="purchases">
-                <TableHead>
-                  
-                </TableHead>
+                <TableHead></TableHead>
                 <TableBody>
-                  
-                      {data.map((row) => (
-                         <Row
-                            key={row.id}
-                            row={row}
-                            client={client}
-                            fetchInstalattion={fetchInstalattion}
-                          />
-                       ))}
-                    
+                  {data.map((row) => (
+                    <Row
+                      key={row.id}
+                      row={row}
+                      client={client}
+                      fetchInstalattion={fetchInstalattion}
+                    />
+                  ))}
 
                   {/* <TableRow>
                     <TableCell rowSpan={1} />
