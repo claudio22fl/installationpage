@@ -40,3 +40,13 @@ export type IndexPageProps = {
   inputstabla: IImpuchip[];
   isUpdate: boolean;
 };
+
+export type formatRow = {
+  compani: string,
+  fehchaInsta: string,
+  id: number | undefined,
+  producto: string | undefined,
+  cost: number | undefined,
+  value: number | undefined,
+  imeiGps: string | undefined
+}

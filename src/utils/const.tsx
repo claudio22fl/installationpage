@@ -61,3 +61,43 @@ export function formatPatente(patente: string) {
     return formattedPatente;
   }
 }
+
+
+export function sumarMesesALaFecha(fecha: string, texto: string) {
+  // Parsea la fecha en formato "DD-MM-YYYY" a objetos Date
+  const partesFecha = fecha.split('-');
+  const dia = parseInt(partesFecha[0], 10);
+  const mes = parseInt(partesFecha[1], 10);
+  const año = parseInt(partesFecha[2], 10);
+  const fechaObj = new Date(año, mes - 1, dia); // Resta 1 al mes porque los meses van de 0 a 11 en JavaScript
+
+  // Extrae la cantidad de meses del texto
+  let meses;
+  const partes = texto.split(/\D+/)
+  if (partes.length < 3) {
+     meses = Number(texto);
+  }else{
+     meses = Number(partes[2]);
+  }
+  // Suma los meses a la fecha
+  fechaObj.setMonth(fechaObj.getMonth() + meses);
+
+  // Formatea la nueva fecha en formato "DD-MM-YYYY"
+  const nuevoDia = fechaObj.getDate().toString().padStart(2, '0');
+  const nuevoMes = (fechaObj.getMonth() + 1).toString().padStart(2, '0'); // Suma 1 al mes porque los meses se muestran de 1 a 12
+  const nuevoAño = fechaObj.getFullYear();
+
+  return `${nuevoDia}-${nuevoMes}-${nuevoAño}`;
+}
+
+export const style = {
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
