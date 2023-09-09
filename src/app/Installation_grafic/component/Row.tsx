@@ -81,7 +81,7 @@ export function Row2({ row, client, fetchInstalattion, instalattion }: Props) {
   };
 
   const { deleteInstallation } = useDeleteInstallation(fetchInstalattion);
-  console.log(row);
+  console.log(data);
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -99,6 +99,9 @@ export function Row2({ row, client, fetchInstalattion, instalattion }: Props) {
         </TableCell>
         <TableCell style={{ fontSize: 12 }} align="left">
           {data.length}
+        </TableCell>
+        <TableCell style={{ fontSize: 12 }} align="left">
+          {data.map((item) => item.product.find((item) => item.name === "revicion")).length}
         </TableCell>
         <TableCell style={{ fontSize: 12 }} align="left">
           $ {formatClp(`${sumaValue}`)}

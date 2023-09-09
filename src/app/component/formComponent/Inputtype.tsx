@@ -35,6 +35,8 @@ export default function Inputtype({
                 label={label}
               />
             )}
+
+            
             {tipo === "selected" && (
               <FormControl key={id} sx={{ m: 1, width: "30ch" }}>
                 <InputLabel id="demo-simple-select-label">{label}</InputLabel>

@@ -55,7 +55,7 @@ export const inputstabla: IImpuchip[] = [
     tipo: "selected",
     name: "installer",
     label: "Instalador:",
-    valor: ["ISAAC", "JONATHAN"],
+    valor: ["ISAAC", "JONATHAN", "ISAAC,JONATHAN", "JONATHAN,ISAAC"],
     shrink: false,
   },
   {

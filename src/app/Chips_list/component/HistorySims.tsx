@@ -43,16 +43,14 @@ export function HistorySims({
   const [openUpdate, setOpenUpdate] = React.useState(false);
   const { history } = useFetchHistory(row.id as never);
   const [lastHistory, setLastHistory] = React.useState<history>();
-  
+
   //obtener ultimo historial por id
 
   React.useEffect(() => {
-    if(history == undefined) return
+    if (history == undefined) return;
 
-      setLastHistory( history[history.length - 1])
-
-  } , [history])
-
+    setLastHistory(history[history.length - 1]);
+  }, [history]);
 
   return (
     <React.Fragment>
@@ -77,11 +75,13 @@ export function HistorySims({
         </TableCell>
         <TableCell>{row.fehchaInsta}</TableCell>
         <TableCell>
-          {lastHistory == undefined ?
-            row.producto != undefined &&
-            sumarMesesALaFecha(row.fehchaInsta, row.producto)
-            : sumarMesesALaFecha(formatearFecha(lastHistory.renewal) , `${lastHistory.months}`)
-          }
+          {lastHistory == undefined
+            ? row.producto != undefined &&
+              sumarMesesALaFecha(row.fehchaInsta, row.producto)
+            : sumarMesesALaFecha(
+                formatearFecha(lastHistory.renewal),
+                `${lastHistory.months}`
+              )}
         </TableCell>
         <TableCell style={{ fontSize: 12 }}>{row.producto}</TableCell>
         <TableCell style={{ fontSize: 12 }}>{row.id}</TableCell>
@@ -120,14 +120,7 @@ export function HistorySims({
                         </TableRow>
                       )
                   )}
-
-                  {/* <TableRow>
-                    <TableCell rowSpan={1} />
-                    <TableCell colSpan={4}><strong>Total</strong></TableCell>
-                    <TableCell align="right">
-                      <strong>$ {formatClp(`${total}`)}</strong>
-                    </TableCell>
-                  </TableRow> */}
+                 
                 </TableBody>
               </Table>
             </Box>

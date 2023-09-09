@@ -19,6 +19,9 @@ import { client } from "@/types/Client";
 import { empresa } from "@/types/Compani";
 import { useEffect, useState } from "react";
 import { HistorySims } from "./HistorySims";
+import { postHistory, useFetchHistory } from "@/app/services/History";
+import { history } from "@/types/History";
+import ModalUpdate from "./ModalUpdate";
 
 interface Props {
   row: empresa;
@@ -100,6 +103,12 @@ export function Row2({ row, client, fetchInstalattion, instalattion }: Props) {
     }
   });
 
+  const [month, setMonth] = useState<number>(0);
+
+  const handleClickMonth = (event: any) => {
+    setMonth(event.target.value);
+  };
+
   const sumaValue = data.reduce((total, item) => {
     const costoTotal = item.product.reduce(
       (subtotal, producto) =>
@@ -128,6 +137,30 @@ export function Row2({ row, client, fetchInstalattion, instalattion }: Props) {
 
   const habdleUpdate = () => {
     console.log(selectedRows);
+    console.log(month);
+    selectedRows.map((item: any) => {
+
+
+      //obtener ultimo historial por id
+      const { history } = useFetchHistory(item);
+      const [lastHistory, setLastHistory] = React.useState<history>();
+
+      React.useEffect(() => {
+        if (history == undefined) return;
+
+        setLastHistory(history[history.length - 1]);
+      }, [history]);
+
+
+      const data: history = {
+        id: item,
+        idinstalattion: item,
+        months: `${month}`,
+        renewal: `${new Date()}`,
+      };
+
+      postHistory(data);
+    });
 
     //
   };
@@ -206,81 +239,33 @@ export function Row2({ row, client, fetchInstalattion, instalattion }: Props) {
                   {rows?.map(
                     (historyRow: any, index: any) =>
                       historyRow != undefined && (
-                        <HistorySims
-                          row={historyRow}
-                          client={client}
-                          fetchInstalattion={fetchInstalattion}
-                          selectedRows={selectedRows}
-                          handleCheckboxChange={handleCheckboxChange}
-                        />
+                        <>
+                          <HistorySims
+                            row={historyRow}
+                            client={client}
+                            fetchInstalattion={fetchInstalattion}
+                            selectedRows={selectedRows}
+                            handleCheckboxChange={handleCheckboxChange}
+                          />
+                          <ModalUpdate
+                            openModal={openModal}
+                            handleClose={handleClose}
+                            month={month}
+                            handleClickMonth={handleClickMonth}
+                            habdleUpdate={habdleUpdate}
+                          />
+                        </>
                       )
                   )}
 
-                  <TableRow>
-                    <TableCell rowSpan={2} />
-                    <TableCell colSpan={7}>
-                      <strong>Total</strong>
-                    </TableCell>
-                    <TableCell >
-                      <strong>$ {formatClp(`${total}`)}</strong>
-                    </TableCell>
-                  </TableRow>
+                
+                  
                 </TableBody>
               </Table>
             </Box>
           </Collapse>
         </TableCell>
       </TableRow>
-      <Modal
-        aria-labelledby="spring-modal-title"
-        aria-describedby="spring-modal-description"
-        open={openModal}
-        onClose={handleClose}
-        closeAfterTransition
-        slotProps={{
-          backdrop: {
-            TransitionComponent: Fade,
-          },
-        }}
-      >
-        <Fade in={openModal}>
-          <Box sx={style}>
-            <Typography id="spring-modal-title" variant="h6" component="h2">
-              Meses a renovar
-            </Typography>
-            <Typography id="spring-modal-description" sx={{ mt: 2 }}>
-              <TextField
-                id="outlined-number"
-                label="Meses a renovar"
-                type="number"
-                fullWidth
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                variant="outlined"
-              />
-            </Typography>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginTop: "10px",
-              }}
-            >
-              <Button
-                variant="contained"
-                color="success"
-                onClick={habdleUpdate}
-              >
-                Renovar
-              </Button>
-              <Button variant="contained" color="error" onClick={handleClose}>
-                Cancelar
-              </Button>
-            </div>
-          </Box>
-        </Fade>
-      </Modal>
     </React.Fragment>
   );
 }

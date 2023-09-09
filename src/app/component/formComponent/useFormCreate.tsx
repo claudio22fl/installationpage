@@ -1,14 +1,36 @@
 import { postClient } from "@/app/services/Client";
 import { formatPatente } from "@/utils/const";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 export const useFormCreate = ({ refreshTable, formData, setFormData }: any) => {
+  const [personName, setPersonName] = useState<string[]>([]);
+
+
   const handleChange = (e: { target: { name: string; value: string } }) => {
     const date1 = new Date(formData[`fechainicio`]);
     date1.setMonth(date1.getMonth() + Number(e.target.value));
-    const cleanedPatente = e.target.value.replace(/[^0-9a-zA-Z]/g, "");
 
-    if (e.target.name === "patent") {
+    console.log(e.target.name);
+    console.log(e.target.value);
+    if (e.target.name === "installer") {
+      const upperCaseValue = e.target.value.toUpperCase();
+      let installer = formData['installer'];
+
+if (!installer.includes(upperCaseValue)) {
+  installer += (installer.length > 0 ? ',' : '') + upperCaseValue;
+} else {
+  // Si upperCaseValue ya está en installer, quitarlo
+  installer = installer.split(',').filter((item: any) => item !== upperCaseValue).join(',');
+}
+
+      console.log(installer);
+      setFormData({
+        ...formData,
+        [e.target.name]: installer, 
+      });
+
+    } else if (e.target.name === "patent") {
       const patente = formatPatente(e.target.value);
       const upperCaseValue = patente.toUpperCase();
       setFormData({
@@ -45,6 +67,7 @@ export const useFormCreate = ({ refreshTable, formData, setFormData }: any) => {
       },
     };
     console.log(JSON.stringify(formatData));
+
     try {
       const response = await fetch(
         "https://plataformasgps.cl/api/instalattions",
@@ -86,6 +109,12 @@ export const useFormCreate = ({ refreshTable, formData, setFormData }: any) => {
 
   const handleEdit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
+
+
+    setFormData({
+      ...formData,
+      ["installer"]: formData.installer.split(","),
+    });
 
     const formatData = {
       data: {

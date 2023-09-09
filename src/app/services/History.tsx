@@ -38,28 +38,18 @@ export const useFetchHistory = (id : number) => {
   return { history, fetchHistory };
 };
 
-// export const postHistory = async (dataUser: history) => {
-//   const formatDataUser = () => {
-//     if (dataUser.email === "" || dataUser.email === null) {
-//       return {
-//         name: dataUser.name,
-//         fone: dataUser.fone,
-//       };
-//     } else {
-//       return {
-//         name: dataUser.name,
-//         fone: (dataUser.fone),
-//         email: dataUser.email,
-//       };
-//     }
-//   };
-//   const newHistory = {
-//     data: {
-//       ...formatDataUser(),
-//     },
-//   };
+export const postHistory = async (dataUser: history) => {
+  
+  const newHistory = {
+    data: {
+      ...dataUser,
+    },
+  };
+
+  console.log(newHistory)
+
 //   console.log(JSON.stringify(newHistory));
-//   const res = await fetch("https://plataformasgps.cl/api/clients", {
+//   const res = await fetch("https://plataformasgps.cl/api/histories", {
 //     method: "POST",
 //     mode: "cors",
 //     cache: "no-store",
@@ -73,19 +63,13 @@ export const useFetchHistory = (id : number) => {
 //     const responseData = await res.json();
 //      const { message } = responseData.error;
 //    console.log(message);
-//    if(message === "This attribute must be unique"){
-//     Swal.fire({
-//       title: `El usuario ${dataUser.name} ya existe`,
-//       icon: "error",
-//       confirmButtonText: "Aceptar",
-//     });
-//    }else{
+   
 //     Swal.fire({
 //       title: `Error al agregar cliente`,
 //       icon: "error",
 //       confirmButtonText: "Aceptar",
 //     });
-//    }
+   
 //   } else {
 //     Swal.fire({
 //       title: "Historye agregado correctamente",
@@ -98,4 +82,4 @@ export const useFetchHistory = (id : number) => {
 //   const { id } = responseData.data;
 
 //   return `${id}`;
-// };
+};
