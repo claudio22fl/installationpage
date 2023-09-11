@@ -182,6 +182,8 @@ export default function CollapsibleTable({
                  instalattion={instalattion}
                />
             ))}
+            
+
           </TableBody>
           <TableFooter>
             <TableRow>

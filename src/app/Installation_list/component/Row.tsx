@@ -54,7 +54,7 @@ export function Row({ row, client, fetchInstalattion }: Props) {
             aria-label="expand row"
             size="small"
             onClick={() => setOpen(!open)}
-            color={row.product?.map((item) => item?.name).includes("REVISION") ? "error" : 'default'}
+            color={row.product?.map((item) => item?.name).includes("GARANTIA") ? "error" : 'default'}
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>

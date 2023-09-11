@@ -257,9 +257,6 @@ export function Row2({ row, client, fetchInstalattion, instalattion }: Props) {
                         </>
                       )
                   )}
-
-                
-                  
                 </TableBody>
               </Table>
             </Box>

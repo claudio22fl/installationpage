@@ -6,7 +6,7 @@ export const useFetchCompani = () => {
 
   const fetchCompani = async () => {
     const res = await fetch(
-      "https://plataformasgps.cl/api/companies?populate=*",
+      "https://plataformasgps.cl/api/companies?populate=*&pagination[pageSize]=10000000000000",
       {
         cache: "no-store",
         mode: "cors",

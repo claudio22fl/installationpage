@@ -8,7 +8,7 @@ export const useFetchHistory = (id : number) => {
   const [history, setHistory] = useState<history[]>([]);
   const fetchHistory = async () => {
     const res = await fetch(
-      `https://plataformasgps.cl/api/histories?filters[idinstalattion]=${id}`,
+      `https://plataformasgps.cl/api/histories?filters[idinstalattion]=${id}&pagination[pageSize]=10000000000000`,
       {
         cache: "no-store",
         mode: "cors",

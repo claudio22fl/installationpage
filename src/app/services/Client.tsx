@@ -9,7 +9,7 @@ export const useFetchClient = () => {
 
   const fetchClient = async () => {
     const res = await fetch(
-      "https://plataformasgps.cl/api/clients?populate=*",
+      "https://plataformasgps.cl/api/clients?populate=*&pagination[pageSize]=10000000000000",
       {
         cache: "no-store",
         mode: "cors",
