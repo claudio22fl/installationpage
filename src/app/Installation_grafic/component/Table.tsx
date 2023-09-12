@@ -22,9 +22,11 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { columns } from "../const";
 import { empresa } from "@/types/Compani";
+import { formatClp } from "@/utils/const";
+import { Producto } from "@/types/Product";
 
 interface Props {
-  empresas:  empresa[];
+  empresas: empresa[];
   client: client[];
   fetchInstalattion: () => void;
   instalattion: fotmatAttributes[];
@@ -42,7 +44,13 @@ export default function CollapsibleTable({
   const [Pagination, setPagination] = useState<empresa[]>([]);
   const [newPagination, setNewPagination] = useState<empresa[]>([]);
   const [showFields, setShowFields] = useState<boolean>(false); // Estado para controlar la visibilidad de los campos
-  const [orderFiels, setOrderFiels] = useState<boolean[]>([false,false,false,false,false]);
+  const [orderFiels, setOrderFiels] = useState<boolean[]>([
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
 
   const handleToggleField = () => {
     // Cambiar el estado de visibilidad del campo en el índice especificado
@@ -73,7 +81,6 @@ export default function CollapsibleTable({
     setPagination(
       newPagination.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
     );
-
   }, [page, rowsPerPage, empresas, newPagination]);
 
   useEffect(() => {
@@ -96,7 +103,11 @@ export default function CollapsibleTable({
     setNewPagination(newPagination);
   };
 
-  const ordenarIntalacionesAlfabeticamente = (dato: any, active: boolean, id: number) => {
+  const ordenarIntalacionesAlfabeticamente = (
+    dato: any,
+    active: boolean,
+    id: number
+  ) => {
     // ordenar de la a a la z las companias y si esta de a a la z ordenar de la z a la a
     const OrderPagination = empresas.sort((a: any, b: any) => {
       if (a[dato] < b[dato]) {
@@ -115,6 +126,55 @@ export default function CollapsibleTable({
     setNewPagination(OrderPagination);
   };
 
+  const bruto = instalattion.reduce((accumulator, item) => {
+    const m2mProducts = item.product.filter((product) =>
+      product.name?.includes("")
+    );
+
+    const m2mCost = m2mProducts.reduce((productAccumulator, product) => {
+      return productAccumulator + (product.value || 0);
+    }, 0);
+
+    return accumulator + m2mCost;
+  }, 0);
+
+  const cost = instalattion.reduce((accumulator, item) => {
+    const m2mProducts = item.product.filter((product) =>
+      product.name?.includes("")
+    );
+
+    const m2mCost = m2mProducts.reduce((productAccumulator, product) => {
+      return productAccumulator + (product.cost || 0);
+    }, 0);
+
+    return accumulator + m2mCost;
+  }, 0);
+
+ 
+  function calcularValorConDescuento(producto: Producto, porcentaje: number) {
+    const valorDescontado = producto.value - producto.cost; // Restar el costo al valor
+    return valorDescontado - (valorDescontado * porcentaje / 100); // Aplicar el porcentaje de descuento
+  }
+  
+  // Calcular el total de los productos con descuento
+  const totalConDescuento = instalattion.reduce((total, instalacion) => {
+    // Suma el valor de los productos en esta instalación con el descuento aplicado
+    const valorInstalacion = instalacion.product.reduce((subtotal, producto) => {
+      const empresa = empresas.find(e => e.label === instalacion.company);
+      if (empresa !== undefined) {
+        // Calcular el valor del producto restando el costo y luego aplicar el descuento de la empresa
+        const valorConDescuento = calcularValorConDescuento(producto, empresa.percentage);
+        return subtotal + valorConDescuento;
+      } else {
+        // Si no se encuentra la empresa, usar el valor sin descuento
+        return subtotal + producto.value;
+      }
+    }, 0);
+  
+    return total + valorInstalacion;
+  }, 0);
+  
+  console.log(`Total con descuento: ${totalConDescuento}`);
 
   return (
     <>
@@ -131,11 +191,15 @@ export default function CollapsibleTable({
                 </IconButton>
               </TableCell>
               {columns.map((columns, index) => (
-                <TableCell 
+                <TableCell
                   align="left"
-                  sx={{paddingLeft: 0}}
+                  sx={{ paddingLeft: 0 }}
                   onClick={() =>
-                    ordenarIntalacionesAlfabeticamente(columns.data, orderFiels[index], index)
+                    ordenarIntalacionesAlfabeticamente(
+                      columns.data,
+                      orderFiels[index],
+                      index
+                    )
                   }
                   style={{ cursor: "pointer" }}
                   key={index}
@@ -160,14 +224,16 @@ export default function CollapsibleTable({
 
                     {columns.label}
                   </div>
-                  {showFields && columns.label != "Acciones" && columns.label != "DI" &&  (
-                    <TextField
-                      label={columns.label}
-                      variant="standard"
-                      name={columns.data}
-                      onChange={handleSearch}
-                    />
-                  )}
+                  {showFields &&
+                    columns.label != "Acciones" &&
+                    columns.label != "DI" && (
+                      <TextField
+                        label={columns.label}
+                        variant="standard"
+                        name={columns.data}
+                        onChange={handleSearch}
+                      />
+                    )}
                 </TableCell>
               ))}
             </TableRow>
@@ -175,15 +241,37 @@ export default function CollapsibleTable({
           <TableBody>
             {Pagination.map((row) => (
               <Row2
-                 key={row.id}
-                 row={row}
-                 client={client}
-                 fetchInstalattion={fetchInstalattion}
-                 instalattion={instalattion}
-               />
+                key={row.id}
+                row={row}
+                client={client}
+                fetchInstalattion={fetchInstalattion}
+                instalattion={instalattion}
+              />
             ))}
-            
-
+            <TableRow>
+              <TableCell rowSpan={2} />
+              <TableCell colSpan={0}>
+                <strong>Total</strong>
+              </TableCell>
+              <TableCell>
+                <strong>{instalattion.length}</strong>
+              </TableCell>
+              <TableCell>
+                <strong>{50}</strong>
+              </TableCell>
+              <TableCell>
+                <strong>$ {formatClp(`${bruto}`)}</strong>
+              </TableCell>
+              <TableCell>
+                <strong>$ {formatClp(`${cost}`)}</strong>
+              </TableCell>
+              <TableCell>
+                <strong>$ {formatClp(`${totalConDescuento}`)}</strong>
+              </TableCell>
+              <TableCell>
+              <strong>$ {formatClp(`${totalConDescuento +cost}`)}</strong>
+              </TableCell>
+            </TableRow>
           </TableBody>
           <TableFooter>
             <TableRow>

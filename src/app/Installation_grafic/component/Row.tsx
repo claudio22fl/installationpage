@@ -45,17 +45,14 @@ export function Row2({ row, client, fetchInstalattion, instalattion }: Props) {
 
   const sumaCostos = data.reduce((total, item) => {
     // sumar cost siempre que label no sea chip
-
     const costoTotal = item.product.reduce(
       (subtotal, producto) =>
         subtotal +
         (producto?.cost === undefined
-          ? 0 
-           : producto?.name === undefined
-           ? 0
-           : producto?.name.includes("M2M")
-           ? 0
-           : producto.cost),
+          ? 0
+          : producto?.name === undefined
+          ? 0
+          : producto.cost),
       0
     );
     return total + costoTotal;
@@ -64,13 +61,12 @@ export function Row2({ row, client, fetchInstalattion, instalattion }: Props) {
   const sumaValue = data.reduce((total, item) => {
     const costoTotal = item.product.reduce(
       (subtotal, producto) =>
-        subtotal + (producto?.value === undefined
-           ? 0 
-           : producto?.name === undefined
-           ? 0
-           : producto?.name.includes("M2M")
-           ? 0
-           : producto.value),
+        subtotal +
+        (producto?.value === undefined
+          ? 0
+          : producto?.name === undefined
+          ? 0
+          : producto.value),
       0
     );
     return total + costoTotal;
@@ -81,7 +77,16 @@ export function Row2({ row, client, fetchInstalattion, instalattion }: Props) {
   };
 
   const { deleteInstallation } = useDeleteInstallation(fetchInstalattion);
-  console.log(data);
+
+  function calcularTotal(sumaValue: number, sumaCostos: number, row: empresa) {
+    const porcentaje = row.percentage === 0 ? 1 : row.percentage / 100;
+    const resultado = (sumaValue - sumaCostos) * porcentaje;
+    return resultado;
+  }
+
+  // Luego, puedes usar esta función para calcular el total en tu código:
+  const totalNeto = calcularTotal(sumaValue, sumaCostos, row);
+
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -101,7 +106,11 @@ export function Row2({ row, client, fetchInstalattion, instalattion }: Props) {
           {data.length}
         </TableCell>
         <TableCell style={{ fontSize: 12 }} align="left">
-          {data.map((item) => item.product.find((item) => item.name === "revicion")).length}
+          {
+            data.map((item) =>
+              item.product.find((item) => item.name === "revicion")
+            ).length
+          }
         </TableCell>
         <TableCell style={{ fontSize: 12 }} align="left">
           $ {formatClp(`${sumaValue}`)}
@@ -111,21 +120,11 @@ export function Row2({ row, client, fetchInstalattion, instalattion }: Props) {
         </TableCell>
         <TableCell style={{ fontSize: 12 }} align="left">
           ${" "}
-          {formatClp(
-            `${
-              (sumaValue - sumaCostos) *
-              (row.percentage / 100 === 0 ? 1 : row.percentage / 100)
-            }`
-          )}
+          {formatClp(`${totalNeto}`)}
         </TableCell>
         <TableCell style={{ fontSize: 12 }} align="left">
           ${" "}
-          {formatClp(
-            `${
-              (sumaValue + sumaCostos) *
-              (row.percentage / 100 === 0 ? 1 : row.percentage / 100)
-            }`
-          )}
+          {formatClp(`${totalNeto + sumaCostos}`)}
         </TableCell>
       </TableRow>
       <TableRow>

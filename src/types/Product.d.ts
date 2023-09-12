@@ -14,8 +14,8 @@ export interface IProducto {
 
 export interface Producto {
     name?: string
-    value?: number
-    cost?: number
+    value: number
+    cost: number
     label?: string
     imeigps?: string,
     tipochip?: string,
