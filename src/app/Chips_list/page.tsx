@@ -15,12 +15,14 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useFetchCompani } from "../services/Compani";
 import CollapsibleTable from "./component/Table";
+import { useFetchHistoryAll } from "../services/History";
 
 export default function page() {
   const { instalattion, fetchInstalattion } = useFetchInstallation();
   const { formData, setFormData } = useDataForm();
   const { client } = useFetchClient();
   const { compani, fetchCompani } = useFetchCompani();
+  const { history } = useFetchHistoryAll();
 
   function createData(
     name: any,
@@ -76,7 +78,10 @@ export default function page() {
           className="text-center flex flex-col rounded-xl"
           style={{ fontSize: 1 }}
         >
-         <CollapsibleTable empresas={compani} client = {client} fetchInstalattion={fetchInstalattion} instalattion={instalattion} />
+      
+  <CollapsibleTable empresas={compani} client = {client} fetchInstalattion={fetchInstalattion} instalattion={instalattion} history={history} />
+        
+       
           
         </div>
       </Container>

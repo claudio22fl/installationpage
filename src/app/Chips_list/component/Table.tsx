@@ -23,12 +23,14 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { columns } from "../const";
 import { empresa } from "@/types/Compani";
 import { formatClp } from "@/utils/const";
+import { history } from "@/types/History";
 
 interface Props {
   empresas: empresa[];
   client: client[];
   fetchInstalattion: () => void;
   instalattion: fotmatAttributes[];
+  history: history[];
 }
 
 export default function CollapsibleTable({
@@ -36,6 +38,7 @@ export default function CollapsibleTable({
   client,
   fetchInstalattion,
   instalattion,
+  history,
 }: Props) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -221,6 +224,7 @@ export default function CollapsibleTable({
                 client={client}
                 fetchInstalattion={fetchInstalattion}
                 instalattion={instalattion}
+                history= {history}
               />
             ))}
             <TableRow>

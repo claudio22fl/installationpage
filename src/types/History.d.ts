@@ -10,7 +10,7 @@ export interface IHistory {
   }
   
 export interface history {
-    id: number
+    id?: number
     idinstalattion?: number
     renewal: string
     months?: string

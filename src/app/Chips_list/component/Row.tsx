@@ -14,7 +14,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { fotmatAttributes } from "@/types/Installation";
 import { Button, Checkbox, Fade, Modal, TextField } from "@mui/material";
 import { useDeleteInstallation } from "@/app/services/Intallation";
-import { formatClp, style, sumarMesesALaFecha } from "@/utils/const";
+import { formatClp, formatearFecha, style, sumarMesesALaFecha } from "@/utils/const";
 import { client } from "@/types/Client";
 import { empresa } from "@/types/Compani";
 import { useEffect, useState } from "react";
@@ -28,9 +28,16 @@ interface Props {
   client: client[];
   fetchInstalattion: () => void;
   instalattion: fotmatAttributes[];
+  history: history[];
 }
 
-export function Row2({ row, client, fetchInstalattion, instalattion }: Props) {
+export function Row2({
+  row,
+  client,
+  fetchInstalattion,
+  instalattion,
+  history,
+}: Props) {
   const [open, setOpen] = React.useState(false);
   const [openUpdate, setOpenUpdate] = React.useState(false);
   const [data, setData] = React.useState<fotmatAttributes[]>([]);
@@ -134,35 +141,53 @@ export function Row2({ row, client, fetchInstalattion, instalattion }: Props) {
   const [openModal, setOpenModal] = React.useState(false);
   const handleOpen = () => setOpenModal(true);
   const handleClose = () => setOpenModal(false);
+   
 
-  const habdleUpdate = () => {
-    console.log(selectedRows);
-    console.log(month);
-    selectedRows.map((item: any) => {
+  const habdleUpdate = async (history: history[]) => {
+    const newHistory = history;
+    for (const item of selectedRows) {
+      const filter = rows.filter((row: history) => row.id === item);
 
+      console.log(history);
 
-      //obtener ultimo historial por id
-      const { history } = useFetchHistory(item);
-      const [lastHistory, setLastHistory] = React.useState<history>();
+      const ultimoHistorial = newHistory.reduce((lastHistory :any, currentHistory) => {
+        if (currentHistory.idinstalattion === filter[0].id) {
+          if (!lastHistory || (currentHistory.id ? currentHistory.id : 0) > (lastHistory.id ? lastHistory.id : 0)) {
+            return currentHistory;
+          }
+        }
+        return lastHistory;
+      }, undefined);
 
-      React.useEffect(() => {
-        if (history == undefined) return;
+      console.log(ultimoHistorial);
 
-        setLastHistory(history[history.length - 1]);
-      }, [history]);
+      if (ultimoHistorial == undefined) {
+        const data: history = {
+          months: String(month),
+          renewal: sumarMesesALaFecha(
+            filter[0].fehchaInsta,
+            filter[0].producto
+          ),
+          idinstalattion: filter[0].id,
+        };
+        console.log('1');
+         postHistory(data);
+      } else {
+        const data: history = {
+          months: String(month),
+          renewal: sumarMesesALaFecha(
+            formatearFecha(ultimoHistorial.renewal),
+            String(ultimoHistorial.months)
+          ),
+          idinstalattion: filter[0].id,
+        };
+        console.log(data);
+         postHistory(data);
+      }
+    
 
-
-      const data: history = {
-        id: item,
-        idinstalattion: item,
-        months: `${month}`,
-        renewal: `${new Date()}`,
-      };
-
-      postHistory(data);
-    });
-
-    //
+      //postHistory(data);
+    }
   };
 
   const handleCheckboxChange = (index: never) => {
@@ -228,7 +253,8 @@ export function Row2({ row, client, fetchInstalattion, instalattion }: Props) {
                     </TableCell>
                     <TableCell>Empresa</TableCell>
                     <TableCell>Fecha Instalacion</TableCell>
-                    <TableCell>Fecha Vencimiento</TableCell>
+                    <TableCell>Fecha p Vencimiento</TableCell>
+                    <TableCell>Fecha u Vencimiento</TableCell>
                     <TableCell>Tipo Chip</TableCell>
                     <TableCell>Numero Chip</TableCell>
                     <TableCell>Costo ($)</TableCell>
@@ -253,6 +279,7 @@ export function Row2({ row, client, fetchInstalattion, instalattion }: Props) {
                             month={month}
                             handleClickMonth={handleClickMonth}
                             habdleUpdate={habdleUpdate}
+                            history={history}
                           />
                         </>
                       )

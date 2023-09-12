@@ -75,6 +75,11 @@ export function HistorySims({
         </TableCell>
         <TableCell>{row.fehchaInsta}</TableCell>
         <TableCell>
+          {row.producto != undefined &&
+              sumarMesesALaFecha(row.fehchaInsta, row.producto)
+            }
+        </TableCell>
+        <TableCell>
           {lastHistory == undefined
             ? row.producto != undefined &&
               sumarMesesALaFecha(row.fehchaInsta, row.producto)

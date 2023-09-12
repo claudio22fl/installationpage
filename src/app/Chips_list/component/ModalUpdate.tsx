@@ -1,16 +1,18 @@
 import { style } from '@/utils/const'
 import { Box, Button, Fade, Modal, TextField, Typography } from '@mui/material'
 import React from 'react'
+import {history} from '@/types/History'
 
 interface Props {
     openModal: boolean;
     handleClose: () => void;
     month: number;
     handleClickMonth: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    habdleUpdate: () => void;
+    habdleUpdate:  (history: history[]) => Promise<void>;
+    history: history[];
 }
 
-export default function ModalUpdate({openModal, handleClose, month, handleClickMonth, habdleUpdate}: Props) {
+export default function ModalUpdate({openModal, handleClose, month, handleClickMonth, habdleUpdate, history}: Props) {
   return (
     <Modal
     aria-labelledby="spring-modal-title"
@@ -53,7 +55,7 @@ export default function ModalUpdate({openModal, handleClose, month, handleClickM
           <Button
             variant="contained"
             color="success"
-            onClick={habdleUpdate}
+            onClick={() => habdleUpdate(history)}
           >
             Renovar
           </Button>
