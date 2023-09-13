@@ -20,6 +20,8 @@ import { formatClp } from "@/utils/const";
 import ModalUpdate from "@/app/Installation_list/component/ModalUpdate";
 import { client } from "@/types/Client";
 import { Padding } from "@mui/icons-material";
+import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
+import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
 
 interface Props {
   row: fotmatAttributes;
@@ -56,7 +58,16 @@ export function Row({ row, client, fetchInstalattion }: Props) {
             onClick={() => setOpen(!open)}
             color={row.product?.map((item) => item?.name).includes("GARANTIA") ? "error" : 'default'}
           >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+           {row.product.length > 1 && row.product?.map((item) => item?.name).includes("GARANTIA") ? (
+             open ? <KeyboardDoubleArrowUpIcon /> : <KeyboardDoubleArrowDownIcon />
+           ) : (
+             open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />
+           )
+           }
+
+          
+                
+           
           </IconButton>
         </TableCell>
         <TableCell align="left"><strong>{row.company}</strong></TableCell>
