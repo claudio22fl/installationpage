@@ -39,19 +39,15 @@ export const useFetchInstallation = () => {
     setInstaattion(formatData);
   };
 
-
   useEffect(() => {
     fetchInstalattion();
-  },[]);
+  }, []);
 
   return { instalattion, fetchInstalattion };
 };
 
-
 export const useDeleteInstallation = (fetchInstalattion: () => void) => {
-
   const deleteInstallation = async (id: number | undefined) => {
-
     Swal.fire({
       title: "Esta seguro?",
       text: "",
@@ -64,9 +60,12 @@ export const useDeleteInstallation = (fetchInstalattion: () => void) => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const res = await fetch(`https://plataformasgps.cl/api/instalattions/${id}`, {
-            method: "DELETE",
-          });
+          const res = await fetch(
+            `https://plataformasgps.cl/api/instalattions/${id}`,
+            {
+              method: "DELETE",
+            }
+          );
           if (res.ok) {
             Swal.fire("Ingresado correctamente", "", "success");
             fetchInstalattion();
@@ -82,31 +81,73 @@ export const useDeleteInstallation = (fetchInstalattion: () => void) => {
   };
 
   return { deleteInstallation };
-}
+};
 
-const useUpdateInstallation = () => {
-  const { fetchInstalattion: refreshTable } = useFetchInstallation();
+export const useUpdateInstallation = (fetchInstalattion: () => void) => {
+  const updateInstallation = async (id: number | undefined, data: string) => {
+    type state = "PENDIENTE" | "TRANSFERENCIA" | "EFECTIVO";
 
-  const updateInstallation = async (id: number | undefined, data: IRootInstallation) => {
-    try {
-      const res = await fetch(`https://plataformasgps.cl/api/instalattions/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      if (res.ok) {
-        Swal.fire("Actualizado correctamente", "", "success");
-        refreshTable();
-      } else {
-        Swal.fire("Error al actualizar", "", "error");
-      }
-    } catch (error) {
-      console.log("Error:", error);
+    if (data === "PENDIENTE") {
+      data = "TRANSFERENCIA";
+    } else if (data === "TRANSFERENCIA") {
+      data = "EFECTIVO";
+    } else if (data === "EFECTIVO") {
+      data = "PENDIENTE";
+    } else {
+      data = "PENDIENTE";
     }
-    refreshTable();
+
+    const inputOptions = new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
+          PENDIENTE: "Pendiente",
+          TRASFERENCIA: "Transferencia",
+          EFECTIVO: "Efectivo",
+        });
+      }, 1000);
+    });
+
+    const { value: color } = await Swal.fire({
+      title: "Tipos de pago",
+      input: "radio",
+      inputOptions: inputOptions,
+      inputValidator: (value) => {
+        if (!value) {
+          return "Seleccione algun metodo";
+        }
+      },
+    });
+
+    if (color) {
+      const formatData = {
+        data: {
+          state: color,
+        },
+      };
+      try {
+        const res = await fetch(
+          `https://plataformasgps.cl/api/instalattions/${id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formatData),
+          }
+        );
+        if (res.ok) {
+          Swal.fire("Actualizado correctamente", "", "success");
+          fetchInstalattion();
+        } else {
+          Swal.fire("Error al actualizar", "", "error");
+        }
+      } catch (error) {
+        console.log("Error:", error);
+      }
+    }
+
+    fetchInstalattion();
   };
 
   return { updateInstallation };
-}
+};

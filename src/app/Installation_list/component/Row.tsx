@@ -15,13 +15,13 @@ import { fotmatAttributes } from "@/types/Installation";
 import { Button, ButtonGroup, Stack, Tooltip } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { useDeleteInstallation } from "@/app/services/Intallation";
+import { useDeleteInstallation, useUpdateInstallation } from "@/app/services/Intallation";
 import { formatClp } from "@/utils/const";
 import ModalUpdate from "@/app/Installation_list/component/ModalUpdate";
 import { client } from "@/types/Client";
-import { Padding } from "@mui/icons-material";
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
+import PaymentIcon from '@mui/icons-material/Payment';
 
 interface Props {
   row: fotmatAttributes;
@@ -47,6 +47,7 @@ export function Row({ row, client, fetchInstalattion }: Props) {
   };
 
   const { deleteInstallation } = useDeleteInstallation(fetchInstalattion);
+ const { updateInstallation } = useUpdateInstallation(fetchInstalattion);
 
   return (
     <React.Fragment>
@@ -103,6 +104,11 @@ export function Row({ row, client, fetchInstalattion }: Props) {
               <Tooltip title="Eliminar">
               <IconButton  onClick={() => deleteInstallation(row?.id)} aria-label="delete" size="small">
                 <DeleteIcon color="error" fontSize="inherit" />
+              </IconButton>
+              </Tooltip>
+              <Tooltip title="Actualizar Pago">
+              <IconButton  onClick={() => updateInstallation(row?.id, row.state)} aria-label="delete" size="small">
+                <PaymentIcon fontSize="inherit" />
               </IconButton>
               </Tooltip>
           </ButtonGroup>
