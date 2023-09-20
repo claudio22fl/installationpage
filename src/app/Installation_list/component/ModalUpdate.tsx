@@ -62,6 +62,7 @@ export default function ModalUpdate({
       ["client"]: `${idCliente}`,
       ["company"]: row.company,
       ["commune"]: row.commune,
+      ["state"]: row.state,
     });
   }, [row]);
 

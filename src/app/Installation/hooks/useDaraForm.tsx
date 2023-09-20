@@ -25,6 +25,7 @@ export const useDataForm = () => {
     client: "",
     company: "",
     commune: "",
+    state: "PENDIENTE",
   });
 
   return { formData, setFormData };

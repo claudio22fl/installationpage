@@ -44,4 +44,5 @@ export interface fotmatAttributes {
   client: string
   company: string
   commune: string
+  state: string
 }

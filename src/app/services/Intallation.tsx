@@ -34,6 +34,7 @@ export const useFetchInstallation = () => {
       client: data.attributes.client.data?.attributes.name,
       company: data.attributes.company.data?.attributes.name,
       commune: data.attributes.commune,
+      state: data.attributes.state,
     }));
     setInstaattion(formatData);
   };

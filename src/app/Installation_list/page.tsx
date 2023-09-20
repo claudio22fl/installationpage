@@ -12,7 +12,7 @@ export default function Page() {
   const { instalattion, fetchInstalattion } = useFetchInstallation();
   const { formData, setFormData } = useDataForm();
   const { client } = useFetchClient();
-   console.log(client)
+
   return (
     <main>
        <Container maxWidth="xl">

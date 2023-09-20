@@ -8,6 +8,7 @@ export const columns = [
     { label: "Tipo", data: "installationtype" },
     { label: "Direccion", data: "address" },
     { label: "Comuna", data: "commune" },
+    { label: "Tipo pago", data: "state" },
     { label: "DI", data: "di" },
     { label: "Notas", data: "note" },
     { label: "Acciones", data: "actions" },

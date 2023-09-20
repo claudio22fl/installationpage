@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { fotmatAttributes } from "@/types/Installation";
-import { Button, ButtonGroup, Stack } from "@mui/material";
+import { Button, ButtonGroup, Stack, Tooltip } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { useDeleteInstallation } from "@/app/services/Intallation";
@@ -81,6 +81,7 @@ export function Row({ row, client, fetchInstalattion }: Props) {
         <TableCell style={{fontSize: 12}}  align="left">{row.installationtype}</TableCell>
         <TableCell style={{fontSize: 12}}  align="left">{row.address}</TableCell>
         <TableCell style={{fontSize: 12}}  align="left">{row.commune}</TableCell>
+        <TableCell style={{fontSize: 12}}  align="left">{row.state}</TableCell>
         <TableCell style={{fontSize: 12}}  align="left">{row.product.length}</TableCell>
         <TableCell width={250} style={{fontSize: 12}}  align="left">
           {lines.map((line, index) => (
@@ -94,17 +95,16 @@ export function Row({ row, client, fetchInstalattion }: Props) {
             variant="contained"
             aria-label="Disabled elevation buttons"
           >
-           
+             <Tooltip title="Editar">
               <IconButton onClick={handleClickOpen} aria-label="delete" size="small">
                 <EditIcon fontSize="inherit" />
               </IconButton>
-         
-
-         
+              </Tooltip>
+              <Tooltip title="Eliminar">
               <IconButton  onClick={() => deleteInstallation(row?.id)} aria-label="delete" size="small">
                 <DeleteIcon color="error" fontSize="inherit" />
               </IconButton>
-         
+              </Tooltip>
           </ButtonGroup>
           <Stack spacing={1}></Stack>
         </TableCell>
