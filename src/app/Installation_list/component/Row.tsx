@@ -110,7 +110,7 @@ export function Row({ row, client, fetchInstalattion }: Props) {
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={12}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={13}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
