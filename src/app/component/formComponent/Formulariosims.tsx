@@ -230,6 +230,7 @@ const FormData = ({
           aria-labelledby="demo-row-radio-buttons-group-label"
           name="row-radio-buttons-group"
           defaultValue={'Pendiente'}
+          value={formData.state}
           onChange={handleRadioChange}
         > 
           <FormControlLabel

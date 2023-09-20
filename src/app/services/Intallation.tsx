@@ -85,23 +85,13 @@ export const useDeleteInstallation = (fetchInstalattion: () => void) => {
 
 export const useUpdateInstallation = (fetchInstalattion: () => void) => {
   const updateInstallation = async (id: number | undefined, data: string) => {
-    type state = "PENDIENTE" | "TRANSFERENCIA" | "EFECTIVO";
 
-    if (data === "PENDIENTE") {
-      data = "TRANSFERENCIA";
-    } else if (data === "TRANSFERENCIA") {
-      data = "EFECTIVO";
-    } else if (data === "EFECTIVO") {
-      data = "PENDIENTE";
-    } else {
-      data = "PENDIENTE";
-    }
 
     const inputOptions = new Promise((resolve) => {
       setTimeout(() => {
         resolve({
           PENDIENTE: "Pendiente",
-          TRASFERENCIA: "Transferencia",
+          TRANSFERENCIA: "Transferencia",
           EFECTIVO: "Efectivo",
         });
       }, 1000);
