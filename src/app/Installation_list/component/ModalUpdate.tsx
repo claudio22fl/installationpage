@@ -77,31 +77,27 @@ export default function ModalUpdate({
   };
 
   return (
-    <div>
-      <Dialog
-        disableEscapeKeyDown
-        open={open}
-        maxWidth={"xl"}
-        fullWidth={true}
-        onClose={handleClose}
-      >
-        <DialogTitle>Actualizar instalacion</DialogTitle>
-        <DialogContent>
-          <div className="flex-auto px-4 bg-gray-300 lg:px-10  pt-0 rounded-b-xl">
-            <FormData
-              refreshTable={fetchInstalattion}
-              formData={formData}
-              setFormData={setFormData}
-              inputstabla={inputstabla}
-              isUpdate={true}
-            />
-          </div>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Ok</Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+    <Dialog
+      disableEscapeKeyDown
+      open={open}
+      maxWidth={"xl"}
+      fullWidth={true}
+      onClose={handleClose}
+    >
+      <DialogTitle>Actualizar instalacion</DialogTitle>
+      <DialogContent>
+        <FormData
+          refreshTable={fetchInstalattion}
+          formData={formData}
+          setFormData={setFormData}
+          inputstabla={inputstabla}
+          isUpdate={true}
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={handleClose}>Ok</Button>
+      </DialogActions>
+    </Dialog>
   );
 }

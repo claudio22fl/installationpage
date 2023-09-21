@@ -94,7 +94,7 @@ export const useUpdateInstallation = (fetchInstalattion: () => void) => {
           TRANSFERENCIA: "Transferencia",
           EFECTIVO: "Efectivo",
         });
-      }, 1000);
+      }, 500);
     });
 
     const { value: color } = await Swal.fire({

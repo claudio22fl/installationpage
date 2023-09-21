@@ -118,9 +118,8 @@ export default function CollapsibleTable({
           <TableHead>
             <TableRow>
               <TableCell>
-                <IconButton aria-label="delete" size="small">
+                <IconButton onClick={() => handleToggleField()} aria-label="delete" size="small">
                   <FilterAltIcon
-                    onClick={() => handleToggleField()}
                     fontSize="inherit"
                   />
                 </IconButton>

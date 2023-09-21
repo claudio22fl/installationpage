@@ -176,6 +176,17 @@ export default function CollapsibleTable({
   
   console.log(`Total con descuento: ${totalConDescuento}`);
 
+  const countRevisions = instalattion.reduce((count, item) => {
+    // Verificar si item.product existe y es un arreglo con al menos un elemento
+    if (Array.isArray(item.product) && item.product.length > 0) {
+      // Verificar si algún producto tiene el nombre "revicion" (corregido a "revision")
+      if (item.product.some((product) => product.name === "GARANTIA")) {
+        return count + 1; // Incrementar el contador si se encuentra "revision"
+      }
+    }
+    return count; // Mantener el contador sin cambios si no se encuentra "revision" o no hay productos
+  }, 0);
+
   return (
     <>
       <TableContainer sx={{ minWidth: "99%" }} component={Paper}>
@@ -257,7 +268,7 @@ export default function CollapsibleTable({
                 <strong>{instalattion.length}</strong>
               </TableCell>
               <TableCell>
-                <strong>{50}</strong>
+                <strong>{countRevisions}</strong>
               </TableCell>
               <TableCell>
                 <strong>$ {formatClp(`${bruto}`)}</strong>

@@ -87,6 +87,17 @@ export function Row2({ row, client, fetchInstalattion, instalattion }: Props) {
   // Luego, puedes usar esta función para calcular el total en tu código:
   const totalNeto = calcularTotal(sumaValue, sumaCostos, row);
 
+  const countRevisions = data.reduce((count, item) => {
+    // Verificar si item.product existe y es un arreglo con al menos un elemento
+    if (Array.isArray(item.product) && item.product.length > 0) {
+      // Verificar si algún producto tiene el nombre "revicion" (corregido a "revision")
+      if (item.product.some((product) => product.name === "GARANTIA")) {
+        return count + 1; // Incrementar el contador si se encuentra "revision"
+      }
+    }
+    return count; // Mantener el contador sin cambios si no se encuentra "revision" o no hay productos
+  }, 0);
+
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -107,9 +118,7 @@ export function Row2({ row, client, fetchInstalattion, instalattion }: Props) {
         </TableCell>
         <TableCell style={{ fontSize: 12 }} align="left">
           {
-            data.map((item) =>
-              item.product.find((item) => item.name === "revicion")
-            ).length
+           countRevisions
           }
         </TableCell>
         <TableCell style={{ fontSize: 12 }} align="left">
