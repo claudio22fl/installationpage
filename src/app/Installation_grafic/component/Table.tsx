@@ -11,6 +11,7 @@ import { fotmatAttributes } from "@/types/Installation";
 import { client } from "@/types/Client";
 import { Row2 } from "./Row";
 import {
+  Button,
   IconButton,
   TableFooter,
   TablePagination,
@@ -24,6 +25,8 @@ import { columns } from "../const";
 import { empresa } from "@/types/Compani";
 import { formatClp } from "@/utils/const";
 import { Producto } from "@/types/Product";
+import TableHeadComponent from "./TableHead";
+import { CheckBox } from "@mui/icons-material";
 
 interface Props {
   empresas: empresa[];
@@ -150,30 +153,35 @@ export default function CollapsibleTable({
     return accumulator + m2mCost;
   }, 0);
 
- 
   function calcularValorConDescuento(producto: Producto, porcentaje: number) {
     const valorDescontado = producto.value - producto.cost; // Restar el costo al valor
-    return valorDescontado - (valorDescontado * porcentaje / 100); // Aplicar el porcentaje de descuento
+    return valorDescontado - (valorDescontado * porcentaje) / 100; // Aplicar el porcentaje de descuento
   }
-  
+
   // Calcular el total de los productos con descuento
   const totalConDescuento = instalattion.reduce((total, instalacion) => {
     // Suma el valor de los productos en esta instalación con el descuento aplicado
-    const valorInstalacion = instalacion.product.reduce((subtotal, producto) => {
-      const empresa = empresas.find(e => e.label === instalacion.company);
-      if (empresa !== undefined) {
-        // Calcular el valor del producto restando el costo y luego aplicar el descuento de la empresa
-        const valorConDescuento = calcularValorConDescuento(producto, empresa.percentage);
-        return subtotal + valorConDescuento;
-      } else {
-        // Si no se encuentra la empresa, usar el valor sin descuento
-        return subtotal + producto.value;
-      }
-    }, 0);
-  
+    const valorInstalacion = instalacion.product.reduce(
+      (subtotal, producto) => {
+        const empresa = empresas.find((e) => e.label === instalacion.company);
+        if (empresa !== undefined) {
+          // Calcular el valor del producto restando el costo y luego aplicar el descuento de la empresa
+          const valorConDescuento = calcularValorConDescuento(
+            producto,
+            empresa.percentage
+          );
+          return subtotal + valorConDescuento;
+        } else {
+          // Si no se encuentra la empresa, usar el valor sin descuento
+          return subtotal + producto.value;
+        }
+      },
+      0
+    );
+
     return total + valorInstalacion;
   }, 0);
-  
+
   console.log(`Total con descuento: ${totalConDescuento}`);
 
   const countRevisions = instalattion.reduce((count, item) => {
@@ -187,9 +195,17 @@ export default function CollapsibleTable({
     return count; // Mantener el contador sin cambios si no se encuentra "revision" o no hay productos
   }, 0);
 
+  const [openDetalles, setOpenDetalles] = React.useState<boolean>(false);
+
+   const handleToggleDetalles = () => {
+    setOpenDetalles(!openDetalles);
+  };
+
   return (
     <>
+    
       <TableContainer sx={{ minWidth: "99%" }} component={Paper}>
+       <Button onClick={handleToggleDetalles}>Detalles</Button>
         <Table aria-label="collapsible table">
           <TableHead>
             <TableRow>
@@ -201,52 +217,40 @@ export default function CollapsibleTable({
                   />
                 </IconButton>
               </TableCell>
-              {columns.map((columns, index) => (
-                <TableCell
-                  align="left"
-                  sx={{ paddingLeft: 0 }}
-                  onClick={() =>
-                    ordenarIntalacionesAlfabeticamente(
-                      columns.data,
-                      orderFiels[index],
-                      index
-                    )
-                  }
-                  style={{ cursor: "pointer" }}
-                  key={index}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "left",
-                      justifyContent: "flex-start",
-                      marginLeft: 0,
-                    }}
-                  >
-                    {columns.label != "Acciones" && columns.label != "DI" && (
-                      <IconButton aria-label="delete" size="small">
-                        {orderFiels[index] ? (
-                          <ArrowDownwardIcon fontSize="inherit" />
-                        ) : (
-                          <ArrowUpwardIcon fontSize="inherit" />
-                        )}
-                      </IconButton>
-                    )}
-
-                    {columns.label}
-                  </div>
-                  {showFields &&
-                    columns.label != "Acciones" &&
-                    columns.label != "DI" && (
-                      <TextField
-                        label={columns.label}
-                        variant="standard"
-                        name={columns.data}
-                        onChange={handleSearch}
-                      />
-                    )}
-                </TableCell>
-              ))}
+              <TableHeadComponent
+                ordenarIntalacionesAlfabeticamente={
+                  ordenarIntalacionesAlfabeticamente
+                }
+                orderFiels={orderFiels}
+                showFields={showFields}
+                handleSearch={handleSearch}
+                inicio={0}
+                final={3}
+              />
+              {openDetalles && (
+                <TableHeadComponent
+                ordenarIntalacionesAlfabeticamente={
+                  ordenarIntalacionesAlfabeticamente
+                }
+                orderFiels={orderFiels}
+                showFields={showFields}
+                handleSearch={handleSearch}
+                inicio={3}
+                final={7}
+              />
+              )
+              }
+              
+                 <TableHeadComponent
+                ordenarIntalacionesAlfabeticamente={
+                  ordenarIntalacionesAlfabeticamente
+                }
+                orderFiels={orderFiels}
+                showFields={showFields}
+                handleSearch={handleSearch}
+                inicio={7}
+                final={11}
+              />
             </TableRow>
           </TableHead>
           <TableBody>
@@ -257,6 +261,7 @@ export default function CollapsibleTable({
                 client={client}
                 fetchInstalattion={fetchInstalattion}
                 instalattion={instalattion}
+                openDetalles={openDetalles}
               />
             ))}
             <TableRow>
@@ -270,12 +275,40 @@ export default function CollapsibleTable({
               <TableCell>
                 <strong>{countRevisions}</strong>
               </TableCell>
-              <TableCell>
-              <strong>{ instalattion.map((item) => item.state === 'PENDIENTE' ? 1 : 0).reduce((a, b) => (a + b as any), 0) }</strong>
+              {openDetalles && (
+                <>
+                <TableCell>
+                <strong>
+                  {instalattion
+                    .map((item) => (item.state === "PENDIENTE" ? 1 : 0))
+                    .reduce((a, b) => (a + b) as any, 0)}
+                </strong>
               </TableCell>
               <TableCell>
-                <strong>{ instalattion.map((item) => item.state === 'TRANSFERENCIA' ||  item.state === 'EFECTIVO' ? 1 : 0).reduce((a, b) => (a + b as any), 0) }</strong>
+                <strong>
+                  {instalattion
+                    .map((item) => (item.state === "EFECTIVO" ? 1 : 0))
+                    .reduce((a, b) => (a + b) as any, 0)}
+                </strong>
               </TableCell>
+              <TableCell>
+                <strong>
+                  {instalattion
+                    .map((item) => (item.state === "TRANSFERENCIA" ? 1 : 0))
+                    .reduce((a, b) => (a + b) as any, 0)}
+                </strong>
+              </TableCell>
+              <TableCell>
+                <strong>
+                  {instalattion
+                    .map((item) => (item.state === "PAGADO" ? 1 : 0))
+                    .reduce((a, b) => (a + b) as any, 0)}
+                </strong>
+              </TableCell>
+                </>
+              )
+                }
+              
               <TableCell>
                 <strong>$ {formatClp(`${bruto}`)}</strong>
               </TableCell>
@@ -286,7 +319,7 @@ export default function CollapsibleTable({
                 <strong>$ {formatClp(`${totalConDescuento}`)}</strong>
               </TableCell>
               <TableCell>
-              <strong>$ {formatClp(`${totalConDescuento +cost}`)}</strong>
+                <strong>$ {formatClp(`${totalConDescuento + cost}`)}</strong>
               </TableCell>
             </TableRow>
           </TableBody>

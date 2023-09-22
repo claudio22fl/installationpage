@@ -28,9 +28,10 @@ interface Props {
   client: client[];
   fetchInstalattion: () => void;
   instalattion: fotmatAttributes[];
+  openDetalles: boolean;
 }
 
-export function Row2({ row, client, fetchInstalattion, instalattion }: Props) {
+export function Row2({ row, client, fetchInstalattion, instalattion, openDetalles }: Props) {
   const [open, setOpen] = React.useState(false);
   const [openUpdate, setOpenUpdate] = React.useState(false);
   const [data, setData] = React.useState<fotmatAttributes[]>([]);
@@ -72,9 +73,25 @@ export function Row2({ row, client, fetchInstalattion, instalattion }: Props) {
     return total + costoTotal;
   }, 0);
 
-  const handleClickOpen = () => {
-    setOpenUpdate(true);
+  const calcularSumaTotal = (data: fotmatAttributes[], estado: string) => {
+    const sumaTotal = data.reduce((total, item) => {
+      const costoTotal = item.product.reduce(
+        (subtotal, producto) =>
+          subtotal +
+          (producto?.value === undefined
+            ? 0
+            : item?.state !== estado
+            ? 0
+            : producto.value),
+        0
+      );
+      return total + costoTotal;
+    }, 0);
+
+    return sumaTotal;
   };
+
+  //sumar total si el state es Pendiente
 
   const { deleteInstallation } = useDeleteInstallation(fetchInstalattion);
 
@@ -98,7 +115,7 @@ export function Row2({ row, client, fetchInstalattion, instalattion }: Props) {
     return count; // Mantener el contador sin cambios si no se encuentra "revision" o no hay productos
   }, 0);
 
-  //contar pendientes de data.state 
+  //contar pendientes de data.state
 
   return (
     <React.Fragment>
@@ -119,20 +136,55 @@ export function Row2({ row, client, fetchInstalattion, instalattion }: Props) {
           {data.length}
         </TableCell>
         <TableCell style={{ fontSize: 12 }} align="left">
-          {
-           countRevisions
-          }
+          {countRevisions}
         </TableCell>
-        <TableCell style={{ fontSize: 12 }} align="left">
-          {
-           data.map((item) => item.state === 'PENDIENTE' ? 1 : 0).reduce((a, b) => (a + b as any), 0)
-          }
+
+        {openDetalles && (
+          <>
+          <TableCell
+          style={{ fontSize: 12, backgroundColor: "#BFC9CA" }}
+          align="left"
+        >
+          {data
+            .map((item) => (item.state === "PENDIENTE" ? 1 : 0))
+            .reduce((a, b) => (a + b) as any, 0)}{" "}
+          ={" $"}
+          {formatClp(`${calcularSumaTotal(data, "PENDIENTE")}`)}
         </TableCell>
-        <TableCell style={{ fontSize: 12 }} align="left">
-          {
-          data.map((item) => item.state === 'TRANSFERENCIA' ||  item.state === 'EFECTIVO' ? 1 : 0).reduce((a, b) => (a + b as any), 0)
-          }
+        <TableCell
+          style={{ fontSize: 12, backgroundColor: "#BFC9CA" }}
+          align="left"
+        >
+          {data
+            .map((item) => (item.state === "EFECTIVO" ? 1 : 0))
+            .reduce((a, b) => (a + b) as any, 0)}{" "}
+          ={" $"}
+          {formatClp(`${calcularSumaTotal(data, "EFECTIVO")}`)}
         </TableCell>
+        <TableCell
+          style={{ fontSize: 12, backgroundColor: "#BFC9CA" }}
+          align="left"
+        >
+          {data
+            .map((item) => (item.state === "TRANSFERENCIA" ? 1 : 0))
+            .reduce((a, b) => (a + b) as any, 0)}{" "}
+          ={" $"}
+          {formatClp(`${calcularSumaTotal(data, "TRANSFERENCIA")}`)}
+        </TableCell>
+        <TableCell
+          style={{ fontSize: 12, backgroundColor: "#BFC9CA" }}
+          align="left"
+        >
+          {data
+            .map((item) => (item.state === "PAGADO" ? 1 : 0))
+            .reduce((a, b) => (a + b) as any, 0)}{" "}
+          ={" $"}
+          {formatClp(`${calcularSumaTotal(data, "PAGADO")}`)}
+        </TableCell>
+        </>
+        )}
+        
+
         <TableCell style={{ fontSize: 12 }} align="left">
           $ {formatClp(`${sumaValue}`)}
         </TableCell>
@@ -140,12 +192,10 @@ export function Row2({ row, client, fetchInstalattion, instalattion }: Props) {
           $ {formatClp(`${sumaCostos}`)}
         </TableCell>
         <TableCell style={{ fontSize: 12 }} align="left">
-          ${" "}
-          {formatClp(`${totalNeto}`)}
+          $ {formatClp(`${totalNeto}`)}
         </TableCell>
         <TableCell style={{ fontSize: 12 }} align="left">
-          ${" "}
-          {formatClp(`${totalNeto + sumaCostos}`)}
+          $ {formatClp(`${totalNeto + sumaCostos}`)}
         </TableCell>
       </TableRow>
       <TableRow>

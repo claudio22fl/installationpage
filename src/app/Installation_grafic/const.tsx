@@ -3,6 +3,8 @@ export const columns = [
     { label: "Total I", data: "fecha" },
     { label: "Total G", data: "fecha" },
     { label: "Pendientes", data: "state" },
+    { label: "Efectivo", data: "state" },
+    { label: "Transferencia", data: "state" },
     { label: "Pagados", data: "state" },
     { label: "Bruto", data: "fecha" },
     { label: "Suma Dis", data: "hours" },
