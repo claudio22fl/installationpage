@@ -82,8 +82,8 @@ export function Row({ row, client, fetchInstalattion }: Props) {
         <TableCell style={{fontSize: 12}}  align="left">{row.installationtype}</TableCell>
         <TableCell style={{fontSize: 12}}  align="left">{row.address}</TableCell>
         <TableCell style={{fontSize: 12}}  align="left">{row.commune}</TableCell>
-        <TableCell style={{fontSize: 12}}  align="left">{row.state}</TableCell>
-        <TableCell style={{fontSize: 12}}  align="left">{row.product.length}</TableCell>
+        <TableCell sx={ row.state === 'PENDIENTE' ? {color: 'red'} : {color: 'green'}} style={{fontSize: 12}}  align="left">{row.state}</TableCell>
+        <TableCell style={ {fontSize: 12}}  align="left">{row.product.length}</TableCell>
         <TableCell width={250} style={{fontSize: 12}}  align="left">
           {lines.map((line, index) => (
             <p style={ line.length === 0 ? {margin: 5, height: 5} : {margin: 0}} key={index}>{line}</p>

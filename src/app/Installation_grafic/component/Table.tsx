@@ -271,6 +271,12 @@ export default function CollapsibleTable({
                 <strong>{countRevisions}</strong>
               </TableCell>
               <TableCell>
+              <strong>{ instalattion.map((item) => item.state === 'PENDIENTE' ? 1 : 0).reduce((a, b) => (a + b as any), 0) }</strong>
+              </TableCell>
+              <TableCell>
+                <strong>{ instalattion.map((item) => item.state === 'TRANSFERENCIA' ||  item.state === 'EFECTIVO' ? 1 : 0).reduce((a, b) => (a + b as any), 0) }</strong>
+              </TableCell>
+              <TableCell>
                 <strong>$ {formatClp(`${bruto}`)}</strong>
               </TableCell>
               <TableCell>

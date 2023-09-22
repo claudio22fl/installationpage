@@ -98,6 +98,8 @@ export function Row2({ row, client, fetchInstalattion, instalattion }: Props) {
     return count; // Mantener el contador sin cambios si no se encuentra "revision" o no hay productos
   }, 0);
 
+  //contar pendientes de data.state 
+
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -119,6 +121,16 @@ export function Row2({ row, client, fetchInstalattion, instalattion }: Props) {
         <TableCell style={{ fontSize: 12 }} align="left">
           {
            countRevisions
+          }
+        </TableCell>
+        <TableCell style={{ fontSize: 12 }} align="left">
+          {
+           data.map((item) => item.state === 'PENDIENTE' ? 1 : 0).reduce((a, b) => (a + b as any), 0)
+          }
+        </TableCell>
+        <TableCell style={{ fontSize: 12 }} align="left">
+          {
+          data.map((item) => item.state === 'TRANSFERENCIA' ||  item.state === 'EFECTIVO' ? 1 : 0).reduce((a, b) => (a + b as any), 0)
           }
         </TableCell>
         <TableCell style={{ fontSize: 12 }} align="left">
