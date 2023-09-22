@@ -93,6 +93,7 @@ export const useUpdateInstallation = (fetchInstalattion: () => void) => {
           PENDIENTE: "Pendiente",
           TRANSFERENCIA: "Transferencia",
           EFECTIVO: "Efectivo",
+          PAGADO: "Pagado",
         });
       }, 500);
     });
