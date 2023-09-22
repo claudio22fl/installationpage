@@ -142,7 +142,7 @@ export function Row2({ row, client, fetchInstalattion, instalattion, openDetalle
         {openDetalles && (
           <>
           <TableCell
-          style={{ fontSize: 12, backgroundColor: "#BFC9CA" }}
+          style={{ fontSize: 12, backgroundColor: "#EAEDED" }}
           align="left"
         >
           {data
@@ -152,7 +152,7 @@ export function Row2({ row, client, fetchInstalattion, instalattion, openDetalle
           {formatClp(`${calcularSumaTotal(data, "PENDIENTE")}`)}
         </TableCell>
         <TableCell
-          style={{ fontSize: 12, backgroundColor: "#BFC9CA" }}
+          style={{ fontSize: 12, backgroundColor: "#EAEDED" }}
           align="left"
         >
           {data
@@ -162,7 +162,7 @@ export function Row2({ row, client, fetchInstalattion, instalattion, openDetalle
           {formatClp(`${calcularSumaTotal(data, "EFECTIVO")}`)}
         </TableCell>
         <TableCell
-          style={{ fontSize: 12, backgroundColor: "#BFC9CA" }}
+          style={{ fontSize: 12, backgroundColor: "#EAEDED" }}
           align="left"
         >
           {data
@@ -172,7 +172,7 @@ export function Row2({ row, client, fetchInstalattion, instalattion, openDetalle
           {formatClp(`${calcularSumaTotal(data, "TRANSFERENCIA")}`)}
         </TableCell>
         <TableCell
-          style={{ fontSize: 12, backgroundColor: "#BFC9CA" }}
+          style={{ fontSize: 12, backgroundColor: "#EAEDED" }}
           align="left"
         >
           {data
