@@ -15,13 +15,16 @@ import { fotmatAttributes } from "@/types/Installation";
 import { Button, ButtonGroup, Stack, Tooltip } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { useDeleteInstallation, useUpdateInstallation } from "@/app/services/Intallation";
+import {
+  useDeleteInstallation,
+  useUpdateInstallation,
+} from "@/app/services/Intallation";
 import { formatClp } from "@/utils/const";
 import ModalUpdate from "@/app/Installation_list/component/ModalUpdate";
 import { client } from "@/types/Client";
-import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
-import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
-import PaymentIcon from '@mui/icons-material/Payment';
+import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
+import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
+import PaymentIcon from "@mui/icons-material/Payment";
 
 interface Props {
   row: fotmatAttributes;
@@ -47,7 +50,7 @@ export function Row({ row, client, fetchInstalattion }: Props) {
   };
 
   const { deleteInstallation } = useDeleteInstallation(fetchInstalattion);
- const { updateInstallation } = useUpdateInstallation(fetchInstalattion);
+  const { updateInstallation } = useUpdateInstallation(fetchInstalattion);
 
   return (
     <React.Fragment>
@@ -57,36 +60,79 @@ export function Row({ row, client, fetchInstalattion }: Props) {
             aria-label="expand row"
             size="small"
             onClick={() => setOpen(!open)}
-            color={row.product?.map((item) => item?.name).includes("GARANTIA") ? "error" : 'default'}
+            color={
+              row.product?.map((item) => item?.name).includes("GARANTIA")
+                ? "error"
+                : "default"
+            }
           >
-           {row.product.length > 1 && row.product?.map((item) => item?.name).includes("GARANTIA") ? (
-             open ? <KeyboardDoubleArrowUpIcon /> : <KeyboardDoubleArrowDownIcon />
-           ) : (
-             open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />
-           )
-           }
-
-          
-                
-           
+            {row.product.length > 1 &&
+            row.product?.map((item) => item?.name).includes("GARANTIA") ? (
+              open ? (
+                <KeyboardDoubleArrowUpIcon />
+              ) : (
+                <KeyboardDoubleArrowDownIcon />
+              )
+            ) : open ? (
+              <KeyboardArrowUpIcon />
+            ) : (
+              <KeyboardArrowDownIcon />
+            )}
           </IconButton>
         </TableCell>
-        <TableCell align="left"><strong>{row.company}</strong></TableCell>
+        <TableCell align="left">
+          <strong>{row.company}</strong>
+        </TableCell>
         <TableCell width={130} component="th" scope="row">
           {row.fecha}
         </TableCell>
-        <TableCell style={{fontSize: 12}} align="left">{row.hours}</TableCell>
-        <TableCell style={{fontSize: 12}} align="left">{row.client}</TableCell>
-        <TableCell width={80} style={{fontSize: 12}}  align="left">{row.patent}</TableCell>
-        <TableCell style={{fontSize: 12}}  align="left">{row.vehiclename}</TableCell>
-        <TableCell style={{fontSize: 12}}  align="left">{row.installationtype}</TableCell>
-        <TableCell style={{fontSize: 12}}  align="left">{row.address}</TableCell>
-        <TableCell style={{fontSize: 12}}  align="left">{row.commune}</TableCell>
-        <TableCell sx={ row.state === 'PENDIENTE' ? {color: 'red'} : {color: 'green'}} style={{fontSize: 12}}  align="left">{row.state}</TableCell>
-        <TableCell style={ {fontSize: 12}}  align="left">{row.product.length}</TableCell>
-        <TableCell width={250} style={{fontSize: 12}}  align="left">
+        <TableCell style={{ fontSize: 12 }} align="left">
+          {row.hours}
+        </TableCell>
+        <TableCell style={{ fontSize: 12 }} align="left">
+          {row.client}
+        </TableCell>
+        <TableCell width={80} style={{ fontSize: 12 }} align="left">
+          {row.patent}
+        </TableCell>
+        <TableCell style={{ fontSize: 12 }} align="left">
+          {row.vehiclename}
+        </TableCell>
+        <TableCell style={{ fontSize: 12 }} align="left">
+          {row.installationtype}
+        </TableCell>
+        <TableCell style={{ fontSize: 12 }} align="left">
+          {row.address}
+        </TableCell>
+        <TableCell style={{ fontSize: 12 }} align="left">
+          {row.commune}
+        </TableCell>
+        <TableCell
+          sx={
+            row.state === "PENDIENTE"
+              ? { color: "red" }
+              : row.state === "TRANSFERENCIA"
+              ? { color: "#FF8F00" }
+              : { color: "green" }
+          }
+          style={{ fontSize: 12 }}
+          align="left"
+        >
+          {row.state}
+        </TableCell>
+        <TableCell style={{ fontSize: 12 }} align="left">
+          {row.product.length}
+        </TableCell>
+        <TableCell width={250} style={{ fontSize: 12 }} align="left">
           {lines.map((line, index) => (
-            <p style={ line.length === 0 ? {margin: 5, height: 5} : {margin: 0}} key={index}>{line}</p>
+            <p
+              style={
+                line.length === 0 ? { margin: 5, height: 5 } : { margin: 0 }
+              }
+              key={index}
+            >
+              {line}
+            </p>
           ))}
         </TableCell>
         <TableCell width={50} align="left">
@@ -96,21 +142,33 @@ export function Row({ row, client, fetchInstalattion }: Props) {
             variant="contained"
             aria-label="Disabled elevation buttons"
           >
-             <Tooltip title="Editar">
-              <IconButton onClick={handleClickOpen} aria-label="delete" size="small">
+            <Tooltip title="Editar">
+              <IconButton
+                onClick={handleClickOpen}
+                aria-label="delete"
+                size="small"
+              >
                 <EditIcon fontSize="inherit" />
               </IconButton>
-              </Tooltip>
-              <Tooltip title="Eliminar">
-              <IconButton  onClick={() => deleteInstallation(row?.id)} aria-label="delete" size="small">
+            </Tooltip>
+            <Tooltip title="Eliminar">
+              <IconButton
+                onClick={() => deleteInstallation(row?.id)}
+                aria-label="delete"
+                size="small"
+              >
                 <DeleteIcon color="error" fontSize="inherit" />
               </IconButton>
-              </Tooltip>
-              <Tooltip title="Actualizar Pago">
-              <IconButton  onClick={() => updateInstallation(row?.id, row.state)} aria-label="delete" size="small">
+            </Tooltip>
+            <Tooltip title="Actualizar Pago">
+              <IconButton
+                onClick={() => updateInstallation(row?.id, row.state)}
+                aria-label="delete"
+                size="small"
+              >
                 <PaymentIcon fontSize="inherit" />
               </IconButton>
-              </Tooltip>
+            </Tooltip>
           </ButtonGroup>
           <Stack spacing={1}></Stack>
         </TableCell>
@@ -160,7 +218,9 @@ export function Row({ row, client, fetchInstalattion }: Props) {
 
                   <TableRow>
                     <TableCell rowSpan={1} />
-                    <TableCell colSpan={4}><strong>Total</strong></TableCell>
+                    <TableCell colSpan={4}>
+                      <strong>Total</strong>
+                    </TableCell>
                     <TableCell align="right">
                       <strong>$ {formatClp(`${total}`)}</strong>
                     </TableCell>
