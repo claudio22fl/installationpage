@@ -113,6 +113,8 @@ export function Row({ row, client, fetchInstalattion }: Props) {
               ? { color: "red" }
               : row.state === "TRANSFERENCIA"
               ? { color: "#FF8F00" }
+              : row.state === "SIN VALOR"
+              ? { color: "#2E86C1" }
               : { color: "green" }
           }
           style={{ fontSize: 12 }}
