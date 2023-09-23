@@ -44,7 +44,7 @@ export default function page() {
 
   return (
     <main>
-       <div style={{ maxWidth: '1650px'}}>
+            <div style={{ maxWidth: '1650px', justifyContent: 'center', alignItems: "center", marginLeft: 30}}>
         <div className="rounded-t bg-white mb-0 px-6 py-6">
           <div className="text-center flex justify-between">
             <h6 className="text-blueGray-700 text-xl font-bold">Reportes</h6>
