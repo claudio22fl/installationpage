@@ -94,11 +94,12 @@ export const useUpdateInstallation = (fetchInstalattion: () => void) => {
           TRANSFERENCIA: "Transferencia",
           EFECTIVO: "Efectivo",
           PAGADO: "Pagado",
+          SIN_VALOR: "Sin Valor",
         });
       }, 500);
     });
 
-    const { value: color } = await Swal.fire({
+    let { value: color } = await Swal.fire({
       title: "Tipos de pago",
       input: "radio",
       inputOptions: inputOptions,
@@ -110,6 +111,9 @@ export const useUpdateInstallation = (fetchInstalattion: () => void) => {
     });
 
     if (color) {
+      if(color === 'SIN_VALOR'){
+        color = 'SIN VALOR'
+      }
       const formatData = {
         data: {
           state: color,

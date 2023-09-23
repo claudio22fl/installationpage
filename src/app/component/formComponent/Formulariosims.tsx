@@ -253,6 +253,11 @@ const FormData = ({
             control={<Radio />}
             label="Pagado"
           />
+           <FormControlLabel
+            value="SIN VALOR"
+            control={<Radio />}
+            label="Sin Valor"
+          />
         </RadioGroup>
       </div>
 
