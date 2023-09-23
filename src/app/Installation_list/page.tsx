@@ -15,7 +15,7 @@ export default function Page() {
 
   return (
     <main>
-       <Container maxWidth="xl">
+      <div style={{ maxWidth: '1650px'}}>
         <div className="rounded-t bg-white mb-0 px-6 py-6">
           <div className="text-center flex justify-between">
             <h6 className="text-blueGray-700 text-xl font-bold">Listado de Instalacion</h6>
@@ -26,7 +26,7 @@ export default function Page() {
             <CollapsibleTable instalattion={instalattion} client = {client} fetchInstalattion={fetchInstalattion} />
           </div>
        
-      </Container>
+      </div>
     </main>
   );
 }

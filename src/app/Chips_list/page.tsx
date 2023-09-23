@@ -38,34 +38,29 @@ export default function page() {
   const [rows, setRows] = useState<any>([]);
 
   useEffect(() => {
-   
     const newDataArray = instalattion.flatMap((instalattion) => {
       return instalattion.product.map((product) => {
-        if(product.name?.includes("M2M")){
-            return createData(
-                instalattion.company,
-                instalattion.fecha,
-                product.name,
-                product.cost,
-                product.value,
-                product.imeigps
-              );
+        if (product.name?.includes("M2M")) {
+          return createData(
+            instalattion.company,
+            instalattion.fecha,
+            product.name,
+            product.cost,
+            product.value,
+            product.imeigps
+          );
         }
       });
     });
     const filteredDataArray = newDataArray.filter((item) => item !== undefined);
-    
-     setRows(filteredDataArray);
-    console.log(filteredDataArray)
-   
+
+    setRows(filteredDataArray);
+    console.log(filteredDataArray);
   }, [instalattion]);
-
-
-  
 
   return (
     <main>
-      <Container maxWidth="xl">
+      <div style={{ maxWidth: '1650px'}}>
         <div className="rounded-t bg-white mb-0 px-6 py-6">
           <div className="text-center flex justify-between">
             <h6 className="text-blueGray-700 text-xl font-bold">
@@ -78,13 +73,15 @@ export default function page() {
           className="text-center flex flex-col rounded-xl"
           style={{ fontSize: 1 }}
         >
-      
-  <CollapsibleTable empresas={compani} client = {client} fetchInstalattion={fetchInstalattion} instalattion={instalattion} history={history} />
-        
-       
-          
+          <CollapsibleTable
+            empresas={compani}
+            client={client}
+            fetchInstalattion={fetchInstalattion}
+            instalattion={instalattion}
+            history={history}
+          />
         </div>
-      </Container>
+      </div>
     </main>
   );
 }
