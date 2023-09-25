@@ -16,6 +16,9 @@ import Paper from "@mui/material/Paper";
 import { useFetchCompani } from "../services/Compani";
 import CollapsibleTable from "./component/Table";
 import { useFetchHistoryAll } from "../services/History";
+import { getMonth } from "@/utils/const";
+import { useSelectedMonth } from "../hooks/useSelectedMonth";
+import MonthSelect from "../component/MonthSelect";
 
 export default function page() {
   const { instalattion, fetchInstalattion } = useFetchInstallation();
@@ -23,6 +26,9 @@ export default function page() {
   const { client } = useFetchClient();
   const { compani, fetchCompani } = useFetchCompani();
   const { history } = useFetchHistoryAll();
+
+  const [month, setMonth] = useState(getMonth());
+  const {newInstallation} = useSelectedMonth(instalattion, month);
 
   function createData(
     name: any,
@@ -68,7 +74,7 @@ export default function page() {
             </h6>
           </div>
         </div>
-
+        <MonthSelect month={month} setMonth={setMonth} />
         <div
           className="text-center flex flex-col rounded-xl"
           style={{ fontSize: 1 }}
@@ -77,7 +83,7 @@ export default function page() {
             empresas={compani}
             client={client}
             fetchInstalattion={fetchInstalattion}
-            instalattion={instalattion}
+            instalattion={newInstallation}
             history={history}
           />
         </div>
