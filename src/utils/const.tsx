@@ -101,3 +101,9 @@ export const style = {
   boxShadow: 24,
   p: 4,
 };
+
+export const getMonth = () => {
+  const date = new Date();
+  const month = date.getMonth();
+  return month + 1;
+};

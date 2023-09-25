@@ -8,7 +8,7 @@ export const useFetchInstallation = () => {
 
   const fetchInstalattion = async () => {
     const res = await fetch(
-      "https://plataformasgps.cl/api/instalattions?populate=*&sort[0]=fecha:DESC&sort[1]=hours:DESC&pagination[pageSize]=10000000000000",
+      "https://plataformasgps.cl/api/instalattions?populate=*&sort[0]=fecha:DESC&sort[1]=hours:DESC&pagination[pageSize]=100",
       {
         cache: "no-store",
         mode: "cors",
@@ -18,7 +18,21 @@ export const useFetchInstallation = () => {
       throw new Error("problema");
     }
 
-    const { data }: any = await res.json();
+    const { data }: IRootInstallation = await res.json();
+
+    if(data.length === 100){
+       const res = await fetch("https://plataformasgps.cl/api/instalattions?populate=*&sort[0]=fecha:DESC&sort[1]=hours:DESC&pagination[pageSize]=100&pagination[page]=2", {
+        cache: "no-store",
+        mode: "cors",
+      });
+      if (!res.ok) {
+        throw new Error("problema");
+      }
+      const { data: data2 }: IRootInstallation = await res.json();
+      data.push(...data2);
+    }
+
+    console.log(data);
 
     const formatData: fotmatAttributes[] = data.map((data: any) => ({
       id: data.id,
