@@ -15,9 +15,10 @@ export default function Page() {
   const { instalattion, fetchInstalattion } = useFetchInstallation();
   const { formData, setFormData } = useDataForm();
   const { client } = useFetchClient();
-  const [month, setMonth] = React.useState(getMonth());
+  const [inicialMonth, setInicialMonth] = React.useState(getMonth());
+  const [finalMonth, setFinalMonth] = React.useState(getMonth());
 
-  const {newInstallation} = useSelectedMonth(instalattion, month);
+  const {newInstallation} = useSelectedMonth(instalattion, inicialMonth, finalMonth);
   
   return (
     <main>
@@ -37,8 +38,21 @@ export default function Page() {
           </div>
         </div>
 
-        <MonthSelect month={month} setMonth={setMonth} />
-      
+        <div className="rounded-t bg-white mb-0 px-6 py-6" style={{ gap: 30, display: 'flex'}}>
+        <div>
+          <h6 className="text-blueGray-700 text-xl font-bold">
+            Mes Inicial
+          </h6>
+          <MonthSelect month={inicialMonth} setMonth={setInicialMonth} />
+        </div>
+        <div style={{marginLeft: 20}}>
+          <h6 className="text-blueGray-700 text-xl font-bold">
+            Mes Final
+          </h6>
+          <MonthSelect month={finalMonth} setMonth={setFinalMonth} />
+        </div>
+        </div>
+
         <div
           className="text-center flex flex-col rounded-xl"
           style={{ fontSize: 1 }}

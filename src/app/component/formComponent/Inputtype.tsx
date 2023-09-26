@@ -10,6 +10,7 @@ import { useFetchCompani } from "@/app/services/Compani";
 import AutocompleteInput from "./inputs/AutoCompleteInput";
 import { useFetchDevice } from "@/app/services/Device";
 import { formatClp, formatPatente } from "@/utils/const";
+import './styles.css'
 
 export default function Inputtype({
   inputs,

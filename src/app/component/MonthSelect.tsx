@@ -21,8 +21,7 @@ export default function MonthSelect({month, setMonth}: Props) {
 
    
   return (
-    <div className="rounded-t bg-white mb-0 px-6 py-6">
-    <h3>Seleccione mes</h3>
+    <>
     <Select
       labelId="demo-simple-select-label"
       id="demo-simple-select"
@@ -44,6 +43,6 @@ export default function MonthSelect({month, setMonth}: Props) {
       <MenuItem value={"11"}>Noviembre</MenuItem>
       <MenuItem value={"12"}>Diciembre</MenuItem>
     </Select>
-  </div>
+    </>
   )
 }

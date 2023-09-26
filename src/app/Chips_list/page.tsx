@@ -27,8 +27,9 @@ export default function page() {
   const { compani, fetchCompani } = useFetchCompani();
   const { history } = useFetchHistoryAll();
 
-  const [month, setMonth] = useState(getMonth());
-  const {newInstallation} = useSelectedMonth(instalattion, month);
+  const [inicialMonth, setInicialMonth] = React.useState(getMonth());
+  const [finalMonth, setFinalMonth] = React.useState(getMonth());
+  const {newInstallation} = useSelectedMonth(instalattion, inicialMonth, finalMonth);
 
   function createData(
     name: any,
@@ -74,7 +75,20 @@ export default function page() {
             </h6>
           </div>
         </div>
-        <MonthSelect month={month} setMonth={setMonth} />
+        <div className="rounded-t bg-white mb-0 px-6 py-6" style={{ gap: 30, display: 'flex'}}>
+        <div>
+          <h6 className="text-blueGray-700 text-xl font-bold">
+            Mes Inicial
+          </h6>
+          <MonthSelect month={inicialMonth} setMonth={setInicialMonth} />
+        </div>
+        <div style={{marginLeft: 20}}>
+          <h6 className="text-blueGray-700 text-xl font-bold">
+            Mes Final
+          </h6>
+          <MonthSelect month={finalMonth} setMonth={setFinalMonth} />
+        </div>
+        </div>
         <div
           className="text-center flex flex-col rounded-xl"
           style={{ fontSize: 1 }}

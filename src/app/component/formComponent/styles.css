@@ -30,3 +30,76 @@
     border-radius: 0.375rem/* 6px */;
     width: 100%;
   }
+
+  /* Estilos para dispositivos medianos y pequeños */
+@media (max-width: 1268px) {
+  .inputs {
+    display: grid;
+    row-gap: 2;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem/* 16px */;
+  }
+  
+
+  /* Estilos para ajustar el ancho de los botones en pantallas pequeñas */
+ 
+}
+
+
+
+/* Estilos para dispositivos grandes */
+@media (min-width: 1468px ) and (max-width: 1536px) {
+  .inputs {
+    display: grid;
+    row-gap: 2;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem/* 16px */;
+  }
+  
+  .inputcontainer{
+    width: 100%;
+    padding-left: 0.75rem/* 12px */;
+    padding-right: 0.75rem/* 12px */;
+    margin-top: 1rem/* 16px */;
+    margin-bottom: 1.5rem/* 24px */;
+}
+}
+
+/* Estilos para dispositivos mediano */
+@media (min-width: 1268px) and (max-width: 1568px) {
+  .inputs {
+    display: grid;
+    row-gap: 2;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem /* 16px */;
+  }
+
+  .inputcontainer {
+    width: 100%;
+    padding-left: 0.75rem /* 12px */;
+    padding-right: 0.75rem /* 12px */;
+    margin-top: 1rem /* 16px */;
+    margin-bottom: 1.5rem /* 24px */;
+  }
+}
+
+/* Estilos para dispositivos pequeños */
+@media (min-width: 640px) and ( max-width: 1268px) {
+  .inputs {
+    display: grid;
+    row-gap: 2;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem/* 16px */;
+  }
+  
+  .inputcontainer{
+    width: 100%;
+    padding-left: 0.75rem/* 12px */;
+    padding-right: 0.75rem/* 12px */;
+    margin-top: 1rem/* 16px */;
+    margin-bottom: 1.5rem/* 24px */;
+}
+}
+
+
+

@@ -1,13 +1,26 @@
 import { fotmatAttributes } from "@/types/Installation";
 import { useState } from "react";
 
-export const useSelectedMonth = (installation : fotmatAttributes[], month: number) => {
-    
+export const useSelectedMonth = (installation : fotmatAttributes[], month: number, finalMonth: number) => {
+
+    if (month > finalMonth) {
+        const aux = month;
+        month = finalMonth;
+        finalMonth = aux;
+    }
+   
+    if( finalMonth < month){
+        const aux = finalMonth;
+        finalMonth = month;
+        month = aux;
+    }
+
 
     const newInstallation = installation.filter((item) => {
         const fecha = obtenerMes(item.fecha);
-      
-        return fecha === month;
+        if (fecha >= month && fecha <= finalMonth){
+            return item;
+        }
     }
     );
 
