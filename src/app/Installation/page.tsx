@@ -14,7 +14,7 @@ export default function Page() {
 
   return (
     <main className={styles.main}> 
-         <div className="flex-auto px-4 bg-gray-300 lg:px-10  pt-0 rounded-b-xl" style={{width: '100%'}}>
+         <div className="flex-auto px-4 bg-gray-300 lg:px-10  pt-0 rounded-b-xl" style={{width: '110%'}}>
           <div className="text-center flex justify-between">
             <h6 className="text-blueGray-700 text-xl font-bold">Agregar Instalacion</h6>
             <button onClick={() => {}}>
@@ -33,7 +33,7 @@ export default function Page() {
           </div>
         </div>
         <Divider />
-        <div className="flex-auto px-4 bg-gray-300 lg:px-10  pt-0 rounded-b-xl">
+        <div className="flex-auto px-4 bg-gray-300 lg:px-10  pt-0 rounded-b-xl" style={{width: '110%'}}>
           <FormData
             refreshTable={fetchInstalattion}
             formData={formData}
