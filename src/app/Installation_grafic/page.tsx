@@ -12,6 +12,7 @@ import { useFetchClient } from "../services/Client";
 import { useSelectedMonth } from "../hooks/useSelectedMonth";
 import { getMonth } from "@/utils/const";
 import MonthSelect from "../component/MonthSelect";
+import ExcelGenerator from "../component/GenerateExcel";
 
 export default function page() {
     const [ instalattionCompani, setIntalattionCompani ] = useState<any>([]) 
@@ -55,7 +56,7 @@ export default function page() {
             <h6 className="text-blueGray-700 text-xl font-bold">Reportes</h6>
           </div>
         </div>
-        <div className="rounded-t bg-white mb-0 px-6 py-6" style={{ gap: 30, display: 'flex'}}>
+        <div className="bg-white mb-0 px-6 py-6" style={{ gap: 30, display: 'flex'}}>
         <div>
           <h6 className="text-blueGray-700 text-xl font-bold">
             Mes Inicial
@@ -69,7 +70,11 @@ export default function page() {
           <MonthSelect month={finalMonth} setMonth={setFinalMonth} />
         </div>
         </div>
-        <div className="text-center flex flex-col rounded-xl" style={{fontSize: 1}}>
+       
+
+      
+        <div className="flex flex-col rounded-xl" style={{fontSize: 1}}>
+   
         <CollapsibleTable empresas={empresas} client = {client} fetchInstalattion={fetchInstalattion} instalattion={newInstallation} />
           </div>
       </div>

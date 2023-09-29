@@ -113,7 +113,7 @@ export const useUpdateInstallation = (fetchInstalattion: () => void) => {
       }, 500);
     });
 
-    let { value: color } = await Swal.fire({
+    let { value: color }: any = await Swal.fire({
       title: "Tipos de pago",
       input: "radio",
       inputOptions: inputOptions,

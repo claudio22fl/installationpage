@@ -1,9 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
-import styles from "../page.module.css";
 import { useFetchInstallation } from "../services/Intallation";
-import { Container, MenuItem, Select } from "@mui/material";
-import { useDataForm } from "../Installation/hooks/useDaraForm";
 import "../Installation/styles.css";
 import { useFetchClient } from "../services/Client";
 import CollapsibleTable from "./component/Table";
@@ -13,7 +10,6 @@ import { useSelectedMonth } from "../hooks/useSelectedMonth";
 
 export default function Page() {
   const { instalattion, fetchInstalattion } = useFetchInstallation();
-  const { formData, setFormData } = useDataForm();
   const { client } = useFetchClient();
   const [inicialMonth, setInicialMonth] = React.useState(getMonth());
   const [finalMonth, setFinalMonth] = React.useState(getMonth());
@@ -53,10 +49,7 @@ export default function Page() {
         </div>
         </div>
 
-        <div
-          className="text-center flex flex-col rounded-xl"
-          style={{ fontSize: 1 }}
-        >
+        <div className="text-center flex flex-col rounded-xl" style={{fontSize: 1}}>
           <CollapsibleTable
             instalattion={newInstallation}
             client={client}

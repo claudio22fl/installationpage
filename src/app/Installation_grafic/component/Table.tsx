@@ -12,7 +12,15 @@ import { client } from "@/types/Client";
 import { Row2 } from "./Row";
 import {
   Button,
+  Checkbox,
+  FormControl,
   IconButton,
+  InputLabel,
+  ListItemText,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  SelectChangeEvent,
   TableFooter,
   TablePagination,
   TextField,
@@ -27,6 +35,8 @@ import { formatClp } from "@/utils/const";
 import { Producto } from "@/types/Product";
 import TableHeadComponent from "./TableHead";
 import { CheckBox } from "@mui/icons-material";
+import ExcelGenerator from "@/app/component/GenerateExcel";
+import PdfGenerator from "@/app/component/GeneratePdf";
 
 interface Props {
   empresas: empresa[];
@@ -197,15 +207,64 @@ export default function CollapsibleTable({
 
   const [openDetalles, setOpenDetalles] = React.useState<boolean>(false);
 
-   const handleToggleDetalles = () => {
+  const handleToggleDetalles = () => {
     setOpenDetalles(!openDetalles);
+  };
+
+  const [personName, setPersonName] = React.useState<string[]>([]);
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  };
+  const names = empresas.map((empresa) => empresa.label);
+  const handleChange = (event: SelectChangeEvent<typeof personName>) => {
+    const {
+      target: { value },
+    } = event;
+    setPersonName(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
   };
 
   return (
     <>
-    
       <TableContainer sx={{ minWidth: "99%" }} component={Paper}>
-       <Button onClick={handleToggleDetalles}>Detalles</Button>
+        <div style={{ display: "flex", justifyContent: "space-around" }}>
+          <Button onClick={handleToggleDetalles}>Detalles</Button>
+
+          <FormControl sx={{ m: 1, width: 200, fontSize: 1 }}>
+            <InputLabel id="demo-multiple-checkbox-label">Empresas</InputLabel>
+            <Select
+              labelId="demo-multiple-checkbox-label"
+              id="demo-multiple-checkbox"
+              multiple
+              value={personName}
+              sx={{ fontSize: 13 }}
+              onChange={handleChange}
+              input={<OutlinedInput label="Empresas" />}
+              renderValue={(selected) => selected.join(", ")}
+              MenuProps={MenuProps}
+            >
+              {names.map((name) => (
+                <MenuItem sx={{ fontSize: 13 }} key={name} value={name}>
+                  <Checkbox checked={personName.indexOf(name as any) > -1} />
+                  <ListItemText sx={{ fontSize: 13 }} primary={name} />
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <ExcelGenerator instalattion={instalattion} empresas={empresas} personName={personName} />
+          <PdfGenerator instalattion={instalattion} empresas={empresas} personName={personName} />
+        </div>
+
         <Table aria-label="collapsible table">
           <TableHead>
             <TableRow>
@@ -229,19 +288,18 @@ export default function CollapsibleTable({
               />
               {openDetalles && (
                 <TableHeadComponent
-                ordenarIntalacionesAlfabeticamente={
-                  ordenarIntalacionesAlfabeticamente
-                }
-                orderFiels={orderFiels}
-                showFields={showFields}
-                handleSearch={handleSearch}
-                inicio={3}
-                final={7}
-              />
-              )
-              }
-              
-                 <TableHeadComponent
+                  ordenarIntalacionesAlfabeticamente={
+                    ordenarIntalacionesAlfabeticamente
+                  }
+                  orderFiels={orderFiels}
+                  showFields={showFields}
+                  handleSearch={handleSearch}
+                  inicio={3}
+                  final={7}
+                />
+              )}
+
+              <TableHeadComponent
                 ordenarIntalacionesAlfabeticamente={
                   ordenarIntalacionesAlfabeticamente
                 }
@@ -277,38 +335,37 @@ export default function CollapsibleTable({
               </TableCell>
               {openDetalles && (
                 <>
-                <TableCell>
-                <strong>
-                  {instalattion
-                    .map((item) => (item.state === "PENDIENTE" ? 1 : 0))
-                    .reduce((a, b) => (a + b) as any, 0)}
-                </strong>
-              </TableCell>
-              <TableCell>
-                <strong>
-                  {instalattion
-                    .map((item) => (item.state === "EFECTIVO" ? 1 : 0))
-                    .reduce((a, b) => (a + b) as any, 0)}
-                </strong>
-              </TableCell>
-              <TableCell>
-                <strong>
-                  {instalattion
-                    .map((item) => (item.state === "TRANSFERENCIA" ? 1 : 0))
-                    .reduce((a, b) => (a + b) as any, 0)}
-                </strong>
-              </TableCell>
-              <TableCell>
-                <strong>
-                  {instalattion
-                    .map((item) => (item.state === "PAGADO" ? 1 : 0))
-                    .reduce((a, b) => (a + b) as any, 0)}
-                </strong>
-              </TableCell>
+                  <TableCell>
+                    <strong>
+                      {instalattion
+                        .map((item) => (item.state === "PENDIENTE" ? 1 : 0))
+                        .reduce((a, b) => (a + b) as any, 0)}
+                    </strong>
+                  </TableCell>
+                  <TableCell>
+                    <strong>
+                      {instalattion
+                        .map((item) => (item.state === "EFECTIVO" ? 1 : 0))
+                        .reduce((a, b) => (a + b) as any, 0)}
+                    </strong>
+                  </TableCell>
+                  <TableCell>
+                    <strong>
+                      {instalattion
+                        .map((item) => (item.state === "TRANSFERENCIA" ? 1 : 0))
+                        .reduce((a, b) => (a + b) as any, 0)}
+                    </strong>
+                  </TableCell>
+                  <TableCell>
+                    <strong>
+                      {instalattion
+                        .map((item) => (item.state === "PAGADO" ? 1 : 0))
+                        .reduce((a, b) => (a + b) as any, 0)}
+                    </strong>
+                  </TableCell>
                 </>
-              )
-                }
-              
+              )}
+
               <TableCell>
                 <strong>$ {formatClp(`${bruto}`)}</strong>
               </TableCell>

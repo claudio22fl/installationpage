@@ -9,7 +9,7 @@ export const useFetchClient = () => {
 
   const fetchClient = async () => {
     const res = await fetch(
-      "https://plataformasgps.cl/api/clients?populate=*&pagination[pageSize]=10000000000000",
+      "https://plataformasgps.cl/api/clients?populate=*&pagination[pageSize]=100&pagination[page]=1",
       {
         cache: "no-store",
         mode: "cors",
@@ -21,6 +21,18 @@ export const useFetchClient = () => {
     }
 
     const { data }: DataClient = await res.json();
+
+    if(data.length === 100){
+      const res = await fetch("https://plataformasgps.cl/api/clients?populate=*&pagination[pageSize]=100&pagination[page]=2", {
+       cache: "no-store",
+       mode: "cors",
+     });
+     if (!res.ok) {
+       throw new Error("problema");
+     }
+     const { data: data2 }: DataClient = await res.json();
+     data.push(...data2);
+   }
 
     const formatData: client[] = data.map((data) => ({
       id: data.id,
