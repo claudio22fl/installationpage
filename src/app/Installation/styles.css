@@ -125,3 +125,19 @@
     align-items: center;
     max-width:  '1650px';
   }
+
+  /* styles.css */
+
+/* Estilos para pantallas grandes */
+@media (min-width: 1432px) {
+  .flex-auto.px-4.bg-gray-300.lg\:px-10.pt-0.rounded-b-xl {
+    width: 100%;
+  }
+}
+
+/* Estilos para pantallas pequeñas */
+@media (max-width: 1431px) {
+  .flex-auto.px-4.bg-gray-300.lg\:px-10.pt-0.rounded-b-xl {
+    width: 110%;
+  }
+}
