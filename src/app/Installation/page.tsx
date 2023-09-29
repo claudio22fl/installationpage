@@ -11,10 +11,12 @@ import { Container, Divider } from "@mui/material";
 export default function Page() {
   const { instalattion, fetchInstalattion } = useFetchInstallation();
   const { formData, setFormData } = useDataForm();
-
+  const logoWidth = window.innerWidth <= 1431 ? 110 : 100;
+  console.log(window.innerWidth);
+  console.log(logoWidth); 
   return (
     <main className={styles.main}> 
-         <div className="flex-auto px-4 bg-gray-300 lg:px-10  pt-0 rounded-b-xl" style={{width: '110%'}}>
+         <div className="flex-auto px-4 bg-gray-300 lg:px-10  pt-0 rounded-b-xl" style={{width: `${logoWidth}%`}}>
           <div className="text-center flex justify-between">
             <h6 className="text-blueGray-700 text-xl font-bold">Agregar Instalacion</h6>
             <button onClick={() => {}}>
@@ -33,7 +35,7 @@ export default function Page() {
           </div>
         </div>
         <Divider />
-        <div className="flex-auto px-4 bg-gray-300 lg:px-10  pt-0 rounded-b-xl" style={{width: '110%'}}>
+        <div className="flex-auto px-4 bg-gray-300 lg:px-10  pt-0 rounded-b-xl" style={{width: `${logoWidth}%`}}>
           <FormData
             refreshTable={fetchInstalattion}
             formData={formData}
