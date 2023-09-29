@@ -9,12 +9,14 @@ interface Props {
   instalattion: fotmatAttributes[];
   empresas: empresa[];
   personName: string[];
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const ExcelGenerator: React.FC<Props> = ({
   instalattion,
   empresas,
   personName,
+  setLoading,
 }: Props) => {
   const generateExcel = () => {
     const workbook = new ExcelJS.Workbook();
@@ -118,7 +120,9 @@ const ExcelGenerator: React.FC<Props> = ({
       cancelButtonText: "No",
     }).then((result) => {
       if (result.isConfirmed) {
+        setLoading(true);
         generateExcel();
+        setLoading(false);
       }
     });
   };

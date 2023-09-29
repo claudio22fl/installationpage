@@ -7,17 +7,20 @@ import { fotmatAttributes } from "@/types/Installation";
 import { empresa } from "@/types/Compani";
 import { formatClp } from "@/utils/const";
 import logoImage from "../assets/logo-main.png";
+import PdfIcon from "./PdfIcon";
 
 interface Props {
   instalattion: fotmatAttributes[];
   empresas: empresa[];
   personName: string[];
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const PdfGenerator: React.FC<Props> = ({
   instalattion,
   empresas,
   personName,
+  setLoading,
 }: Props) => {
 
   // filtrar instalattion por empresa
@@ -163,14 +166,16 @@ const PdfGenerator: React.FC<Props> = ({
       cancelButtonText: "No",
     }).then(async (result) => {
       if (result.isConfirmed) {
+        setLoading(true);
        await  generatePdf();
+        setLoading(false);
       }
     });
   };
 
   return (
     <div>
-      <ExcelIcon onClick={generarSwalPdf} />
+      <PdfIcon onClick={generarSwalPdf} />
     </div>
   );
 };

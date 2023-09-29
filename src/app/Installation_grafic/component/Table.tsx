@@ -13,6 +13,7 @@ import { Row2 } from "./Row";
 import {
   Button,
   Checkbox,
+  CircularProgress,
   FormControl,
   IconButton,
   InputLabel,
@@ -232,13 +233,14 @@ export default function CollapsibleTable({
       typeof value === "string" ? value.split(",") : value
     );
   };
-
+ const [loading, setLoading] = useState<boolean>(false);
   return (
     <>
       <TableContainer sx={{ minWidth: "99%" }} component={Paper}>
         <div style={{ display: "flex", justifyContent: "space-around" }}>
           <Button onClick={handleToggleDetalles}>Detalles</Button>
 
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <FormControl sx={{ m: 1, width: 200, fontSize: 1 }}>
             <InputLabel id="demo-multiple-checkbox-label">Empresas</InputLabel>
             <Select
@@ -260,9 +262,13 @@ export default function CollapsibleTable({
               ))}
             </Select>
           </FormControl>
-
-          <ExcelGenerator instalattion={instalattion} empresas={empresas} personName={personName} />
-          <PdfGenerator instalattion={instalattion} empresas={empresas} personName={personName} />
+          <div style={{ display: 'flex', width: 50, justifyContent: 'space-around', marginLeft: 25, gap: 10}}>
+          <ExcelGenerator instalattion={instalattion} empresas={empresas} personName={personName} setLoading={setLoading}/>
+          <PdfGenerator instalattion={instalattion} empresas={empresas} personName={personName} setLoading={setLoading}/>
+          </div>
+          
+          {loading && <CircularProgress />}
+          </div>
         </div>
 
         <Table aria-label="collapsible table">
