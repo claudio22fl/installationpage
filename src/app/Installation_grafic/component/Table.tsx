@@ -142,7 +142,7 @@ export default function CollapsibleTable({
 
   const bruto = instalattion.reduce((accumulator, item) => {
     const m2mProducts = item.product.filter((product) =>
-      product.name?.includes("")
+    !product.name?.includes("M2M")
     );
 
     const m2mCost = m2mProducts.reduce((productAccumulator, product) => {
@@ -154,7 +154,7 @@ export default function CollapsibleTable({
 
   const cost = instalattion.reduce((accumulator, item) => {
     const m2mProducts = item.product.filter((product) =>
-      product.name?.includes("")
+    !product.name?.includes("M2M")
     );
 
     const m2mCost = m2mProducts.reduce((productAccumulator, product) => {
@@ -193,7 +193,7 @@ export default function CollapsibleTable({
     return total + valorInstalacion;
   }, 0);
 
-  console.log(`Total con descuento: ${totalConDescuento}`);
+  
 
   const countRevisions = instalattion.reduce((count, item) => {
     // Verificar si item.product existe y es un arreglo con al menos un elemento

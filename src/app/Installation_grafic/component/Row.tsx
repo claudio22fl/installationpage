@@ -51,7 +51,7 @@ export function Row2({ row, client, fetchInstalattion, instalattion, openDetalle
         subtotal +
         (producto?.cost === undefined
           ? 0
-          : producto?.name === undefined
+          : producto.name?.includes("M2M")
           ? 0
           : producto.cost),
       0
@@ -65,7 +65,7 @@ export function Row2({ row, client, fetchInstalattion, instalattion, openDetalle
         subtotal +
         (producto?.value === undefined
           ? 0
-          : producto?.name === undefined
+          : producto.name?.includes("M2M")
           ? 0
           : producto.value),
       0
