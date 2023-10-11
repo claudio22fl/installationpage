@@ -10,7 +10,6 @@ import Swal from "sweetalert2";
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const empresa = localStorage.getItem('empresa');
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
