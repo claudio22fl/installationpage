@@ -232,7 +232,16 @@ export default function CollapsibleTable({
     );
   };
   const [loading, setLoading] = useState<boolean>(false);
-  const rol = localStorage.getItem("rol");
+  var empresa: any = '';
+  var rol : any= '';
+
+  try {
+    empresa = localStorage.getItem('empresa');
+    rol = localStorage.getItem('rol');
+  } catch (error) {
+    empresa = '';
+    rol = '';
+  }
   return (
     <>
       <TableContainer sx={{ minWidth: "99%" }} component={Paper}>

@@ -15,8 +15,18 @@ export default function Page() {
     fotmatAttributes[]
   >([]);
   const { client } = useFetchClient();
-  const empresa = localStorage.getItem("empresa");
-  const rol = localStorage.getItem("rol");
+  var empresa: any = '';
+  var rol : any= '';
+
+  try {
+    empresa = localStorage.getItem('empresa');
+    rol = localStorage.getItem('rol');
+  } catch (error) {
+    empresa = '';
+    rol = '';
+  }
+
+
   const [inicialMonth, setInicialMonth] = React.useState(getMonth());
   const [finalMonth, setFinalMonth] = React.useState(getMonth());
   console.log(rol);

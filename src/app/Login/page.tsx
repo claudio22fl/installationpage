@@ -30,6 +30,7 @@ const LoginForm = () => {
     if( data2.length > 0){
       localStorage.setItem('empresa', data.data[0].attributes.name);
       localStorage.setItem('rol', data.data[0].attributes.rol);
+      localStorage.setItem('loggedIn', "true");
       console.log("data", data.data[0].attributes.name);
       console.log("data", data.data[0].attributes.rol);
       window.location.href = '/Installation_list';
