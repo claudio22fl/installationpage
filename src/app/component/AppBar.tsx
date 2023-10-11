@@ -22,6 +22,7 @@ import SaveAsIcon from "@mui/icons-material/SaveAs";
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import SimCardIcon from '@mui/icons-material/SimCard';
 import CloseIcon from '@mui/icons-material/Close';
+import { Tooltip } from "@mui/material";
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -182,7 +183,8 @@ export default function MiniDrawer({ children }: Props) {
          <Typography variant="h6" noWrap component="div">
             {empresa}
           </Typography>
-         <IconButton
+          <Tooltip title="Cerrar sesion" placement="bottom">
+          <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={closeUser}
@@ -190,6 +192,8 @@ export default function MiniDrawer({ children }: Props) {
           >
             <CloseIcon />
           </IconButton>
+             </Tooltip>
+         
          </div>
           
 
