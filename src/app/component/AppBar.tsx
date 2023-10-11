@@ -125,6 +125,7 @@ export default function MiniDrawer({ children }: Props) {
   const closeUser = () => {
     localStorage.removeItem('empresa');
     localStorage.removeItem('rol');
+    localStorage.removeItem('loggedIn');
     window.location.href = '/';
   }
 

@@ -14,13 +14,13 @@ export default function IsLogin({ children }: any) {
       const loggedIn = localStorage.getItem('loggedIn');
       setIsLoggedIn(loggedIn === 'true');
       setIsLoading(false); // Marcar como cargado una vez que los datos estén listos
-    }, 2000); // Simulamos una carga de 2 segundos
+    }, 0); // Simulamos una carga de 2 segundos
   }, []);
 
   return (
     <div style={{ width: '100%', marginTop: '40px' }}>
       {isLoading ? (
-         <MiniDrawer children={children} />
+         <MiniDrawer children={null} />
       ) : (
         isLoggedIn ? <MiniDrawer children={children} /> : <LoginForm />
       )}
