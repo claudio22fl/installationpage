@@ -141,8 +141,8 @@ export default function CollapsibleTable({
   };
 
   const bruto = instalattion.reduce((accumulator, item) => {
-    const m2mProducts = item.product.filter((product) =>
-    !product.name?.includes("M2M")
+    const m2mProducts = item.product.filter(
+      (product) => !product.name?.includes("M2M")
     );
 
     const m2mCost = m2mProducts.reduce((productAccumulator, product) => {
@@ -153,8 +153,8 @@ export default function CollapsibleTable({
   }, 0);
 
   const cost = instalattion.reduce((accumulator, item) => {
-    const m2mProducts = item.product.filter((product) =>
-    !product.name?.includes("M2M")
+    const m2mProducts = item.product.filter(
+      (product) => !product.name?.includes("M2M")
     );
 
     const m2mCost = m2mProducts.reduce((productAccumulator, product) => {
@@ -192,8 +192,6 @@ export default function CollapsibleTable({
 
     return total + valorInstalacion;
   }, 0);
-
-  
 
   const countRevisions = instalattion.reduce((count, item) => {
     // Verificar si item.product existe y es un arreglo con al menos un elemento
@@ -233,41 +231,70 @@ export default function CollapsibleTable({
       typeof value === "string" ? value.split(",") : value
     );
   };
- const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const rol = localStorage.getItem("rol");
   return (
     <>
       <TableContainer sx={{ minWidth: "99%" }} component={Paper}>
         <div style={{ display: "flex", justifyContent: "space-around" }}>
-          <Button onClick={handleToggleDetalles}>Detalles</Button>
+          {rol === "admin" && (
+            <Button onClick={handleToggleDetalles}>Detalles</Button>
+          )}
 
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <FormControl sx={{ m: 1, width: 200, fontSize: 1 }}>
-            <InputLabel id="demo-multiple-checkbox-label">Empresas</InputLabel>
-            <Select
-              labelId="demo-multiple-checkbox-label"
-              id="demo-multiple-checkbox"
-              multiple
-              value={personName}
-              sx={{ fontSize: 13 }}
-              onChange={handleChange}
-              input={<OutlinedInput label="Empresas" />}
-              renderValue={(selected) => selected.join(", ")}
-              MenuProps={MenuProps}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <FormControl sx={{ m: 1, width: 200, fontSize: 1 }}>
+              <InputLabel id="demo-multiple-checkbox-label">
+                Empresas
+              </InputLabel>
+              <Select
+                labelId="demo-multiple-checkbox-label"
+                id="demo-multiple-checkbox"
+                multiple
+                value={personName}
+                sx={{ fontSize: 13 }}
+                onChange={handleChange}
+                input={<OutlinedInput label="Empresas" />}
+                renderValue={(selected) => selected.join(", ")}
+                MenuProps={MenuProps}
+              >
+                {names.map((name) => (
+                  <MenuItem sx={{ fontSize: 13 }} key={name} value={name}>
+                    <Checkbox checked={personName.indexOf(name as any) > -1} />
+                    <ListItemText sx={{ fontSize: 13 }} primary={name} />
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <div
+              style={{
+                display: "flex",
+                width: 50,
+                justifyContent: "space-around",
+                marginLeft: 25,
+                gap: 10,
+              }}
             >
-              {names.map((name) => (
-                <MenuItem sx={{ fontSize: 13 }} key={name} value={name}>
-                  <Checkbox checked={personName.indexOf(name as any) > -1} />
-                  <ListItemText sx={{ fontSize: 13 }} primary={name} />
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <div style={{ display: 'flex', width: 50, justifyContent: 'space-around', marginLeft: 25, gap: 10}}>
-          <ExcelGenerator instalattion={instalattion} empresas={empresas} personName={personName} setLoading={setLoading}/>
-          <PdfGenerator instalattion={instalattion} empresas={empresas} personName={personName} setLoading={setLoading}/>
-          </div>
-          
-          {loading && <CircularProgress />}
+              <ExcelGenerator
+                instalattion={instalattion}
+                empresas={empresas}
+                personName={personName}
+                setLoading={setLoading}
+              />
+              <PdfGenerator
+                instalattion={instalattion}
+                empresas={empresas}
+                personName={personName}
+                setLoading={setLoading}
+              />
+            </div>
+
+            {loading && <CircularProgress />}
           </div>
         </div>
 
@@ -304,8 +331,20 @@ export default function CollapsibleTable({
                   final={7}
                 />
               )}
-
-              <TableHeadComponent
+              {rol === "admin" ? (
+                <TableHeadComponent
+                  ordenarIntalacionesAlfabeticamente={
+                    ordenarIntalacionesAlfabeticamente
+                  }
+                  orderFiels={orderFiels}
+                  showFields={showFields}
+                  handleSearch={handleSearch}
+                  inicio={7}
+                  final={11}
+                />
+              ):
+              (
+                <TableHeadComponent
                 ordenarIntalacionesAlfabeticamente={
                   ordenarIntalacionesAlfabeticamente
                 }
@@ -313,8 +352,9 @@ export default function CollapsibleTable({
                 showFields={showFields}
                 handleSearch={handleSearch}
                 inicio={7}
-                final={11}
-              />
+                final={8}
+              />  
+              )}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -375,15 +415,21 @@ export default function CollapsibleTable({
               <TableCell>
                 <strong>$ {formatClp(`${bruto}`)}</strong>
               </TableCell>
-              <TableCell>
-                <strong>$ {formatClp(`${cost}`)}</strong>
-              </TableCell>
-              <TableCell>
-                <strong>$ {formatClp(`${totalConDescuento}`)}</strong>
-              </TableCell>
-              <TableCell>
-                <strong>$ {formatClp(`${totalConDescuento + cost}`)}</strong>
-              </TableCell>
+              {rol === "admin" && (
+                <>
+                  <TableCell>
+                    <strong>$ {formatClp(`${cost}`)}</strong>
+                  </TableCell>
+                  <TableCell>
+                    <strong>$ {formatClp(`${totalConDescuento}`)}</strong>
+                  </TableCell>
+                  <TableCell>
+                    <strong>
+                      $ {formatClp(`${totalConDescuento + cost}`)}
+                    </strong>
+                  </TableCell>
+                </>
+              )}
             </TableRow>
           </TableBody>
           <TableFooter>

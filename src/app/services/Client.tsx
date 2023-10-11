@@ -72,7 +72,6 @@ export const postClient = async (dataUser: client) => {
       ...formatDataUser(),
     },
   };
-  console.log(JSON.stringify(newClient));
   const res = await fetch("https://plataformasgps.cl/api/clients", {
     method: "POST",
     mode: "cors",
@@ -86,7 +85,6 @@ export const postClient = async (dataUser: client) => {
   if (!res.ok) {
     const responseData = await res.json();
      const { message } = responseData.error;
-   console.log(message);
    if(message === "This attribute must be unique"){
     Swal.fire({
       title: `El usuario ${dataUser.name} ya existe`,

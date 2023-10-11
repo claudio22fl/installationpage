@@ -4,6 +4,8 @@ import { Inter } from "next/font/google";
 import MenuAppBar from "./component/AppBar";
 import MiniDrawer from "./component/AppBar";
 import React from "react";
+import LoginForm from "./Login/page";
+import IsLogin from "./component/formComponent/IsLogin";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <MiniDrawer children={children} />
+        <IsLogin children={children}/>
       </body>
     </html>
   );

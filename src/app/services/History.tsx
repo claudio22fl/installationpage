@@ -80,8 +80,6 @@ export const postHistory = async (dataUser: history) => {
        "idinstalattion": dataUser.idinstalattion,
     },
   };
-
-   console.log(JSON.stringify(newHistory));
   const res = await fetch("https://plataformasgps.cl/api/histories", {
     method: "POST",
     mode: "cors",
@@ -95,7 +93,6 @@ export const postHistory = async (dataUser: history) => {
   if (!res.ok) {
     const responseData = await res.json();
      const { message } = responseData.error;
-   console.log(message);
    
     Swal.fire({
       title: `Error al agregar cliente`,

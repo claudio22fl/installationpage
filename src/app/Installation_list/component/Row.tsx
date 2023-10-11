@@ -36,7 +36,7 @@ export function Row({ row, client, fetchInstalattion }: Props) {
   const [open, setOpen] = React.useState(false);
   const [openUpdate, setOpenUpdate] = React.useState(false);
   const lines = row.note.split("\n");
-
+  const rol = localStorage.getItem("rol");
   let total = 0;
 
   row.product?.map((historyRow, index) => {
@@ -138,40 +138,46 @@ export function Row({ row, client, fetchInstalattion }: Props) {
           ))}
         </TableCell>
         <TableCell width={50} align="left">
-          <ButtonGroup
-            disableElevation
-            style={{ alignItems: "center", justifyContent: "center" }}
-            variant="contained"
-            aria-label="Disabled elevation buttons"
-          >
-            <Tooltip title="Editar">
-              <IconButton
-                onClick={handleClickOpen}
-                aria-label="delete"
-                size="small"
-              >
-                <EditIcon fontSize="inherit" />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Eliminar">
-              <IconButton
-                onClick={() => deleteInstallation(row?.id)}
-                aria-label="delete"
-                size="small"
-              >
-                <DeleteIcon color="error" fontSize="inherit" />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Actualizar Pago">
-              <IconButton
-                onClick={() => updateInstallation(row?.id, row.state)}
-                aria-label="delete"
-                size="small"
-              >
-                <PaymentIcon fontSize="inherit" />
-              </IconButton>
-            </Tooltip>
-          </ButtonGroup>
+
+        {rol === "admin" && (
+             <ButtonGroup
+             disableElevation
+             style={{ alignItems: "center", justifyContent: "center" }}
+             variant="contained"
+             aria-label="Disabled elevation buttons"
+           >
+          
+             <Tooltip title="Editar">
+               <IconButton
+                 onClick={handleClickOpen}
+                 aria-label="delete"
+                 size="small"
+               >
+                 <EditIcon fontSize="inherit" />
+               </IconButton>
+             </Tooltip>
+             <Tooltip title="Eliminar">
+               <IconButton
+                 onClick={() => deleteInstallation(row?.id)}
+                 aria-label="delete"
+                 size="small"
+               >
+                 <DeleteIcon color="error" fontSize="inherit" />
+               </IconButton>
+             </Tooltip>
+             <Tooltip title="Actualizar Pago">
+               <IconButton
+                 onClick={() => updateInstallation(row?.id, row.state)}
+                 aria-label="delete"
+                 size="small"
+               >
+                 <PaymentIcon fontSize="inherit" />
+               </IconButton>
+             </Tooltip>
+           </ButtonGroup>
+            )}
+
+         
           <Stack spacing={1}></Stack>
         </TableCell>
       </TableRow>

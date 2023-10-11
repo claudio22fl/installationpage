@@ -13,7 +13,6 @@ export default function MonthSelect({month, setMonth}: Props) {
 
 
     const handleChange = (e: { target: { name: string; value: string } }) => {
-        console.log(e.target.value);
         setMonth(Number(e.target.value));
 
     }

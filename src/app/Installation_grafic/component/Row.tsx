@@ -116,7 +116,7 @@ export function Row2({ row, client, fetchInstalattion, instalattion, openDetalle
   }, 0);
 
   //contar pendientes de data.state
-
+  const rol = localStorage.getItem("rol");
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -188,7 +188,9 @@ export function Row2({ row, client, fetchInstalattion, instalattion, openDetalle
         <TableCell style={{ fontSize: 12 }} align="left">
           $ {formatClp(`${sumaValue}`)}
         </TableCell>
-        <TableCell style={{ fontSize: 12 }} align="left">
+        {rol === "admin" && (
+        <>
+         <TableCell style={{ fontSize: 12 }} align="left">
           $ {formatClp(`${sumaCostos}`)}
         </TableCell>
         <TableCell style={{ fontSize: 12 }} align="left">
@@ -197,6 +199,9 @@ export function Row2({ row, client, fetchInstalattion, instalattion, openDetalle
         <TableCell style={{ fontSize: 12 }} align="left">
           $ {formatClp(`${totalNeto + sumaCostos}`)}
         </TableCell>
+        </>
+        )}
+       
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={12}>

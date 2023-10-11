@@ -11,8 +11,6 @@ export const useFormCreate = ({ refreshTable, formData, setFormData }: any) => {
     const date1 = new Date(formData[`fechainicio`]);
     date1.setMonth(date1.getMonth() + Number(e.target.value));
 
-    console.log(e.target.name);
-    console.log(e.target.value);
     if (e.target.name === "installer") {
       const upperCaseValue = e.target.value.toUpperCase();
       let installer = formData['installer'];
@@ -24,7 +22,6 @@ if (!installer.includes(upperCaseValue)) {
   installer = installer.split(',').filter((item: any) => item !== upperCaseValue).join(',');
 }
 
-      console.log(installer);
       setFormData({
         ...formData,
         [e.target.name]: installer, 
@@ -66,7 +63,6 @@ if (!installer.includes(upperCaseValue)) {
         ...formData,
       },
     };
-    console.log(JSON.stringify(formatData));
 
     try {
       const response = await fetch(
@@ -121,7 +117,6 @@ if (!installer.includes(upperCaseValue)) {
         ...formData,
       },
     };
-    console.log(JSON.stringify(formatData));
     try {
       const response = await fetch(
         `https://plataformasgps.cl/api/instalattions/${formData.id}`,

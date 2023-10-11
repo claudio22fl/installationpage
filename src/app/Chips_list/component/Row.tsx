@@ -148,8 +148,6 @@ export function Row2({
     for (const item of selectedRows) {
       const filter = rows.filter((row: history) => row.id === item);
 
-      console.log(history);
-
       const ultimoHistorial = newHistory.reduce((lastHistory :any, currentHistory) => {
         if (currentHistory.idinstalattion === filter[0].id) {
           if (!lastHistory || (currentHistory.id ? currentHistory.id : 0) > (lastHistory.id ? lastHistory.id : 0)) {
@@ -158,8 +156,6 @@ export function Row2({
         }
         return lastHistory;
       }, undefined);
-
-      console.log(ultimoHistorial);
 
       if (ultimoHistorial == undefined) {
         const data: history = {
@@ -170,7 +166,6 @@ export function Row2({
           ),
           idinstalattion: filter[0].id,
         };
-        console.log('1');
          postHistory(data);
       } else {
         const data: history = {
@@ -181,7 +176,6 @@ export function Row2({
           ),
           idinstalattion: filter[0].id,
         };
-        console.log(data);
          postHistory(data);
       }
     

@@ -121,7 +121,6 @@ const FormData = ({
   };
 
   const saveUser = async () => {
-    console.log(dataUser);
     const res = await postClient(dataUser);
 
     setFormData({

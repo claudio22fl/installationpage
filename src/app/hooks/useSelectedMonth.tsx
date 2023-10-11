@@ -24,7 +24,6 @@ export const useSelectedMonth = (installation : fotmatAttributes[], month: numbe
     }
     );
 
-    console.log(newInstallation);
 
    return {newInstallation}
    

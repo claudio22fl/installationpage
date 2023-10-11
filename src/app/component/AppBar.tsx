@@ -21,7 +21,7 @@ import DataUsageIcon from '@mui/icons-material/DataUsage';
 import SaveAsIcon from "@mui/icons-material/SaveAs";
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import SimCardIcon from '@mui/icons-material/SimCard';
-
+import CloseIcon from '@mui/icons-material/Close';
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -100,6 +100,8 @@ interface Props {
 export default function MiniDrawer({ children }: Props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const empresa = localStorage.getItem('empresa');
+  const rol = localStorage.getItem('rol');
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -109,6 +111,11 @@ export default function MiniDrawer({ children }: Props) {
     setOpen(false);
   };
  
+  const closeUser = () => {
+    localStorage.removeItem('empresa');
+    localStorage.removeItem('rol');
+    window.location.href = '/';
+  }
 
 
   const toggleDrawer = [
@@ -158,8 +165,25 @@ export default function MiniDrawer({ children }: Props) {
           <Typography variant="h6" noWrap component="div">
             Instalaciones
           </Typography>
+         
+         <div style={{position:'absolute' , right: 25, display: 'flex', justifyContent: 'center' , alignItems: 'center'}}>
+         <Typography variant="h6" noWrap component="div">
+            {empresa}
+          </Typography>
+         <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={closeUser}
+            edge="end"
+          >
+            <CloseIcon />
+          </IconButton>
+         </div>
+          
+
         </Toolbar>
       </AppBar>
+     
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
@@ -172,7 +196,7 @@ export default function MiniDrawer({ children }: Props) {
         </DrawerHeader>
         <Divider />
         <List>
-          {toggleDrawer.map(
+          {toggleDrawer.slice((rol === "user" ? 1 : 0),(rol === "user" ? 3 : 5)).map(
             ({label, onClick, icon, href}) => (
               <ListItem key={label} disablePadding sx={{ display: "block" }}>
                 <ListItemButton

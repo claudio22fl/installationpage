@@ -13,7 +13,7 @@ export default function Page() {
   const { formData, setFormData } = useDataForm();
 
   return (
-    <main className={styles.main}> 
+    <main  style={{ width: '105%', marginLeft: '40px', marginTop: "50px", gap: "10"}}> 
          <div className="flex-auto px-4 bg-gray-300 lg:px-10  pt-0 rounded-b-xl">
           <div className="text-center flex justify-between">
             <h6 className="text-blueGray-700 text-xl font-bold">Agregar Instalacion</h6>

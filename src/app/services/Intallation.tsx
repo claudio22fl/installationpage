@@ -32,8 +32,6 @@ export const useFetchInstallation = () => {
       data.push(...data2);
     }
 
-    console.log(data);
-
     const formatData: fotmatAttributes[] = data.map((data: any) => ({
       id: data.id,
       fecha: formatearFecha(data.attributes.fecha),

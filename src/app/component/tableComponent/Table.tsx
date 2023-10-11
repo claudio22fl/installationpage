@@ -53,10 +53,8 @@ export default function SpanningTable({rows,setRows, setFormData, formData}: Pod
 
 
     const deleteRow = (index: number)  => {
-      console.log(index);
         const newRows = [...rows];
         newRows.splice(index, 1);
-        console.log(newRows);
         setRows(newRows);
         setFormData({
           ...formData,

@@ -62,7 +62,6 @@ export default function page() {
     const filteredDataArray = newDataArray.filter((item) => item !== undefined);
 
     setRows(filteredDataArray);
-    console.log(filteredDataArray);
   }, [instalattion]);
 
   return (
