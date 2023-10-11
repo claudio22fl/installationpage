@@ -109,7 +109,7 @@ export default function MiniDrawer({ children }: Props) {
     rol = localStorage.getItem('rol');
   } catch (error) {
     empresa = '';
-    rol = '';
+    rol = 'user';
   }
 
 
