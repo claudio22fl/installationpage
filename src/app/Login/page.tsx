@@ -14,8 +14,6 @@ const LoginForm = () => {
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     
-    console.log("email", email);
-    console.log("password", password);  
     const url = `https://plataformasgps.cl/api/companies?filters[name][$eq][0]=${email}&filters[password][$eq][1]=${password}`;
    
     const response = await fetch(url, {
@@ -31,8 +29,6 @@ const LoginForm = () => {
       localStorage.setItem('empresa', data.data[0].attributes.name);
       localStorage.setItem('rol', data.data[0].attributes.rol);
       localStorage.setItem('loggedIn', "true");
-      console.log("data", data.data[0].attributes.name);
-      console.log("data", data.data[0].attributes.rol);
       window.location.href = '/Installation_list';
     }else{
       Swal.fire({

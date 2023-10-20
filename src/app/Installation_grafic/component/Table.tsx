@@ -444,7 +444,7 @@ export default function CollapsibleTable({
           <TableFooter>
             <TableRow>
               <TablePagination
-                rowsPerPageOptions={[10, 20, 100, { label: "All", value: -1 }]}
+                rowsPerPageOptions={[10, 20, 100, { label: "All", value: 10000 }]}
                 colSpan={12}
                 count={newPagination.length}
                 rowsPerPage={rowsPerPage}

@@ -18,10 +18,10 @@ export const useFetchInstallation = () => {
       throw new Error("problema");
     }
 
-    const { data }: IRootInstallation = await res.json();
-
-    if(data.length === 100){
-       const res = await fetch("https://plataformasgps.cl/api/instalattions?populate=*&sort[0]=fecha:DESC&sort[1]=hours:DESC&pagination[pageSize]=100&pagination[page]=2", {
+    const { data, meta }: IRootInstallation = await res.json();
+    
+    for (let index = 2; index <= meta.pagination.pageCount; index++) {
+      const res = await fetch(`https://plataformasgps.cl/api/instalattions?populate=*&sort[0]=fecha:DESC&sort[1]=hours:DESC&pagination[pageSize]=100&pagination[page]=${index}`, {
         cache: "no-store",
         mode: "cors",
       });
@@ -31,6 +31,7 @@ export const useFetchInstallation = () => {
       const { data: data2 }: IRootInstallation = await res.json();
       data.push(...data2);
     }
+  
 
     const formatData: fotmatAttributes[] = data.map((data: any) => ({
       id: data.id,

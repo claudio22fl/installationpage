@@ -29,7 +29,6 @@ export default function Page() {
 
   const [inicialMonth, setInicialMonth] = React.useState(getMonth());
   const [finalMonth, setFinalMonth] = React.useState(getMonth());
-  console.log(rol);
   const { newInstallation } = useSelectedMonth(
     rol === "user" ? instalattionCompani : instalattion,
     inicialMonth,
@@ -37,11 +36,9 @@ export default function Page() {
   );
 
   useEffect(() => {
-    console.log(empresa);
     if (empresa) {
       //filtrar por empresa
       const installationsCompany = instalattion.filter((installation: any) => {
-        console.log(installation.company, empresa);
         return installation.company === empresa;
       });
       // Establecer el objeto de instalaciones por empresa en el estado

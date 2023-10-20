@@ -43,7 +43,6 @@ export default function page() {
   });
 
   useEffect(() => {
-    console.log(empresa);
     if (empresa) {
       //filtrar por empresa
       const installationsCompany = instalattion.filter((installation: any) => {

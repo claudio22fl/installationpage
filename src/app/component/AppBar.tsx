@@ -24,6 +24,7 @@ import SimCardIcon from '@mui/icons-material/SimCard';
 import CloseIcon from '@mui/icons-material/Close';
 import { Tooltip } from "@mui/material";
 const drawerWidth = 240;
+import StorageIcon from '@mui/icons-material/Storage';
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -155,6 +156,12 @@ export default function MiniDrawer({ children }: Props) {
       icon: <SimCardIcon  sx={{color: 'red'}}/>,
       onClick: handleDrawerOpen,
       href: "/Chips_list",
+    },
+    {
+      label: "Chips Instalaciones",
+      icon: <StorageIcon  sx={{color: 'green'}}/>,
+      onClick: handleDrawerOpen,
+      href: "https://adminns.vercel.app/servers",
     },
   ];
 
