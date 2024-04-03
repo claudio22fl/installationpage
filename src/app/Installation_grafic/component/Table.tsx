@@ -165,6 +165,7 @@ export default function CollapsibleTable({
   }, 0);
 
   function calcularValorConDescuento(producto: Producto, porcentaje: number) {
+    
     const valorDescontado = producto.value - producto.cost; // Restar el costo al valor
     return valorDescontado - (valorDescontado * porcentaje) / 100; // Aplicar el porcentaje de descuento
   }
@@ -174,6 +175,12 @@ export default function CollapsibleTable({
     // Suma el valor de los productos en esta instalación con el descuento aplicado
     const valorInstalacion = instalacion.product.reduce(
       (subtotal, producto) => {
+        // Verificar si el nombre del producto contiene la cadena "CHIP"
+        if (producto?.name?.includes('CHIP')) {
+          // Si el nombre del producto contiene "CHIP", no sumar nada al subtotal
+          return subtotal;
+        }
+    
         const empresa = empresas.find((e) => e.label === instalacion.company);
         if (empresa !== undefined) {
           // Calcular el valor del producto restando el costo y luego aplicar el descuento de la empresa
@@ -187,9 +194,9 @@ export default function CollapsibleTable({
           return subtotal + producto.value;
         }
       },
-      0
+      0 // Valor inicial del subtotal
     );
-
+    console.log(instalacion.product)
     return total + valorInstalacion;
   }, 0);
 
@@ -242,6 +249,7 @@ export default function CollapsibleTable({
     empresa = '';
     rol = '';
   }
+
   return (
     <>
       <TableContainer sx={{ minWidth: "99%" }} component={Paper}>

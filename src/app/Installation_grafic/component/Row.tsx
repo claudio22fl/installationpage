@@ -103,7 +103,7 @@ export function Row2({ row, client, fetchInstalattion, instalattion, openDetalle
 
   // Luego, puedes usar esta función para calcular el total en tu código:
   const totalNeto = calcularTotal(sumaValue, sumaCostos, row);
-
+ 
   const countRevisions = data.reduce((count, item) => {
     // Verificar si item.product existe y es un arreglo con al menos un elemento
     if (Array.isArray(item.product) && item.product.length > 0) {
