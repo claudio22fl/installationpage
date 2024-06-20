@@ -20,19 +20,22 @@ export const useFetchClient = () => {
       throw new Error("problema");
     }
 
-    const { data }: DataClient = await res.json();
+    const { data , meta }: DataClient = await res.json();
 
-    if(data.length === 100){
-      const res = await fetch("https://plataformasgps.cl/api/clients?populate=*&pagination[pageSize]=100&pagination[page]=2", {
-       cache: "no-store",
-       mode: "cors",
-     });
-     if (!res.ok) {
-       throw new Error("problema");
-     }
-     const { data: data2 }: DataClient = await res.json();
-     data.push(...data2);
-   }
+
+    for (let index = 2; index <= meta.pagination.pageCount; index++) {
+      const res = await fetch(`https://plataformasgps.cl/api/clients?populate=*&pagination[pageSize]=100&pagination[page]=${index}`, {
+        cache: "no-store",
+        mode: "cors",
+      });
+      if (!res.ok) {
+        throw new Error("problema");
+      }
+      const { data: data2 }: DataClient = await res.json();
+      data.push(...data2);
+    }
+
+    console.log(data)
 
     const formatData: client[] = data.map((data) => ({
       id: data.id,

@@ -2,6 +2,7 @@
 
 export interface DataClient {
     data: IClient[]
+    meta: Meta
   }
 
 export interface IClient {
