@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../page.module.css";
 import FormData from "../component/formComponent/Formulariosims";
 import { useDataForm } from "./hooks/useDaraForm";
@@ -7,10 +7,22 @@ import { inputstabla } from "../hooks/mockInputs";
 import { useFetchInstallation } from "../services/Intallation";
 import './styles.css'
 import { Container, Divider } from "@mui/material";
+import { IImpuchip } from "@/types/Types";
 
 export default function Page() {
   const { instalattion, fetchInstalattion } = useFetchInstallation();
   const { formData, setFormData } = useDataForm();
+  const [inputs, setInputs] = useState<IImpuchip[]>([])
+
+ 
+
+  useEffect(() => {
+    const getInputs = async () => {
+      setInputs(await inputstabla())
+    }
+
+    getInputs()
+  }, [inputstabla])
 
   return (
     <main  style={{ width: '105%', marginLeft: '40px', marginTop: "50px", gap: "10"}}> 
@@ -38,7 +50,7 @@ export default function Page() {
             refreshTable={fetchInstalattion}
             formData={formData}
             setFormData={setFormData}
-            inputstabla={inputstabla}
+            inputstabla={inputs}
             isUpdate={false}
           />
         </div>

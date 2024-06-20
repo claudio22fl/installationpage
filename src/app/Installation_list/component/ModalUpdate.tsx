@@ -12,9 +12,10 @@ import { useDataForm } from "@/app/Installation/hooks/useDaraForm";
 import FormData from "@/app/component/formComponent/Formulariosims";
 import { inputstabla } from "@/app/hooks/mockInputs";
 import "../../Installation/styles.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { formatearFecha } from "@/utils/const";
 import { client } from "@/types/Client";
+import { IImpuchip } from "@/types/Types";
 
 interface IModalUpdate {
   open: boolean;
@@ -76,6 +77,18 @@ export default function ModalUpdate({
     }
   };
 
+  const [inputs, setInputs] = useState<IImpuchip[]>([])
+  
+  useEffect(() => {
+    const getInputs = async () => {
+      setInputs(await inputstabla())
+    }
+
+    getInputs()
+  }, [inputstabla])
+
+
+
   return (
     <Dialog
       disableEscapeKeyDown
@@ -90,7 +103,7 @@ export default function ModalUpdate({
           refreshTable={fetchInstalattion}
           formData={formData}
           setFormData={setFormData}
-          inputstabla={inputstabla}
+          inputstabla={inputs}
           isUpdate={true}
         />
       </DialogContent>
