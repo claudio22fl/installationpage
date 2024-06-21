@@ -50,7 +50,7 @@ const FormData = ({
   } = useDataDevice();
 
   const defaultForm = () => {
-    handleDefaultForm();
+    handleDefaultForm?.();
     serDataUser(
       {
         name: "",

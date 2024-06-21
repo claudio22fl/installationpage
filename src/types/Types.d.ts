@@ -39,7 +39,7 @@ export type IndexPageProps = {
   setFormData: React.Dispatch<React.SetStateAction<fotmatAttributes>>;
   inputstabla: IImpuchip[];
   isUpdate: boolean;
-  handleDefaultForm: () => void
+  handleDefaultForm?: () => void
 };
 
 export type formatRow = {
