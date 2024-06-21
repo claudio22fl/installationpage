@@ -28,5 +28,24 @@ export const useDataForm = () => {
     state: "PENDIENTE",
   });
 
-  return { formData, setFormData };
+
+  const handleDefaultForm = () => {
+    setFormData({
+      fecha: formatDateInputs(new Date().toString()),
+      hours: formatHourInputs(new Date().toString()),
+      installer: "",
+      installationtype: "",
+      address: "",
+      vehiclename: "",
+      patent: "",
+      note: "",
+      product: productoInicial,
+      client: "",
+      company: "",
+      commune: "",
+      state: "PENDIENTE",
+    });
+  }
+
+  return { formData, setFormData, handleDefaultForm };
 };

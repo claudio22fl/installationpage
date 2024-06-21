@@ -7,14 +7,13 @@ import { inputstabla } from "../hooks/mockInputs";
 import { useFetchInstallation } from "../services/Intallation";
 import './styles.css'
 import { Container, Divider } from "@mui/material";
-import { IImpuchip } from "@/types/Types";
+import { IImpuchip, Irows } from "@/types/Types";
 
 export default function Page() {
   const { instalattion, fetchInstalattion } = useFetchInstallation();
-  const { formData, setFormData } = useDataForm();
+  const { formData, setFormData, handleDefaultForm } = useDataForm();
   const [inputs, setInputs] = useState<IImpuchip[]>([])
 
- 
 
   useEffect(() => {
     const getInputs = async () => {
@@ -29,7 +28,7 @@ export default function Page() {
          <div className="flex-auto px-4 bg-gray-300 lg:px-10  pt-0 rounded-b-xl">
           <div className="text-center flex justify-between">
             <h6 className="text-blueGray-700 text-xl font-bold">Agregar Instalacion</h6>
-            <button onClick={() => {}}>
+            <button onClick={() => {handleDefaultForm()}}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -52,6 +51,7 @@ export default function Page() {
             setFormData={setFormData}
             inputstabla={inputs}
             isUpdate={false}
+            handleDefaultForm={handleDefaultForm}
           />
         </div>
       

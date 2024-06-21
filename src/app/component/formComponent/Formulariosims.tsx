@@ -27,17 +27,11 @@ const FormData = ({
   setFormData,
   inputstabla,
   isUpdate,
+  handleDefaultForm
 }: IndexPageProps) => {
-  const { handleChange, handleSubmit, autocompleteChague, handleEdit } =
-    useFormCreate({
-      refreshTable,
-      formData,
-      setFormData,
-    });
 
-  const { compani } = useFetchCompani();
-  const { chips } = useFetchChips();
-
+  const [rows, setRows] = useState<Irows[]>(formData.product);
+  console.log(rows, "rows")
   const {
     dataUser,
     serDataUser,
@@ -45,7 +39,7 @@ const FormData = ({
     client,
     handleChancheUser,
   } = useDataClient({ setFormData, formData });
-
+ 
   const {
     devices,
     device,
@@ -54,6 +48,40 @@ const FormData = ({
     handleChancheDevice,
     autocompleteChagueChip,
   } = useDataDevice();
+
+  const defaultForm = () => {
+    handleDefaultForm();
+    serDataUser(
+      {
+        name: "",
+        fone: "",
+        email: "",
+      }
+    )
+    setDevices({
+      label: "",
+      cost: "",
+      value: "",
+      imeigps: "",
+      tipochip: "",
+      numerochip: "",
+    });
+    setRows([]);
+  };
+
+  const { handleChange, handleSubmit, autocompleteChague, handleEdit } =
+    useFormCreate({
+      refreshTable,
+      formData,
+      setFormData,
+      defaultForm
+    });
+
+  const { compani } = useFetchCompani();
+  const { chips } = useFetchChips();
+
+
+
 
   useEffect(() => {
     client?.forEach((element) => {
@@ -89,8 +117,7 @@ const FormData = ({
     }
   }, [compani]);
 
-  const [rows, setRows] = useState<Irows[]>(formData.product);
-
+  
   const saveData = () => {
     const cost = devices.cost.replace(/[,\.]/g, "");
     const value = devices.value.replace(/[,\.]/g, "");
@@ -260,9 +287,17 @@ const FormData = ({
         </RadioGroup>
       </div>
 
-      <div className=" mt-10 text-right">
+      <div className="flex mt-10 text-right gap-4" style={{ marginTop: 20, gap: 15 }}>
         <Button endIcon={<SendIcon />} type="submit" variant="contained">
           Enviar
+        </Button>
+        <Button
+          onClick={() => {
+            defaultForm();
+          }}
+          variant="contained"
+        >
+          Limpiar
         </Button>
       </div>
     </form>

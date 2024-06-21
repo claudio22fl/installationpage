@@ -3,9 +3,8 @@ import { formatPatente } from "@/utils/const";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
-export const useFormCreate = ({ refreshTable, formData, setFormData }: any) => {
+export const useFormCreate = ({ refreshTable, formData, setFormData, defaultForm }: any) => {
   const [personName, setPersonName] = useState<string[]>([]);
-
 
   const handleChange = (e: { target: { name: string; value: string } }) => {
     const date1 = new Date(formData[`fechainicio`]);
@@ -13,20 +12,22 @@ export const useFormCreate = ({ refreshTable, formData, setFormData }: any) => {
 
     if (e.target.name === "installer") {
       const upperCaseValue = e.target.value.toUpperCase();
-      let installer = formData['installer'];
+      let installer = formData["installer"];
 
-if (!installer.includes(upperCaseValue)) {
-  installer += (installer.length > 0 ? ',' : '') + upperCaseValue;
-} else {
-  // Si upperCaseValue ya está en installer, quitarlo
-  installer = installer.split(',').filter((item: any) => item !== upperCaseValue).join(',');
-}
+      if (!installer.includes(upperCaseValue)) {
+        installer += (installer.length > 0 ? "," : "") + upperCaseValue;
+      } else {
+        // Si upperCaseValue ya está en installer, quitarlo
+        installer = installer
+          .split(",")
+          .filter((item: any) => item !== upperCaseValue)
+          .join(",");
+      }
 
       setFormData({
         ...formData,
-        [e.target.name]: installer, 
+        [e.target.name]: installer,
       });
-
     } else if (e.target.name === "patent") {
       const patente = formatPatente(e.target.value);
       const upperCaseValue = patente.toUpperCase();
@@ -93,7 +94,7 @@ if (!installer.includes(upperCaseValue)) {
           icon: "success",
           title: "Agregado correctamente",
         });
-
+        defaultForm();
         refreshTable();
       } else {
         Swal.fire("Error al ingresar", "", "error");
@@ -105,7 +106,6 @@ if (!installer.includes(upperCaseValue)) {
 
   const handleEdit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-
 
     setFormData({
       ...formData,
