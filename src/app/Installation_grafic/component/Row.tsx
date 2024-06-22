@@ -214,7 +214,7 @@ export function Row2({ row, client, fetchInstalattion, instalattion, openDetalle
           $ {formatClp(`${sumaValueChip}`)}
         </TableCell>
         <TableCell style={{ fontSize: 12 }} align="left">
-          $ {formatClp(`${totalNeto + sumaCostos}`)}
+          $ {formatClp(`${totalNeto + sumaCostos + sumaValueChip}`)}
         </TableCell>
       
         </>

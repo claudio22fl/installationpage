@@ -457,7 +457,7 @@ export default function CollapsibleTable({
               </TableCell>
                   <TableCell>
                     <strong>
-                      $ {formatClp(`${totalConDescuento + cost}`)}
+                      $ {formatClp(`${totalConDescuento + cost + brutoChips}`)}
                     </strong>
                   </TableCell>
                 </>
