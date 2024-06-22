@@ -16,7 +16,7 @@ export const useFetchHistory = (id : number) => {
       }
     );
     if (!res.ok) {
-      throw new Error("problema");
+      throw new Error("problema5");
     }
 
     const { data }: DataHistory = await res.json();
@@ -49,7 +49,7 @@ export const useFetchHistoryAll = () => {
       }
     );
     if (!res.ok) {
-      throw new Error("problema");
+      throw new Error("problema6");
     }
 
     const { data }: DataHistory = await res.json();

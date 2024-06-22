@@ -107,9 +107,10 @@ export const useFormCreate = ({ refreshTable, formData, setFormData, defaultForm
   const handleEdit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
+  
     setFormData({
       ...formData,
-      ["installer"]: formData.installer.split(","),
+      ["installer"]: Array.isArray(formData.installer) ? formData.installer.join(', ') : formData.installer,
     });
 
     const formatData = {
@@ -117,6 +118,8 @@ export const useFormCreate = ({ refreshTable, formData, setFormData, defaultForm
         ...formData,
       },
     };
+
+    console.log(formatData)
     try {
       const response = await fetch(
         `https://plataformasgps.cl/api/instalattions/${formData.id}`,

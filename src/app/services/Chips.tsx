@@ -17,7 +17,7 @@ export const useFetchChips= () => {
     );
 
     if (!res.ok) {
-      throw new Error("problema");
+      throw new Error("problema1");
     }
 
     const { data }: IRootChips = await res.json();

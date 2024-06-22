@@ -31,7 +31,7 @@ const FormData = ({
 }: IndexPageProps) => {
 
   const [rows, setRows] = useState<Irows[]>(formData.product);
-  console.log(rows, "rows")
+  
   const {
     dataUser,
     serDataUser,

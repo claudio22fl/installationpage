@@ -1,0 +1,20 @@
+.dateContainer{
+    display: flex;
+    gap: 15px;
+}
+
+.dateContainer>div{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+
+.dateContainer>div>div>div>input{
+    background: transparent;
+    color: black;
+    border-radius: 8px;
+    height: 30px;
+    border: 1px solid;
+    text-indent: 5px;
+}

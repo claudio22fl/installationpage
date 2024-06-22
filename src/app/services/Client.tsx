@@ -17,7 +17,7 @@ export const useFetchClient = () => {
     );
 
     if (!res.ok) {
-      throw new Error("problema");
+      throw new Error("problema2");
     }
 
     const { data , meta }: DataClient = await res.json();
@@ -29,13 +29,11 @@ export const useFetchClient = () => {
         mode: "cors",
       });
       if (!res.ok) {
-        throw new Error("problema");
+        throw new Error("problema3");
       }
       const { data: data2 }: DataClient = await res.json();
       data.push(...data2);
     }
-
-    console.log(data)
 
     const formatData: client[] = data.map((data) => ({
       id: data.id,

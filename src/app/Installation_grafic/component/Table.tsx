@@ -196,7 +196,6 @@ export default function CollapsibleTable({
       },
       0 // Valor inicial del subtotal
     );
-    console.log(instalacion.product)
     return total + valorInstalacion;
   }, 0);
 

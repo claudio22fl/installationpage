@@ -17,7 +17,7 @@ export const useFetchCompani = () => {
     ); 
 
     if (!res.ok) {
-      throw new Error("problema");
+      throw new Error("problema4");
     }
 
     const { data }: IRootEmpresa = await res.json();

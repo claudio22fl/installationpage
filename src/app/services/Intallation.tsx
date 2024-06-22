@@ -1,37 +1,43 @@
 import { IRootInstallation, fotmatAttributes } from "@/types/Installation";
 import { formatFecha, formatearFecha } from "@/utils/const";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Swal from "sweetalert2";
 
-export const useFetchInstallation = () => {
+
+export const useFetchInstallation = (inicialDate?: Date, finalDate?: Date) => {
   const [instalattion, setInstaattion] = useState<fotmatAttributes[]>([]);
+  const inicial = useMemo(() => inicialDate, [inicialDate]);
+  const final = useMemo(() => finalDate, [finalDate]);
 
   const fetchInstalattion = async () => {
-    const res = await fetch(
-      "https://plataformasgps.cl/api/instalattions?populate=*&sort[0]=fecha:DESC&sort[1]=hours:DESC&pagination[pageSize]=100",
-      {
-        cache: "no-store",
-        mode: "cors",
-      }
-    );
+    const baseUrl = "https://plataformasgps.cl/api/instalattions?populate=*&sort[0]=fecha:DESC&sort[1]=hours:DESC&pagination[pageSize]=100";
+    const filterUrl = `${baseUrl}&filters[fecha][$gte]=${inicial?.toISOString().split('T')[0]}&filters[fecha][$lte]=${final?.toISOString().split('T')[0]}`;
+
+    const res = await fetch(inicial?  filterUrl: baseUrl, {
+      cache: "no-store",
+      mode: "cors",
+    });
+
     if (!res.ok) {
-      throw new Error("problema");
+      throw new Error("8");
     }
 
     const { data, meta }: IRootInstallation = await res.json();
-    
+
     for (let index = 2; index <= meta.pagination.pageCount; index++) {
-      const res = await fetch(`https://plataformasgps.cl/api/instalattions?populate=*&sort[0]=fecha:DESC&sort[1]=hours:DESC&pagination[pageSize]=100&pagination[page]=${index}`, {
-        cache: "no-store",
-        mode: "cors",
-      });
+      const res = await fetch(
+        `${inicial?  filterUrl: baseUrl}&pagination[page]=${index}`,
+        {
+          cache: "no-store",
+          mode: "cors",
+        }
+      );
       if (!res.ok) {
-        throw new Error("problema");
+        throw new Error("problema9");
       }
       const { data: data2 }: IRootInstallation = await res.json();
       data.push(...data2);
     }
-  
 
     const formatData: fotmatAttributes[] = data.map((data: any) => ({
       id: data.id,
@@ -44,8 +50,8 @@ export const useFetchInstallation = () => {
       patent: data.attributes.patent,
       note: data.attributes.note,
       product: data.attributes.product,
-      client: data.attributes.client.data?.attributes.name,
-      company: data.attributes.company.data?.attributes.name,
+      client: data.attributes.client?.data?.attributes?.name ?? null,
+      company: data.attributes.company?.data?.attributes?.name ?? null,
       commune: data.attributes.commune,
       state: data.attributes.state,
     }));
@@ -54,7 +60,7 @@ export const useFetchInstallation = () => {
 
   useEffect(() => {
     fetchInstalattion();
-  }, []);
+  }, [inicial, final]);
 
   return { instalattion, fetchInstalattion };
 };
@@ -98,8 +104,6 @@ export const useDeleteInstallation = (fetchInstalattion: () => void) => {
 
 export const useUpdateInstallation = (fetchInstalattion: () => void) => {
   const updateInstallation = async (id: number | undefined, data: string) => {
-
-
     const inputOptions = new Promise((resolve) => {
       setTimeout(() => {
         resolve({
@@ -123,10 +127,9 @@ export const useUpdateInstallation = (fetchInstalattion: () => void) => {
       },
     });
 
-
     if (color) {
-      if(color === 'SIN_VALOR'){
-        color = 'SIN VALOR'
+      if (color === "SIN_VALOR") {
+        color = "SIN VALOR";
       }
       const formatData = {
         data: {

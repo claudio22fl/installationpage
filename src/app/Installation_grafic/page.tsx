@@ -13,23 +13,32 @@ import { useSelectedMonth } from "../hooks/useSelectedMonth";
 import { getMonth } from "@/utils/const";
 import MonthSelect from "../component/MonthSelect";
 import ExcelGenerator from "../component/GenerateExcel";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import style from "./Installation_grafic-styles.module.css";
 
 export default function page() {
   const [instalattionCompani, setIntalattionCompani] = useState<
     fotmatAttributes[]
   >([]);
-  const { instalattion, fetchInstalattion } = useFetchInstallation();
+  const [inicialDate, setInicialDate] = useState(new Date());
+  const [finalDate, setFinalDate] = useState(new Date());
+
+  const { instalattion, fetchInstalattion } = useFetchInstallation(
+    inicialDate,
+    finalDate
+  );
   const { compani, fetchCompani } = useFetchCompani();
   const { client } = useFetchClient();
-  var empresa: any = '';
-  var rol : any= '';
+  var empresa: any = "";
+  var rol: any = "";
 
   try {
-    empresa = localStorage.getItem('empresa');
-    rol = localStorage.getItem('rol');
+    empresa = localStorage.getItem("empresa");
+    rol = localStorage.getItem("rol");
   } catch (error) {
-    empresa = '';
-    rol = '';
+    empresa = "";
+    rol = "";
   }
   const [inicialMonth, setInicialMonth] = React.useState(getMonth());
   const [finalMonth, setFinalMonth] = React.useState(getMonth());
@@ -72,19 +81,31 @@ export default function page() {
           className="bg-white mb-0 px-6 py-6"
           style={{ gap: 30, display: "flex" }}
         >
-          <div>
-            <h6 className="text-blueGray-700 text-xl font-bold">Mes Inicial</h6>
-            <MonthSelect month={inicialMonth} setMonth={setInicialMonth} />
-          </div>
-          <div style={{ marginLeft: 20 }}>
-            <h6 className="text-blueGray-700 text-xl font-bold">Mes Final</h6>
-            <MonthSelect month={finalMonth} setMonth={setFinalMonth} />
-          </div>
+          <article className={style.dateContainer}>
+            <div>
+              <h6 className="text-blueGray-700 text-xl font-bold">
+                Dia Inicial
+              </h6>
+              <DatePicker
+                selected={inicialDate}
+                onChange={(date) => setInicialDate(date ? date : new Date())}
+              />
+            </div>
+            <div>
+              <h6 className="text-blueGray-700 text-xl font-bold">
+                Dia Final
+              </h6>
+              <DatePicker
+                selected={finalDate}
+                onChange={(date) => setFinalDate(date ? date : new Date())}
+              />
+            </div>
+          </article>
         </div>
 
         <div className="flex flex-col rounded-xl" style={{ fontSize: 1 }}>
           <CollapsibleTable
-            empresas={rol === "admin" ? compani : companies }
+            empresas={rol === "admin" ? compani : companies}
             client={client}
             fetchInstalattion={fetchInstalattion}
             instalattion={newInstallation}

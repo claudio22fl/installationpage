@@ -27,15 +27,12 @@ export const useFetchChips= () => {
     );
 
     if (!res.ok) {
-      throw new Error("problema");
+      throw new Error("problema7");
     }
 
     const { data }: IRootInstalador = await res.json();
 
     const formatData: string[] = data.map((item) => item.attributes.name ? item.attributes.name : "");
-
-
-    console.log(formatData)
 
     return formatData
   };
