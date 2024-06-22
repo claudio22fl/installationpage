@@ -152,6 +152,18 @@ export default function CollapsibleTable({
     return accumulator + m2mCost;
   }, 0);
 
+  const brutoChips = instalattion.reduce((accumulator, item) => {
+    const m2mProducts = item.product.filter(
+      (product) => product.name?.includes("M2M")
+    );
+
+    const m2mCost = m2mProducts.reduce((productAccumulator, product) => {
+      return productAccumulator + (product.value || 0);
+    }, 0);
+
+    return accumulator + m2mCost;
+  }, 0);
+
   const cost = instalattion.reduce((accumulator, item) => {
     const m2mProducts = item.product.filter(
       (product) => !product.name?.includes("M2M")
@@ -356,7 +368,7 @@ export default function CollapsibleTable({
                   showFields={showFields}
                   handleSearch={handleSearch}
                   inicio={7}
-                  final={11}
+                  final={12}
                 />
               ):
               (
@@ -431,6 +443,7 @@ export default function CollapsibleTable({
               <TableCell>
                 <strong>$ {formatClp(`${bruto}`)}</strong>
               </TableCell>
+              
               {rol === "admin" && (
                 <>
                   <TableCell>
@@ -439,6 +452,9 @@ export default function CollapsibleTable({
                   <TableCell>
                     <strong>$ {formatClp(`${totalConDescuento}`)}</strong>
                   </TableCell>
+                  <TableCell>
+                <strong>$ {formatClp(`${brutoChips}`)}</strong>
+              </TableCell>
                   <TableCell>
                     <strong>
                       $ {formatClp(`${totalConDescuento + cost}`)}

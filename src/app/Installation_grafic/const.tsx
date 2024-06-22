@@ -8,6 +8,8 @@ export const columns = [
     { label: "Pagados", data: "state" },
     { label: "Bruto", data: "fecha" },
     { label: "Suma Dis", data: "hours" },
-    { label: "Neto", data: "client" },
-    { label: "Pagar", data: "client" },
+    { label: "C/Uno", data: "client" },
+    { label: "Chips", data: "sims" },
+    { label: "Dis + C/Uno", data: "client" },
+
   ];

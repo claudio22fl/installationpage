@@ -73,6 +73,20 @@ export function Row2({ row, client, fetchInstalattion, instalattion, openDetalle
     return total + costoTotal;
   }, 0);
 
+  const sumaValueChip = data.reduce((total, item) => {
+    const costoTotal = item.product.reduce(
+      (subtotal, producto) =>
+        subtotal +
+        (producto?.value === undefined
+          ? 0
+          : producto.name?.includes("M2M")
+          ? producto.value
+          : 0),
+      0
+    );
+    return total + costoTotal;
+  }, 0);
+
   const calcularSumaTotal = (data: fotmatAttributes[], estado: string) => {
     const sumaTotal = data.reduce((total, item) => {
       const costoTotal = item.product.reduce(
@@ -183,11 +197,11 @@ export function Row2({ row, client, fetchInstalattion, instalattion, openDetalle
         </TableCell>
         </>
         )}
-        
-
-        <TableCell style={{ fontSize: 12 }} align="left">
+          <TableCell style={{ fontSize: 12 }} align="left">
           $ {formatClp(`${sumaValue}`)}
         </TableCell>
+
+        
         {rol === "admin" && (
         <>
          <TableCell style={{ fontSize: 12 }} align="left">
@@ -197,8 +211,12 @@ export function Row2({ row, client, fetchInstalattion, instalattion, openDetalle
           $ {formatClp(`${totalNeto}`)}
         </TableCell>
         <TableCell style={{ fontSize: 12 }} align="left">
+          $ {formatClp(`${sumaValueChip}`)}
+        </TableCell>
+        <TableCell style={{ fontSize: 12 }} align="left">
           $ {formatClp(`${totalNeto + sumaCostos}`)}
         </TableCell>
+      
         </>
         )}
        
