@@ -58,12 +58,12 @@ export const postClient = async (dataUser: client) => {
     if (dataUser.email === "" || dataUser.email === null) {
       return {
         name: dataUser.name,
-        fone: dataUser.fone,
+        fone: dataUser.fone ? dataUser.fone : null,
       };
     } else {
       return {
         name: dataUser.name,
-        fone: (dataUser.fone),
+        fone: (dataUser.fone ? dataUser.fone : null),
         email: dataUser.email,
       };
     }

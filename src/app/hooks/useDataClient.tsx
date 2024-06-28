@@ -31,7 +31,7 @@ export const useDataClient = ({setFormData, formData}: IState) => {
       serDataUser({
         ...dataUser,
         ["name"]: name,
-        ["fone"]: value.fone,
+        ["fone"]: value.fone ? value.fone : 0,
         ["email"]: email,
       });
       
