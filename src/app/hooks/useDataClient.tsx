@@ -19,7 +19,7 @@ export const useDataClient = ({setFormData, formData}: IState) => {
     fone: 0,
     email: "",
   });
-  const { client } = useFetchClient();
+  const { client , fetchClient } = useFetchClient();
 
   const autocompleteChagueUser = (name: string, value: any) => {
 
@@ -61,5 +61,5 @@ export const useDataClient = ({setFormData, formData}: IState) => {
     });
   };
 
-  return { dataUser, serDataUser, autocompleteChagueUser, client, handleChancheUser };
+  return { dataUser, serDataUser, autocompleteChagueUser, client, handleChancheUser, fetchClient };
 };

@@ -38,6 +38,7 @@ const FormData = ({
     autocompleteChagueUser,
     client,
     handleChancheUser,
+    fetchClient
   } = useDataClient({ setFormData, formData });
  
   const {
@@ -154,6 +155,8 @@ const FormData = ({
       ...formData,
       ["client"]: res,
     });
+
+    fetchClient()
   };
 
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
