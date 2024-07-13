@@ -22,6 +22,7 @@ import SaveAsIcon from "@mui/icons-material/SaveAs";
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import SimCardIcon from '@mui/icons-material/SimCard';
 import CloseIcon from '@mui/icons-material/Close';
+import StreetviewIcon from '@mui/icons-material/Streetview';
 import { Tooltip } from "@mui/material";
 const drawerWidth = 240;
 import StorageIcon from '@mui/icons-material/Storage';
@@ -150,6 +151,12 @@ export default function MiniDrawer({ children }: Props) {
       icon: <DataUsageIcon />,
       onClick: handleDrawerOpen,
       href: "/Installation_grafic",
+    },
+    {
+      label: "Dispositivos",
+      icon: <StreetviewIcon />,
+      onClick: handleDrawerOpen,
+      href: "/DevicesList",
     },
     {
       label: "Chips Instalaciones",
