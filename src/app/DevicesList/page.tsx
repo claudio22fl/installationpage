@@ -1,22 +1,15 @@
 "use client";
-import { Container } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { BarChart } from "@mui/x-charts/BarChart";
-import "../Installation/styles.css";
-import { PieChart, pieArcLabelClasses } from "@mui/x-charts/PieChart";
+import { fotmatAttributes } from "@/types/Installation";
+import { useEffect, useState } from "react";
 import { useFetchInstallation } from "../services/Intallation";
 import { useFetchCompani } from "../services/Compani";
-import { fotmatAttributes } from "@/types/Installation";
-import CollapibleTable from "./component/Table";
 import { useFetchClient } from "../services/Client";
-import { useSelectedMonth } from "../hooks/useSelectedMonth";
+import { useFetchDevice } from "../services/Device";
 import { getMonth } from "@/utils/const";
-import MonthSelect from "../component/MonthSelect";
-import ExcelGenerator from "../component/GenerateExcel";
+import { useSelectedMonth } from "../hooks/useSelectedMonth";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import style from "./Installation_grafic-styles.module.css";
 import CollapsibleTable from "./component/Table";
+import style from './Installation_grafic-styles.module.css'
 
 export default function page() {
   const [instalattionCompani, setIntalattionCompani] = useState<
@@ -31,6 +24,11 @@ export default function page() {
   );
   const { compani, fetchCompani } = useFetchCompani();
   const { client } = useFetchClient();
+
+  const {device} = useFetchDevice();
+  
+  console.log(device)
+
   var empresa: any = "";
   var rol: any = "";
 
@@ -41,8 +39,8 @@ export default function page() {
     empresa = "";
     rol = "";
   }
-  const [inicialMonth, setInicialMonth] = React.useState(getMonth());
-  const [finalMonth, setFinalMonth] = React.useState(getMonth());
+  const [inicialMonth, setInicialMonth] = useState(getMonth());
+  const [finalMonth, setFinalMonth] = useState(getMonth());
   const { newInstallation } = useSelectedMonth(
     rol === "user" ? instalattionCompani : instalattion,
     inicialMonth,
@@ -106,7 +104,7 @@ export default function page() {
 
         <div className="flex flex-col rounded-xl" style={{ fontSize: 1 }}>
           <CollapsibleTable
-            empresas={rol === "admin" ? compani : companies}
+            empresas={rol === "admin" ? device : []}
             client={client}
             fetchInstalattion={fetchInstalattion}
             instalattion={newInstallation}

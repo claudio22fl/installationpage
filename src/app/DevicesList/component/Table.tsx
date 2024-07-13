@@ -40,7 +40,7 @@ import ExcelGenerator from "@/app/component/GenerateExcel";
 import PdfGenerator from "@/app/component/GeneratePdf";
 
 interface Props {
-  empresas: empresa[];
+  empresas: Producto[];
   client: client[];
   fetchInstalattion: () => void;
   instalattion: fotmatAttributes[];
@@ -55,8 +55,8 @@ export default function CollapsibleTable({
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [searchTerm, setSearchTerm] = React.useState<string>(""); // Estado para almacenar el término de búsqueda
-  const [Pagination, setPagination] = useState<empresa[]>([]);
-  const [newPagination, setNewPagination] = useState<empresa[]>([]);
+  const [Pagination, setPagination] = useState<Producto[]>([]);
+  const [newPagination, setNewPagination] = useState<Producto[]>([]);
   const [showFields, setShowFields] = useState<boolean>(false); // Estado para controlar la visibilidad de los campos
   const [orderFiels, setOrderFiels] = useState<boolean[]>([
     false,
@@ -153,8 +153,8 @@ export default function CollapsibleTable({
   }, 0);
 
   const brutoChips = instalattion.reduce((accumulator, item) => {
-    const m2mProducts = item.product.filter(
-      (product) => product.name?.includes("M2M")
+    const m2mProducts = item.product.filter((product) =>
+      product.name?.includes("M2M")
     );
 
     const m2mCost = m2mProducts.reduce((productAccumulator, product) => {
@@ -177,39 +177,9 @@ export default function CollapsibleTable({
   }, 0);
 
   function calcularValorConDescuento(producto: Producto, porcentaje: number) {
-    
     const valorDescontado = producto.value - producto.cost; // Restar el costo al valor
     return valorDescontado - (valorDescontado * porcentaje) / 100; // Aplicar el porcentaje de descuento
   }
-
-  // Calcular el total de los productos con descuento
-  const totalConDescuento = instalattion.reduce((total, instalacion) => {
-    // Suma el valor de los productos en esta instalación con el descuento aplicado
-    const valorInstalacion = instalacion.product.reduce(
-      (subtotal, producto) => {
-        // Verificar si el nombre del producto contiene la cadena "CHIP"
-        if (producto?.name?.includes('CHIP')) {
-          // Si el nombre del producto contiene "CHIP", no sumar nada al subtotal
-          return subtotal;
-        }
-    
-        const empresa = empresas.find((e) => e.label === instalacion.company);
-        if (empresa !== undefined) {
-          // Calcular el valor del producto restando el costo y luego aplicar el descuento de la empresa
-          const valorConDescuento = calcularValorConDescuento(
-            producto,
-            empresa.percentage
-          );
-          return subtotal + valorConDescuento;
-        } else {
-          // Si no se encuentra la empresa, usar el valor sin descuento
-          return subtotal + producto.value;
-        }
-      },
-      0 // Valor inicial del subtotal
-    );
-    return total + valorInstalacion;
-  }, 0);
 
   const countRevisions = instalattion.reduce((count, item) => {
     // Verificar si item.product existe y es un arreglo con al menos un elemento
@@ -250,15 +220,15 @@ export default function CollapsibleTable({
     );
   };
   const [loading, setLoading] = useState<boolean>(false);
-  var empresa: any = '';
-  var rol : any= '';
+  var empresa: any = "";
+  var rol: any = "";
 
   try {
-    empresa = localStorage.getItem('empresa');
-    rol = localStorage.getItem('rol');
+    empresa = localStorage.getItem("empresa");
+    rol = localStorage.getItem("rol");
   } catch (error) {
-    empresa = '';
-    rol = '';
+    empresa = "";
+    rol = "";
   }
 
   return (
@@ -278,7 +248,7 @@ export default function CollapsibleTable({
           >
             <FormControl sx={{ m: 1, width: 200, fontSize: 1 }}>
               <InputLabel id="demo-multiple-checkbox-label">
-                Empresas
+                Dispositivos
               </InputLabel>
               <Select
                 labelId="demo-multiple-checkbox-label"
@@ -287,7 +257,7 @@ export default function CollapsibleTable({
                 value={personName}
                 sx={{ fontSize: 13 }}
                 onChange={handleChange}
-                input={<OutlinedInput label="Empresas" />}
+                input={<OutlinedInput label="Dispositivos" />}
                 renderValue={(selected) => selected.join(", ")}
                 MenuProps={MenuProps}
               >
@@ -307,20 +277,7 @@ export default function CollapsibleTable({
                 marginLeft: 25,
                 gap: 10,
               }}
-            >
-              <ExcelGenerator
-                instalattion={instalattion}
-                empresas={empresas}
-                personName={personName}
-                setLoading={setLoading}
-              />
-              <PdfGenerator
-                instalattion={instalattion}
-                empresas={empresas}
-                personName={personName}
-                setLoading={setLoading}
-              />
-            </div>
+            ></div>
 
             {loading && <CircularProgress />}
           </div>
@@ -347,48 +304,12 @@ export default function CollapsibleTable({
                 inicio={0}
                 final={3}
               />
-              {openDetalles && (
-                <TableHeadComponent
-                  ordenarIntalacionesAlfabeticamente={
-                    ordenarIntalacionesAlfabeticamente
-                  }
-                  orderFiels={orderFiels}
-                  showFields={showFields}
-                  handleSearch={handleSearch}
-                  inicio={3}
-                  final={7}
-                />
-              )}
-              {rol === "admin" ? (
-                <TableHeadComponent
-                  ordenarIntalacionesAlfabeticamente={
-                    ordenarIntalacionesAlfabeticamente
-                  }
-                  orderFiels={orderFiels}
-                  showFields={showFields}
-                  handleSearch={handleSearch}
-                  inicio={7}
-                  final={12}
-                />
-              ):
-              (
-                <TableHeadComponent
-                ordenarIntalacionesAlfabeticamente={
-                  ordenarIntalacionesAlfabeticamente
-                }
-                orderFiels={orderFiels}
-                showFields={showFields}
-                handleSearch={handleSearch}
-                inicio={7}
-                final={8}
-              />  
-              )}
             </TableRow>
           </TableHead>
           <TableBody>
-            {Pagination.map((row) => (
+            {Pagination.map((row, index) => (
               <Row2
-                key={row.id}
+                key={index}
                 row={row}
                 client={client}
                 fetchInstalattion={fetchInstalattion}
@@ -407,58 +328,19 @@ export default function CollapsibleTable({
               <TableCell>
                 <strong>{countRevisions}</strong>
               </TableCell>
-              {openDetalles && (
-                <>
-                  <TableCell>
-                    <strong>
-                      {instalattion
-                        .map((item) => (item.state === "PENDIENTE" ? 1 : 0))
-                        .reduce((a, b) => (a + b) as any, 0)}
-                    </strong>
-                  </TableCell>
-                  <TableCell>
-                    <strong>
-                      {instalattion
-                        .map((item) => (item.state === "EFECTIVO" ? 1 : 0))
-                        .reduce((a, b) => (a + b) as any, 0)}
-                    </strong>
-                  </TableCell>
-                  <TableCell>
-                    <strong>
-                      {instalattion
-                        .map((item) => (item.state === "TRANSFERENCIA" ? 1 : 0))
-                        .reduce((a, b) => (a + b) as any, 0)}
-                    </strong>
-                  </TableCell>
-                  <TableCell>
-                    <strong>
-                      {instalattion
-                        .map((item) => (item.state === "PAGADO" ? 1 : 0))
-                        .reduce((a, b) => (a + b) as any, 0)}
-                    </strong>
-                  </TableCell>
-                </>
-              )}
 
               <TableCell>
                 <strong>$ {formatClp(`${bruto}`)}</strong>
               </TableCell>
-              
+
               {rol === "admin" && (
                 <>
                   <TableCell>
                     <strong>$ {formatClp(`${cost}`)}</strong>
                   </TableCell>
+
                   <TableCell>
-                    <strong>$ {formatClp(`${totalConDescuento}`)}</strong>
-                  </TableCell>
-                  <TableCell>
-                <strong>$ {formatClp(`${brutoChips}`)}</strong>
-              </TableCell>
-                  <TableCell>
-                    <strong>
-                      $ {formatClp(`${totalConDescuento + cost + brutoChips}`)}
-                    </strong>
+                    <strong>$ {formatClp(`${brutoChips}`)}</strong>
                   </TableCell>
                 </>
               )}
@@ -467,7 +349,12 @@ export default function CollapsibleTable({
           <TableFooter>
             <TableRow>
               <TablePagination
-                rowsPerPageOptions={[10, 20, 100, { label: "All", value: 10000 }]}
+                rowsPerPageOptions={[
+                  10,
+                  20,
+                  100,
+                  { label: "All", value: 10000 },
+                ]}
                 colSpan={12}
                 count={newPagination.length}
                 rowsPerPage={rowsPerPage}
