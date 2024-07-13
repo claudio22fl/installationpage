@@ -19,8 +19,9 @@ export function createData(
   imeigps: string,
   tipochip: string,
   numerochip: string,
+  percentaje: number
 ) {
-  return { name, cost, value, imeigps, tipochip, numerochip };
+  return { name, cost, value, imeigps, tipochip, numerochip, percentaje };
 }
 
 interface Row {
@@ -30,6 +31,7 @@ interface Row {
   imeigps: string,
   tipochip: string,
   numerochip: string,
+  percentaje: number
 }
 
 function subtotal(items: Row[]) {

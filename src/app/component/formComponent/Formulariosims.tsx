@@ -128,7 +128,8 @@ const FormData = ({
       Number(value),
       devices.imeigps,
       devices.tipochip,
-      devices.numerochip
+      devices.numerochip,
+      formData.company.percentage ? formData.company.percentage  : 0
     ); // Agrega aquí los valores iniciales
 
     setRows([...rows, newRow]);

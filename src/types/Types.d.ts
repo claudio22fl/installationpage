@@ -30,6 +30,7 @@ export interface IImpuchip {
     imeigps: string;
     tipochip: string;
     numerochip: string;
+    percentaje: number;
 }
 
 

@@ -118,8 +118,6 @@ export const useFormCreate = ({ refreshTable, formData, setFormData, defaultForm
         ...formData,
       },
     };
-
-    console.log(formatData)
     try {
       const response = await fetch(
         `https://plataformasgps.cl/api/instalattions/${formData.id}`,

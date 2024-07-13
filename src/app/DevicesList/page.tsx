@@ -1,15 +1,23 @@
 "use client";
-import { fotmatAttributes } from "@/types/Installation";
-import { useEffect, useState } from "react";
+import { Container } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { BarChart } from "@mui/x-charts/BarChart";
+import "../Installation/styles.css";
+import { PieChart, pieArcLabelClasses } from "@mui/x-charts/PieChart";
 import { useFetchInstallation } from "../services/Intallation";
 import { useFetchCompani } from "../services/Compani";
-import { useFetchClient } from "../services/Client";
-import { useFetchDevice } from "../services/Device";
-import { getMonth } from "@/utils/const";
-import { useSelectedMonth } from "../hooks/useSelectedMonth";
-import DatePicker from "react-datepicker";
+import { fotmatAttributes } from "@/types/Installation";
 import CollapsibleTable from "./component/Table";
-import style from './Installation_grafic-styles.module.css'
+import { useFetchClient } from "../services/Client";
+import { useSelectedMonth } from "../hooks/useSelectedMonth";
+import { getMonth } from "@/utils/const";
+import MonthSelect from "../component/MonthSelect";
+import ExcelGenerator from "../component/GenerateExcel";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import style from "./Installation_grafic-styles.module.css";
+import { useFetchDevice } from "../services/Device";
+import { Producto } from "@/types/Product";
 
 export default function page() {
   const [instalattionCompani, setIntalattionCompani] = useState<
@@ -17,18 +25,16 @@ export default function page() {
   >([]);
   const [inicialDate, setInicialDate] = useState(new Date());
   const [finalDate, setFinalDate] = useState(new Date());
+  const [diferentDevices, setDiferentDevices] = useState<string[]>([])
 
   const { instalattion, fetchInstalattion } = useFetchInstallation(
     inicialDate,
     finalDate
   );
-  const { compani, fetchCompani } = useFetchCompani();
   const { client } = useFetchClient();
 
   const {device} = useFetchDevice();
   
-  console.log(device)
-
   var empresa: any = "";
   var rol: any = "";
 
@@ -46,10 +52,7 @@ export default function page() {
     inicialMonth,
     finalMonth
   );
-  const companies = compani.filter((compani) => {
-    return compani.label === empresa;
-  });
-
+ 
   useEffect(() => {
     if (empresa) {
       //filtrar por empresa
@@ -60,6 +63,17 @@ export default function page() {
       setIntalattionCompani(installationsCompany);
     }
   }, [instalattion]);
+
+
+  useEffect(() => {
+    const diferentDevices = instalattion
+  .flatMap(inst => inst.product.map(pro => pro.name))
+  .filter((name, index, self) => self.indexOf(name) === index);
+
+ 
+
+  setDiferentDevices(diferentDevices as string[])
+    },[instalattion])
 
   return (
     <main>
@@ -104,7 +118,7 @@ export default function page() {
 
         <div className="flex flex-col rounded-xl" style={{ fontSize: 1 }}>
           <CollapsibleTable
-            empresas={rol === "admin" ? device : []}
+            empresas={rol === "admin" ? diferentDevices : []}
             client={client}
             fetchInstalattion={fetchInstalattion}
             instalattion={newInstallation}

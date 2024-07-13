@@ -38,9 +38,10 @@ import TableHeadComponent from "./TableHead";
 import { CheckBox } from "@mui/icons-material";
 import ExcelGenerator from "@/app/component/GenerateExcel";
 import PdfGenerator from "@/app/component/GeneratePdf";
+import { useFetchCompani } from "@/app/services/Compani";
 
 interface Props {
-  empresas: Producto[];
+  empresas: string[];
   client: client[];
   fetchInstalattion: () => void;
   instalattion: fotmatAttributes[];
@@ -55,8 +56,8 @@ export default function CollapsibleTable({
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [searchTerm, setSearchTerm] = React.useState<string>(""); // Estado para almacenar el término de búsqueda
-  const [Pagination, setPagination] = useState<Producto[]>([]);
-  const [newPagination, setNewPagination] = useState<Producto[]>([]);
+  const [Pagination, setPagination] = useState<string[]>([]);
+  const [newPagination, setNewPagination] = useState<string[]>([]);
   const [showFields, setShowFields] = useState<boolean>(false); // Estado para controlar la visibilidad de los campos
   const [orderFiels, setOrderFiels] = useState<boolean[]>([
     false,
@@ -65,6 +66,7 @@ export default function CollapsibleTable({
     false,
     false,
   ]);
+  const { compani, fetchCompani } = useFetchCompani();
 
   const handleToggleField = () => {
     // Cambiar el estado de visibilidad del campo en el índice especificado
@@ -140,58 +142,6 @@ export default function CollapsibleTable({
     setNewPagination(OrderPagination);
   };
 
-  const bruto = instalattion.reduce((accumulator, item) => {
-    const m2mProducts = item.product.filter(
-      (product) => !product.name?.includes("M2M")
-    );
-
-    const m2mCost = m2mProducts.reduce((productAccumulator, product) => {
-      return productAccumulator + (product.value || 0);
-    }, 0);
-
-    return accumulator + m2mCost;
-  }, 0);
-
-  const brutoChips = instalattion.reduce((accumulator, item) => {
-    const m2mProducts = item.product.filter((product) =>
-      product.name?.includes("M2M")
-    );
-
-    const m2mCost = m2mProducts.reduce((productAccumulator, product) => {
-      return productAccumulator + (product.value || 0);
-    }, 0);
-
-    return accumulator + m2mCost;
-  }, 0);
-
-  const cost = instalattion.reduce((accumulator, item) => {
-    const m2mProducts = item.product.filter(
-      (product) => !product.name?.includes("M2M")
-    );
-
-    const m2mCost = m2mProducts.reduce((productAccumulator, product) => {
-      return productAccumulator + (product.cost || 0);
-    }, 0);
-
-    return accumulator + m2mCost;
-  }, 0);
-
-  function calcularValorConDescuento(producto: Producto, porcentaje: number) {
-    const valorDescontado = producto.value - producto.cost; // Restar el costo al valor
-    return valorDescontado - (valorDescontado * porcentaje) / 100; // Aplicar el porcentaje de descuento
-  }
-
-  const countRevisions = instalattion.reduce((count, item) => {
-    // Verificar si item.product existe y es un arreglo con al menos un elemento
-    if (Array.isArray(item.product) && item.product.length > 0) {
-      // Verificar si algún producto tiene el nombre "revicion" (corregido a "revision")
-      if (item.product.some((product) => product.name === "GARANTIA")) {
-        return count + 1; // Incrementar el contador si se encuentra "revision"
-      }
-    }
-    return count; // Mantener el contador sin cambios si no se encuentra "revision" o no hay productos
-  }, 0);
-
   const [openDetalles, setOpenDetalles] = React.useState<boolean>(false);
 
   const handleToggleDetalles = () => {
@@ -209,7 +159,7 @@ export default function CollapsibleTable({
       },
     },
   };
-  const names = empresas.map((empresa) => empresa.label);
+  const names = empresas.map((empresa) => empresa);
   const handleChange = (event: SelectChangeEvent<typeof personName>) => {
     const {
       target: { value },
@@ -230,6 +180,21 @@ export default function CollapsibleTable({
     empresa = "";
     rol = "";
   }
+  
+
+  const totalCost = instalattion.reduce((total, inst) => total + inst.product.reduce((totalp, p) => totalp + p.cost, 0), 0);
+  const totalValue = instalattion.reduce((total, inst) => total + inst.product.reduce((totalp, p) => totalp + p.value, 0), 0);
+  const totalWithDiscount = instalattion.reduce((total, inst) => {
+    const company = compani.find(em => em.label === inst.company);
+    const discountPercentage = company ? company.percentage : 0;
+   
+    const productTotal = inst.product.reduce((totalp, p) => {
+      const discount = (p.value - p.cost) * (p.percentaje ? (p.percentaje / 100) : (discountPercentage / 100)) ;
+      return totalp + ((p.value - p.cost) - discount);
+    }, 0);
+  
+    return total + productTotal;
+  }, 0);
 
   return (
     <>
@@ -302,7 +267,7 @@ export default function CollapsibleTable({
                 showFields={showFields}
                 handleSearch={handleSearch}
                 inicio={0}
-                final={3}
+                final={6}
               />
             </TableRow>
           </TableHead>
@@ -310,6 +275,7 @@ export default function CollapsibleTable({
             {Pagination.map((row, index) => (
               <Row2
                 key={index}
+                compani={compani}
                 row={row}
                 client={client}
                 fetchInstalattion={fetchInstalattion}
@@ -323,27 +289,20 @@ export default function CollapsibleTable({
                 <strong>Total</strong>
               </TableCell>
               <TableCell>
-                <strong>{instalattion.length}</strong>
+              <strong>{instalattion.reduce((total, inst) => total + inst.product.length, 0)}</strong>
               </TableCell>
               <TableCell>
-                <strong>{countRevisions}</strong>
+              <strong>${formatClp(instalattion.reduce((total, inst) => total + inst.product.reduce((totalp, p)  => totalp + p.cost, 0 ), 0).toString())}</strong>
               </TableCell>
-
               <TableCell>
-                <strong>$ {formatClp(`${bruto}`)}</strong>
+              <strong>${formatClp(instalattion.reduce((total, inst) => total + inst.product.reduce((totalp, p)  => totalp + p.value, 0 ), 0).toString())}</strong>
               </TableCell>
-
-              {rol === "admin" && (
-                <>
-                  <TableCell>
-                    <strong>$ {formatClp(`${cost}`)}</strong>
-                  </TableCell>
-
-                  <TableCell>
-                    <strong>$ {formatClp(`${brutoChips}`)}</strong>
-                  </TableCell>
-                </>
-              )}
+              <TableCell>
+              <strong>${formatClp((totalValue - totalCost).toString())}</strong>
+              </TableCell>
+              <TableCell>
+              <strong>${formatClp((totalWithDiscount).toString())}</strong>
+              </TableCell>
             </TableRow>
           </TableBody>
           <TableFooter>

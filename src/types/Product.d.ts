@@ -20,4 +20,5 @@ export interface Producto {
     imeigps?: string,
     tipochip?: string,
     numerochip?: string
+    percentaje?: number
   }
