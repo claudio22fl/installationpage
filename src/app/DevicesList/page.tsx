@@ -102,6 +102,7 @@ export default function page() {
               <DatePicker
                 selected={inicialDate}
                 onChange={(date) => setInicialDate(date ? date : new Date())}
+                  dateFormat="dd-MM-yyyy"
               />
             </div>
             <div>
@@ -111,6 +112,7 @@ export default function page() {
               <DatePicker
                 selected={finalDate}
                 onChange={(date) => setFinalDate(date ? date : new Date())}
+                  dateFormat="dd-MM-yyyy"
               />
             </div>
           </article>

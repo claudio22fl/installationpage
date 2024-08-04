@@ -62,6 +62,8 @@ export default function page() {
     }
   }, [instalattion]);
 
+  console.log("instalattion", instalattion);
+
   return (
     <main>
       <div
@@ -89,15 +91,15 @@ export default function page() {
               <DatePicker
                 selected={inicialDate}
                 onChange={(date) => setInicialDate(date ? date : new Date())}
+                dateFormat="dd-MM-yyyy"
               />
             </div>
             <div>
-              <h6 className="text-blueGray-700 text-xl font-bold">
-                Dia Final
-              </h6>
+              <h6 className="text-blueGray-700 text-xl font-bold">Dia Final</h6>
               <DatePicker
                 selected={finalDate}
                 onChange={(date) => setFinalDate(date ? date : new Date())}
+                dateFormat="dd-MM-yyyy"
               />
             </div>
           </article>
@@ -108,7 +110,7 @@ export default function page() {
             empresas={rol === "admin" ? compani : companies}
             client={client}
             fetchInstalattion={fetchInstalattion}
-            instalattion={newInstallation}
+            instalattion={instalattion}
           />
         </div>
       </div>
