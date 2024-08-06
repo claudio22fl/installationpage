@@ -25,7 +25,7 @@ export default function page() {
   >([]);
   const [inicialDate, setInicialDate] = useState(new Date());
   const [finalDate, setFinalDate] = useState(new Date());
-  const [diferentDevices, setDiferentDevices] = useState<string[]>([])
+  const [diferentDevices, setDiferentDevices] = useState<string[]>([]);
 
   const { instalattion, fetchInstalattion } = useFetchInstallation(
     inicialDate,
@@ -33,8 +33,8 @@ export default function page() {
   );
   const { client } = useFetchClient();
 
-  const {device} = useFetchDevice();
-  
+  const { device } = useFetchDevice();
+
   var empresa: any = "";
   var rol: any = "";
 
@@ -52,7 +52,7 @@ export default function page() {
     inicialMonth,
     finalMonth
   );
- 
+
   useEffect(() => {
     if (empresa) {
       //filtrar por empresa
@@ -64,16 +64,13 @@ export default function page() {
     }
   }, [instalattion]);
 
-
   useEffect(() => {
     const diferentDevices = instalattion
-  .flatMap(inst => inst.product.map(pro => pro.name))
-  .filter((name, index, self) => self.indexOf(name) === index);
+      .flatMap((inst) => inst.product.map((pro) => pro.name))
+      .filter((name, index, self) => self.indexOf(name) === index);
 
- 
-
-  setDiferentDevices(diferentDevices as string[])
-    },[instalattion])
+    setDiferentDevices(diferentDevices as string[]);
+  }, [instalattion]);
 
   return (
     <main>
@@ -102,17 +99,15 @@ export default function page() {
               <DatePicker
                 selected={inicialDate}
                 onChange={(date) => setInicialDate(date ? date : new Date())}
-                  dateFormat="dd-MM-yyyy"
+                dateFormat="dd-MM-yyyy"
               />
             </div>
             <div>
-              <h6 className="text-blueGray-700 text-xl font-bold">
-                Dia Final
-              </h6>
+              <h6 className="text-blueGray-700 text-xl font-bold">Dia Final</h6>
               <DatePicker
                 selected={finalDate}
                 onChange={(date) => setFinalDate(date ? date : new Date())}
-                  dateFormat="dd-MM-yyyy"
+                dateFormat="dd-MM-yyyy"
               />
             </div>
           </article>
@@ -123,7 +118,7 @@ export default function page() {
             empresas={rol === "admin" ? diferentDevices : []}
             client={client}
             fetchInstalattion={fetchInstalattion}
-            instalattion={newInstallation}
+            instalattion={instalattion}
           />
         </div>
       </div>
