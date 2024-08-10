@@ -3,17 +3,29 @@ import { formatFecha, formatearFecha } from "@/utils/const";
 import { useEffect, useMemo, useState } from "react";
 import Swal from "sweetalert2";
 
-
 export const useFetchInstallation = (inicialDate?: Date, finalDate?: Date) => {
   const [instalattion, setInstaattion] = useState<fotmatAttributes[]>([]);
-  const inicial = useMemo(() => inicialDate, [inicialDate]);
-  const final = useMemo(() => finalDate, [finalDate]);
+  const inicial = useMemo(() => {
+    const adjustedInicialDate = new Date(inicialDate as Date);
+    adjustedInicialDate.setDate(adjustedInicialDate.getDate() - 1);
+    return adjustedInicialDate;
+  }, [inicialDate]);
+
+  const final = useMemo(() => {
+    const adjustedFinalDate = new Date(finalDate as Date);
+    adjustedFinalDate.setDate(adjustedFinalDate.getDate() - 1);
+    return adjustedFinalDate;
+  }, [finalDate]);
 
   const fetchInstalattion = async () => {
-    const baseUrl = "https://plataformasgps.cl/api/instalattions?populate=*&sort[0]=fecha:DESC&sort[1]=hours:DESC&pagination[pageSize]=100";
-    const filterUrl = `${baseUrl}&filters[fecha][$gte]=${inicial?.toISOString().split('T')[0]}&filters[fecha][$lte]=${final?.toISOString().split('T')[0]}`;
+    const baseUrl =
+      "https://plataformasgps.cl/api/instalattions?populate=*&sort[0]=fecha:DESC&sort[1]=hours:DESC&pagination[pageSize]=100";
+    const filterUrl = `${baseUrl}&filters[fecha][$gte]=${
+      inicial?.toISOString().split("T")[0]
+    }&filters[fecha][$lte]=${final?.toISOString().split("T")[0]}`;
 
-    const res = await fetch(inicial?  filterUrl: baseUrl, {
+    console.log(filterUrl);
+    const res = await fetch(inicial ? filterUrl : baseUrl, {
       cache: "no-store",
       mode: "cors",
     });
@@ -26,7 +38,7 @@ export const useFetchInstallation = (inicialDate?: Date, finalDate?: Date) => {
 
     for (let index = 2; index <= meta.pagination.pageCount; index++) {
       const res = await fetch(
-        `${inicial?  filterUrl: baseUrl}&pagination[page]=${index}`,
+        `${inicial ? filterUrl : baseUrl}&pagination[page]=${index}`,
         {
           cache: "no-store",
           mode: "cors",
