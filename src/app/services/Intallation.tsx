@@ -8,13 +8,13 @@ export const useFetchInstallation = (inicialDate?: Date, finalDate?: Date) => {
   const inicial = useMemo(() => {
     const adjustedInicialDate = new Date(inicialDate as Date);
     adjustedInicialDate.setDate(adjustedInicialDate.getDate() - 1);
-    return adjustedInicialDate;
+    return inicialDate;
   }, [inicialDate]);
 
   const final = useMemo(() => {
     const adjustedFinalDate = new Date(finalDate as Date);
     adjustedFinalDate.setDate(adjustedFinalDate.getDate() - 1);
-    return adjustedFinalDate;
+    return finalDate;
   }, [finalDate]);
 
   const fetchInstalattion = async () => {
