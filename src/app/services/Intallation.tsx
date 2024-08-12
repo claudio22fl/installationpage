@@ -7,14 +7,14 @@ export const useFetchInstallation = (inicialDate?: Date, finalDate?: Date) => {
   const [instalattion, setInstaattion] = useState<fotmatAttributes[]>([]);
   const inicial = useMemo(() => {
     const adjustedInicialDate = new Date(inicialDate as Date);
-    adjustedInicialDate.setDate(adjustedInicialDate.getDate() - 1);
-    return inicialDate;
+    adjustedInicialDate.setDate(adjustedInicialDate.getDate());
+    return adjustedInicialDate;
   }, [inicialDate]);
 
   const final = useMemo(() => {
     const adjustedFinalDate = new Date(finalDate as Date);
-    adjustedFinalDate.setDate(adjustedFinalDate.getDate() - 1);
-    return finalDate;
+    adjustedFinalDate.setDate(adjustedFinalDate.getDate());
+    return adjustedFinalDate;
   }, [finalDate]);
 
   const fetchInstalattion = async () => {
