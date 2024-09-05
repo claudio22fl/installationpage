@@ -1,17 +1,23 @@
 import { IRootInstallation, fotmatAttributes } from "@/types/Installation";
-import { formatFecha, formatearFecha } from "@/utils/const";
+import { formatearFecha } from "@/utils/const";
 import { useEffect, useMemo, useState } from "react";
 import Swal from "sweetalert2";
 
 export const useFetchInstallation = (inicialDate?: Date, finalDate?: Date) => {
   const [instalattion, setInstaattion] = useState<fotmatAttributes[]>([]);
   const inicial = useMemo(() => {
+    if (!inicialDate) {
+      return null;
+    }
     const adjustedInicialDate = new Date(inicialDate as Date);
     adjustedInicialDate.setDate(adjustedInicialDate.getDate());
     return adjustedInicialDate;
   }, [inicialDate]);
 
   const final = useMemo(() => {
+    if (!finalDate) {
+      return null;
+    }
     const adjustedFinalDate = new Date(finalDate as Date);
     adjustedFinalDate.setDate(adjustedFinalDate.getDate());
     return adjustedFinalDate;
@@ -20,9 +26,12 @@ export const useFetchInstallation = (inicialDate?: Date, finalDate?: Date) => {
   const fetchInstalattion = async () => {
     const baseUrl =
       "https://plataformasgps.cl/api/instalattions?populate=*&sort[0]=fecha:DESC&sort[1]=hours:DESC&pagination[pageSize]=100";
-    const filterUrl = `${baseUrl}&filters[fecha][$gte]=${
-      inicial?.toISOString().split("T")[0]
-    }&filters[fecha][$lte]=${final?.toISOString().split("T")[0]}`;
+    const filterUrl =
+      inicial && final
+        ? `${baseUrl}&filters[fecha][$gte]=${
+            inicial?.toISOString().split("T")[0]
+          }&filters[fecha][$lte]=${final?.toISOString().split("T")[0]}`
+        : "";
 
     console.log(filterUrl);
     const res = await fetch(inicial ? filterUrl : baseUrl, {
