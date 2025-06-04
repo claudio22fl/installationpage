@@ -1,5 +1,20 @@
 "use client";
-import * as React from "react";
+import ModalUpdate from "@/app/Installation_list/component/ModalUpdate";
+import {
+  useDeleteInstallation,
+  useUpdateInstallation,
+} from "@/app/services/Intallation";
+import { client } from "@/types/Client";
+import { fotmatAttributes } from "@/types/Installation";
+import { formatClp } from "@/utils/const";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
+import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
+import PaymentIcon from "@mui/icons-material/Payment";
+import { ButtonGroup, Stack, Tooltip } from "@mui/material";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
@@ -9,22 +24,7 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { fotmatAttributes } from "@/types/Installation";
-import { Button, ButtonGroup, Stack, Tooltip } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import {
-  useDeleteInstallation,
-  useUpdateInstallation,
-} from "@/app/services/Intallation";
-import { formatClp } from "@/utils/const";
-import ModalUpdate from "@/app/Installation_list/component/ModalUpdate";
-import { client } from "@/types/Client";
-import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
-import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
-import PaymentIcon from "@mui/icons-material/Payment";
+import * as React from "react";
 
 interface Props {
   row: fotmatAttributes;
@@ -102,6 +102,9 @@ export function Row({ row, client, fetchInstalattion }: Props) {
           {row.installationtype}
         </TableCell>
         <TableCell style={{ fontSize: 12 }} align="left">
+          {row.installer}
+        </TableCell>
+        <TableCell style={{ fontSize: 12 }} align="left">
           {row.address}
         </TableCell>
         <TableCell style={{ fontSize: 12 }} align="left">
@@ -138,46 +141,43 @@ export function Row({ row, client, fetchInstalattion }: Props) {
           ))}
         </TableCell>
         <TableCell width={50} align="left">
+          {rol === "admin" && (
+            <ButtonGroup
+              disableElevation
+              style={{ alignItems: "center", justifyContent: "center" }}
+              variant="contained"
+              aria-label="Disabled elevation buttons"
+            >
+              <Tooltip title="Editar">
+                <IconButton
+                  onClick={handleClickOpen}
+                  aria-label="delete"
+                  size="small"
+                >
+                  <EditIcon fontSize="inherit" />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Eliminar">
+                <IconButton
+                  onClick={() => deleteInstallation(row?.id)}
+                  aria-label="delete"
+                  size="small"
+                >
+                  <DeleteIcon color="error" fontSize="inherit" />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Actualizar Pago">
+                <IconButton
+                  onClick={() => updateInstallation(row?.id, row.state)}
+                  aria-label="delete"
+                  size="small"
+                >
+                  <PaymentIcon fontSize="inherit" />
+                </IconButton>
+              </Tooltip>
+            </ButtonGroup>
+          )}
 
-        {rol === "admin" && (
-             <ButtonGroup
-             disableElevation
-             style={{ alignItems: "center", justifyContent: "center" }}
-             variant="contained"
-             aria-label="Disabled elevation buttons"
-           >
-          
-             <Tooltip title="Editar">
-               <IconButton
-                 onClick={handleClickOpen}
-                 aria-label="delete"
-                 size="small"
-               >
-                 <EditIcon fontSize="inherit" />
-               </IconButton>
-             </Tooltip>
-             <Tooltip title="Eliminar">
-               <IconButton
-                 onClick={() => deleteInstallation(row?.id)}
-                 aria-label="delete"
-                 size="small"
-               >
-                 <DeleteIcon color="error" fontSize="inherit" />
-               </IconButton>
-             </Tooltip>
-             <Tooltip title="Actualizar Pago">
-               <IconButton
-                 onClick={() => updateInstallation(row?.id, row.state)}
-                 aria-label="delete"
-                 size="small"
-               >
-                 <PaymentIcon fontSize="inherit" />
-               </IconButton>
-             </Tooltip>
-           </ButtonGroup>
-            )}
-
-         
           <Stack spacing={1}></Stack>
         </TableCell>
       </TableRow>
