@@ -1,15 +1,9 @@
 "use client";
-import * as React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { fotmatAttributes } from "@/types/Installation";
+import { useFetchCompani } from "@/app/services/Compani";
 import { client } from "@/types/Client";
-import { Row2 } from "./Row";
+import { fotmatAttributes } from "@/types/Installation";
+import { formatClp } from "@/utils/const";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import {
   Button,
   Checkbox,
@@ -24,21 +18,18 @@ import {
   SelectChangeEvent,
   TableFooter,
   TablePagination,
-  TextField,
 } from "@mui/material";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import * as React from "react";
 import { useEffect, useState } from "react";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import { columns } from "../const";
-import { empresa } from "@/types/Compani";
-import { formatClp } from "@/utils/const";
-import { Producto } from "@/types/Product";
+import { Row2 } from "./Row";
 import TableHeadComponent from "./TableHead";
-import { CheckBox } from "@mui/icons-material";
-import ExcelGenerator from "@/app/component/GenerateExcel";
-import PdfGenerator from "@/app/component/GeneratePdf";
-import { useFetchCompani } from "@/app/services/Compani";
 
 interface Props {
   empresas: string[];
@@ -180,19 +171,28 @@ export default function CollapsibleTable({
     empresa = "";
     rol = "";
   }
-  
 
-  const totalCost = instalattion.reduce((total, inst) => total + inst.product.reduce((totalp, p) => totalp + p.cost, 0), 0);
-  const totalValue = instalattion.reduce((total, inst) => total + inst.product.reduce((totalp, p) => totalp + p.value, 0), 0);
+  const totalCost = instalattion.reduce(
+    (total, inst) =>
+      total + inst.product.reduce((totalp, p) => totalp + p.cost, 0),
+    0
+  );
+  const totalValue = instalattion.reduce(
+    (total, inst) =>
+      total + inst.product.reduce((totalp, p) => totalp + p.value, 0),
+    0
+  );
   const totalWithDiscount = instalattion.reduce((total, inst) => {
-    const company = compani.find(em => em.label === inst.company);
+    const company = compani.find((em) => em.label === inst.company);
     const discountPercentage = company ? company.percentage : 0;
-   
+
     const productTotal = inst.product.reduce((totalp, p) => {
-      const discount = (p.value - p.cost) * (p.percentaje ? (p.percentaje / 100) : (discountPercentage / 100)) ;
-      return totalp + ((p.value - p.cost) - discount);
+      const discount =
+        (p.value - p.cost) *
+        (p.percentaje ? p.percentaje / 100 : discountPercentage / 100);
+      return totalp + (p.value - p.cost - discount);
     }, 0);
-  
+
     return total + productTotal;
   }, 0);
 
@@ -289,19 +289,56 @@ export default function CollapsibleTable({
                 <strong>Total</strong>
               </TableCell>
               <TableCell>
-              <strong>{instalattion.reduce((total, inst) => total + inst.product.length, 0)}</strong>
+                <strong>
+                  {instalattion.reduce(
+                    (total, inst) => total + inst.product.length,
+                    0
+                  )}
+                </strong>
               </TableCell>
               <TableCell>
-              <strong>${formatClp(instalattion.reduce((total, inst) => total + inst.product.reduce((totalp, p)  => totalp + p.cost, 0 ), 0).toString())}</strong>
+                <strong>
+                  $
+                  {formatClp(
+                    instalattion
+                      .reduce(
+                        (total, inst) =>
+                          total +
+                          inst.product.reduce(
+                            (totalp, p) => totalp + p.cost,
+                            0
+                          ),
+                        0
+                      )
+                      .toString()
+                  )}
+                </strong>
               </TableCell>
               <TableCell>
-              <strong>${formatClp(instalattion.reduce((total, inst) => total + inst.product.reduce((totalp, p)  => totalp + p.value, 0 ), 0).toString())}</strong>
+                <strong>
+                  $
+                  {formatClp(
+                    instalattion
+                      .reduce(
+                        (total, inst) =>
+                          total +
+                          inst.product.reduce(
+                            (totalp, p) => totalp + p.value,
+                            0
+                          ),
+                        0
+                      )
+                      .toString()
+                  )}
+                </strong>
               </TableCell>
               <TableCell>
-              <strong>${formatClp((totalValue - totalCost).toString())}</strong>
+                <strong>
+                  ${formatClp((totalValue - totalCost).toString())}
+                </strong>
               </TableCell>
               <TableCell>
-              <strong>${formatClp((totalWithDiscount).toString())}</strong>
+                <strong>${formatClp(totalWithDiscount.toString())}</strong>
               </TableCell>
             </TableRow>
           </TableBody>

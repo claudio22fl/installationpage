@@ -1,5 +1,11 @@
 "use client";
-import * as React from "react";
+import { Row } from "@/app/Installation_list/component/Row";
+import { client } from "@/types/Client";
+import { empresa } from "@/types/Compani";
+import { fotmatAttributes } from "@/types/Installation";
+import { formatClp } from "@/utils/const";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
@@ -9,16 +15,9 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { fotmatAttributes } from "@/types/Installation";
-import { formatClp } from "@/utils/const";
-import { client } from "@/types/Client";
-import { empresa } from "@/types/Compani";
+import * as React from "react";
 import { useEffect } from "react";
-import { Row } from "@/app/Installation_list/component/Row";
-import { calcularTotal, utils } from "../utils/utils";
-import { Producto } from "@/types/Product";
+import { utils } from "../utils/utils";
 
 interface Props {
   row: string;
@@ -26,7 +25,7 @@ interface Props {
   fetchInstalattion: () => void;
   instalattion: fotmatAttributes[];
   openDetalles: boolean;
-  compani: empresa[]
+  compani: empresa[];
 }
 
 export function Row2({
@@ -35,7 +34,7 @@ export function Row2({
   fetchInstalattion,
   instalattion,
   openDetalles,
-  compani
+  compani,
 }: Props) {
   const [open, setOpen] = React.useState(false);
   const [openUpdate, setOpenUpdate] = React.useState(false);
@@ -77,16 +76,23 @@ export function Row2({
   );
 
   const totalWithDiscount = data.reduce((total, inst) => {
-    const company = compani.find(em => em.label === inst.company);
+    const company = compani.find((em) => em.label === inst.company);
     const discountPercentage = company ? company.percentage : 0;
-   
+
     const productTotal = inst.product.reduce((totalp, p) => {
       const discount = (p.value - p.cost) * (discountPercentage / 100);
-      return totalp + ((p.value - p.cost) - discount);
+      return totalp + (p.value - p.cost - discount);
     }, 0);
-  
+
     return total + productTotal;
   }, 0);
+
+  console.log(row);
+
+  const totalProductos = data.reduce(
+    (acc, inst) => acc + inst.product.filter((p) => p.name === row).length,
+    0
+  );
 
   return (
     <React.Fragment>
@@ -104,7 +110,7 @@ export function Row2({
           <strong>{row}</strong>
         </TableCell>
         <TableCell style={{ fontSize: 12 }} align="left">
-          {data.length}
+          {totalProductos}
         </TableCell>
         <TableCell style={{ fontSize: 12 }} align="left">
           ${formatClp(totalCost.toString())}
@@ -116,7 +122,7 @@ export function Row2({
           ${formatClp((totalValue - totalCost).toString())}
         </TableCell>
         <TableCell style={{ fontSize: 12 }} align="left">
-          ${formatClp((totalWithDiscount).toString())}
+          ${formatClp(totalWithDiscount.toString())}
         </TableCell>
       </TableRow>
       <TableRow>
